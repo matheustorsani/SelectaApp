@@ -1,0 +1,60 @@
+import React from 'react';
+import { SafeAreaView, View, Text, ScrollView, TouchableOpacity, StyleSheet, Image, StatusBar } from 'react-native';
+const categories = ['Eletrônicos', 'Moda', 'Casa e Banho', 'Esportes', 'Livros', 'Beleza'];
+
+export default function Header() {
+  return (
+    <SafeAreaView style={styles.safeArea}>
+      <View style={styles.logoContainer}>
+        <Image
+          source={require('../../assets/logo.png')}
+          style={styles.logo}
+          resizeMode="contain"
+        />
+      </View>
+
+      <ScrollView
+        horizontal
+        showsHorizontalScrollIndicator={false}
+        contentContainerStyle={styles.categoriesContainer}
+      >
+        {categories.map((cat) => (
+          <TouchableOpacity key={cat} style={styles.categoryButton}>
+            <Text style={styles.categoryText}>{cat}</Text>
+          </TouchableOpacity>
+        ))}
+      </ScrollView>
+    </SafeAreaView>
+  );
+}
+
+const styles = StyleSheet.create({
+  safeArea: {
+    flex: 0,
+    backgroundColor: '#fff',
+    paddingTop: StatusBar.currentHeight + 10,
+    paddingBottom: 10,
+  },
+  logoContainer: {
+    alignItems: 'center',
+    paddingVertical: 8,
+  },
+  logo: {
+    width: 120,
+    height: 40,
+  },
+  categoriesContainer: {
+    paddingHorizontal: 8,
+  },
+  categoryButton: {
+    paddingHorizontal: 12,
+    paddingVertical: 6,
+    borderRadius: 20,
+    backgroundColor: '#f0f0f0',
+    marginRight: 8,
+  },
+  categoryText: {
+    fontSize: 14,
+    color: '#333',
+  },
+});
