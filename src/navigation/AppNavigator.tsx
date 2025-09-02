@@ -17,7 +17,7 @@ export default function AppNavigator() {
       <Stack.Navigator
         initialRouteName="Home"
         screenOptions={{
-          header: () => <Header />, // Custom Header
+          header: () => <Header />,
         }}
       >
         <Stack.Screen name="Home" component={Home} />

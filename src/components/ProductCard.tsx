@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
-import { styles } from '../../styles/ProductCard/ProductCard.styles';
+// import { styles } from '../../styles/ProductCard/ProductCard.styles';
 
 interface Product {
   id: string;
