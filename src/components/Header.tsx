@@ -32,7 +32,7 @@ const styles = StyleSheet.create({
   safeArea: {
     flex: 0,
     backgroundColor: '#fff',
-    paddingTop: StatusBar.currentHeight + 10,
+    paddingTop: (StatusBar.currentHeight ?? 0) + 10,
     paddingBottom: 10,
   },
   logoContainer: {
