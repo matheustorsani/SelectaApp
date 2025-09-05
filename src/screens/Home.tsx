@@ -8,11 +8,11 @@ import { Styles } from '../styles/Styles';
 
 export default function Home() {
     return (
-        <GestureHandlerRootView style={{ flex: 1 }}>
+        <GestureHandlerRootView style={{ flex: 1, padding: 16, paddingBottom: 0}}>
             <Text style={Styles.TextTitle}>Para você</Text>
             <Text style={Styles.TextSubtitle}>Produtos baseados com base no seu perfil e histórico</Text>
             <FlatList
-                style={{ flex: 1, padding: 16 }}
+                style={{ flex: 1 }}
                 showsVerticalScrollIndicator={false}
                 data={products}
                 keyExtractor={(item) => item.id.toString()}
@@ -23,20 +23,3 @@ export default function Home() {
         </GestureHandlerRootView>
     );
 }
-
-const styles = StyleSheet.create({
-    View: {
-        flexDirection: 'row',
-        flexWrap: 'wrap',
-        justifyContent: 'space-between',
-        paddingBottom: 16,
-    },
-    productsContainer: {
-        width: '48%',
-        marginBottom: 16,
-        backgroundColor: '#fff',
-        borderRadius: 8,
-        padding: 8,
-        elevation: 2,
-    },
-});

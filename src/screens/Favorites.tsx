@@ -4,6 +4,7 @@ import { useFavorites } from "../context/FavoritesContext";
 import { products, Product } from "../data/Products";
 import { ProductCard } from "../components/ProductCard";
 import { Styles } from "../styles/Styles";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 
 export default function Favorites() {
     const { favorites } = useFavorites();
@@ -11,45 +12,26 @@ export default function Favorites() {
     const favoriteProducts: Product[] = products.filter(p => favorites.includes(p.id));
 
     return (
-        <View style={{ flex: 1 }}>
-            <Text style={styles.title}>Meus Favoritos</Text>
-            {favoriteProducts.length === 0 ? (
-                <Text style={styles.empty}>Você ainda não salvou nenhum produto.</Text>
-            ) : (
-                <>
-                    <Text style={Styles.TextSubtitle}>
+        <GestureHandlerRootView style={{ flexDirection: 'row', flexWrap: 'wrap', gap: 10, justifyContent: 'space-between' }}>
+            <View style={Styles.Main}>
+                <Text style={Styles.title}>Meus Favoritos</Text>
+
+                {favoriteProducts.length !== 0 ? (
+                    <><Text style={Styles.TextSubtitle}>
                         {favoriteProducts.length === 1
                             ? "1 Produto Salvo"
                             : `${favoriteProducts.length} Produtos Salvos`}
-                    </Text>
-                    <FlatList
-                        data={favoriteProducts}
-                        keyExtractor={item => item.id.toString()}
-                        numColumns={2}
-                        columnWrapperStyle={styles.row}
-                        contentContainerStyle={{ padding: 16 }}
-                        renderItem={({ item }) => <ProductCard item={item} />}
-                    />
-                </>
-            )}
-        </View>
+                    </Text><FlatList
+                            data={favoriteProducts}
+                            keyExtractor={item => item.id.toString()}
+                            numColumns={2}
+                            columnWrapperStyle={Styles.row}
+                            showsVerticalScrollIndicator={false}
+                            renderItem={({ item }) => <ProductCard item={item} />} /></>
+                ) :
+                    <Text style={Styles.empty}>Você não possui produtos salvos.</Text>
+            }
+            </View>
+        </GestureHandlerRootView>
     );
 }
-
-const styles = StyleSheet.create({
-    title: {
-        fontSize: 24,
-        fontWeight: "bold",
-        margin: 16,
-        marginBottom: 0,
-    },
-    empty: {
-        margin: 16,
-        fontSize: 14,
-        color: "gray",
-    },
-    row: {
-        justifyContent: "space-between",
-        marginBottom: 16,
-    },
-});

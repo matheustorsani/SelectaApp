@@ -1,16 +1,18 @@
 import { StyleSheet } from "react-native";
 
 export const Styles = StyleSheet.create({
+    Main: {
+        flex: 1,
+        padding: 16
+    },
     TextTitle: {
         fontSize: 24,
         fontWeight: 'bold',
-        margin: 16,
         marginBottom: 0,
         textAlignVertical: 'center',
     },
     TextSubtitle: {
         fontSize: 12,
-        marginHorizontal: 16,
         marginBottom: 8,
         color: 'gray'
     },
@@ -41,11 +43,23 @@ export const Styles = StyleSheet.create({
     },
     button: {
         alignItems: "center",
-        width: 100,
         overflow: "hidden"
     },
     buttonText: {
         fontSize: 14,
         color: "#64748B",
+    },
+    title: {
+        fontSize: 24,
+        fontWeight: "bold",
+        marginBottom: 0,
+    },
+    empty: {
+        marginTop: 16,
+        fontSize: 14,
+        color: "gray",
+    },
+    row: {
+        justifyContent: "space-between",
     },
 })

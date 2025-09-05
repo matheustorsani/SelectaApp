@@ -20,7 +20,7 @@ export function ProductCard({ item }: ProductCard) {
       padding: 8,
       elevation: 2,
     }}>
-      <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: 8 }}>
+      <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
         {item.discount ? (
           <View style={{ backgroundColor: '#FF5252', borderRadius: 4, paddingHorizontal: 6, paddingVertical: 2 }}>
             <Text style={{ color: '#fff', fontWeight: 'bold', fontSize: 12 }}>
@@ -39,7 +39,7 @@ export function ProductCard({ item }: ProductCard) {
       </View>
       <Image source={item.image} style={{ width: 120, height: 120, alignSelf: 'center' }} />
       <Text>{item.name}</Text>
-      <View style={{ flexDirection: 'row', alignItems: 'center', paddingTop: 5, paddingBottom: 5 }}>
+      <View style={{ flexDirection: 'row', alignItems: 'center', paddingTop: 5 }}>
         {Array.from({ length: 5 }).map((_, i) => (
           <Icon
             key={i}

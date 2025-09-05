@@ -19,5 +19,5 @@ export const user: User = {
     address: "São Paulo Bahia",
     pedidos: [0],
     favoritos: [1,2],
-    cart: [0]
+    cart: [1, 2, 3,4,5,6,7,8,9,10]
 };
