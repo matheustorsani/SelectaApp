@@ -11,13 +11,13 @@ export default function AppNavigator() {
   return (
     <NavigationContainer>
       <Stack.Navigator
-        initialRouteName="Home"
+        initialRouteName="Profile"
         screenOptions={{
           header: () => <Header />,
         }}
       >
         <Stack.Screen name="Home" component={Home} />
-        <Stack.Screen name="Favoritos" component={Favorites} />
+        <Stack.Screen name="Favorites" component={Favorites} />
         <Stack.Screen name="Profile" component={Profile} />
       </Stack.Navigator>
       <Footer />

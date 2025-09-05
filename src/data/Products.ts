@@ -31,7 +31,7 @@ export const products: Product[] = [
         peso: 0.5,
         status: "Disponível",
         condition: 0,
-        rate: 5,
+        rate: 4,
         totalRatings: 234
     },
     {
@@ -40,13 +40,13 @@ export const products: Product[] = [
         name: 'Smartphone Premium 128GB',
         description: 'Smartphone',
         price: 1199.99,
-        discount: 25,
+        discount: 9,
         image: require("../../assets/smartphone.png"),
         category: 'Eletrônicos',
         peso: 0.5,
         status: "Disponível",
         condition: 0,
-        rate: 5,
+        rate: 3,
         totalRatings: 234
     },
 ]
