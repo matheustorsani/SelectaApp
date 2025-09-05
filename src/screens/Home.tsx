@@ -1,24 +1,26 @@
-// src/screens/Home.tsx
 import React from 'react';
 import { View, Text, StyleSheet, Image } from 'react-native';
 import { ScrollView } from 'react-native';
 import { products } from '../data/Products';
+import { ProductCard } from '../components/ProductCard';
+import { FlatList, GestureHandlerRootView } from 'react-native-gesture-handler';
+import { Styles } from '../styles/Styles';
 
 export default function Home() {
     return (
-        <ScrollView style={{ flex: 1, padding: 16 }} showsVerticalScrollIndicator={false}>
-            <View style={styles.View}>
-                {products.map((item) => (
-                    <View key={item.id} style={styles.productsContainer}>
-                        <Image source={item.image} style={{ width: 120, height: 120, alignSelf: 'center' }} />
-                        <Text>{item.name}</Text>
-                        <Text style={{ paddingTop: 5, paddingBottom: 5, color: 'gray' }}>⭐⭐⭐⭐⭐ {item.rate} {item.totalRatings}</Text>
-                        <Text style={{ color: '#0063E6', fontWeight: 'bold' }}>R$ {(item.discount ? item.price - ((item.discount / 100) * item.price) : item.price).toFixed(2)}</Text>
-                        {item.discount && <Text style={{ textDecorationLine: 'line-through', color: 'gray', fontSize: 12 }}>R$ {item.price.toFixed(2)}</Text>}
-                    </View>
-                ))}
-            </View>
-        </ScrollView>
+        <GestureHandlerRootView style={{ flex: 1 }}>
+            <Text style={Styles.TextTitle}>Para você</Text>
+            <Text style={Styles.TextSubtitle}>Produtos baseados com base no seu perfil e histórico</Text>
+            <FlatList
+                style={{ flex: 1, padding: 16 }}
+                showsVerticalScrollIndicator={false}
+                data={products}
+                keyExtractor={(item) => item.id.toString()}
+                numColumns={2}
+                columnWrapperStyle={{ justifyContent: 'space-between' }}
+                renderItem={({ item }) => (<ProductCard key={item.id} item={item} />)}
+            />
+        </GestureHandlerRootView>
     );
 }
 

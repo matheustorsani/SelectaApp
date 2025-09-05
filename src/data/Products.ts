@@ -3,8 +3,8 @@ type ProductStatus = "Indisponível" | "Disponível" | "Esgotado";
 type ProductCondition = 0 | 1; // 0: Novo, 1: Usado
 
 export interface Product {
-    id: string,
-    idVendedor: string,
+    id: number,
+    idVendedor: number,
     name: string,
     description: string,
     price: number,
@@ -18,11 +18,10 @@ export interface Product {
     totalRatings?: number
 }
 
-
 export const products: Product[] = [
     {
-        id: '1',
-        idVendedor: '1',
+        id: 1,
+        idVendedor: 1,
         name: 'Smartphone Premium 128GB',
         description: 'Smartphone',
         price: 1199.99,
@@ -32,7 +31,22 @@ export const products: Product[] = [
         peso: 0.5,
         status: "Disponível",
         condition: 0,
-        rate: 4.5,
+        rate: 5,
+        totalRatings: 234
+    },
+    {
+        id: 2,
+        idVendedor: 1,
+        name: 'Smartphone Premium 128GB',
+        description: 'Smartphone',
+        price: 1199.99,
+        discount: 25,
+        image: require("../../assets/smartphone.png"),
+        category: 'Eletrônicos',
+        peso: 0.5,
+        status: "Disponível",
+        condition: 0,
+        rate: 5,
         totalRatings: 234
     },
 ]
