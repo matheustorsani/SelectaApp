@@ -1,11 +1,25 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { View, Text, Image, TouchableOpacity } from "react-native";
-import { user } from "../data/User";
 import { ProfileOption } from "../components/ProfileOption";
 import { ProfileBoxActivity } from "../components/ProfileBoxActivity";
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import { getUser } from "../services/UserService";
+import { User } from "../data/User";
 
 export default function Profile() {
+    const [user, setUser] = useState<User | null>(null);
+
+    useEffect(() => {
+        const fetchUser = async () => {
+            const storedUser = await getUser();
+            setUser(storedUser);
+        };
+
+        fetchUser();
+    }, []);
+
+    if (!user) return <Text>Carregando...</Text>;
+
     return (
         <View style={{ flex: 1, padding: 16 }}>
             <View style={{ flexDirection: "row", alignItems: "center" }}>

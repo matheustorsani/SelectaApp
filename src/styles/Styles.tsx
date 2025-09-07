@@ -44,6 +44,14 @@ export const Styles = StyleSheet.create({
         alignItems: "center",
         overflow: "hidden"
     },
+    btn: {
+        alignSelf: "stretch",
+        marginTop: 10,
+        backgroundColor: "#005FDB",
+        borderRadius: 6,
+        padding: 6,
+        color: "#fff"
+    },
     buttonText: {
         fontSize: 14,
         color: "#64748B",

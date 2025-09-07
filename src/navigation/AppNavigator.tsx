@@ -6,6 +6,7 @@ import Profile from "../screens/Profile";
 import Cart from "../screens/Cart";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
+import Register from "../screens/Register";
 
 const Tab = createBottomTabNavigator();
 
@@ -13,16 +14,17 @@ export default function AppNavigator() {
   return (
     <NavigationContainer>
       <Tab.Navigator
-        initialRouteName="Home"
+        initialRouteName="Register"
         screenOptions={{
           header: () => <Header />,
         }}
         tabBar={(props: any) => <Footer {...props} />}
       >
+        <Tab.Screen name="Register" component={Register} options={{ headerShown: false, tabBarStyle: { display: "none" } }} />
         <Tab.Screen name="Home" component={Home} />
-        {/* <Tab.Screen name="Favoritos" component={Favorites} />
+        <Tab.Screen name="Favoritos" component={Favorites} />
         <Tab.Screen name="Carrinho" component={Cart} />
-        <Tab.Screen name="Perfil" component={Profile} /> */}
+        <Tab.Screen name="Perfil" component={Profile} />
       </Tab.Navigator>
     </NavigationContainer>
   );
