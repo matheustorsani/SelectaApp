@@ -2,8 +2,7 @@ import { StyleSheet } from "react-native";
 
 export const Styles = StyleSheet.create({
     Main: {
-        flex: 1,
-        padding: 16
+        flex: 1, padding: 16, paddingBottom: 0
     },
     TextTitle: {
         fontSize: 24,

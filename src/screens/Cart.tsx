@@ -15,14 +15,10 @@ export default function Cart() {
                 if (!product) return 0;
                 const discount = product.discount ? product.price * (product.discount / 100) : 0;
                 return product.price - discount;
-            })
-            .reduce((acc, price) => acc + price, 0)
-            .toFixed(2)
-        : "0.00";
-
-    return (
-        <GestureHandlerRootView style={{ flexDirection: 'row', flexWrap: 'wrap', gap: 10, justifyContent: 'space-between' }}>
-            <View style={Styles.Main}>
+            }).reduce((acc, price) => acc + price, 0).toFixed(2) : '0.00';   
+        
+        return (
+        <GestureHandlerRootView style={{ flex: 1, padding: 16, paddingBottom: 0 }}>
                 <View style={{ flexDirection: 'row', alignItems: 'center', gap: 10 }}>
                     <Icon name="shopping-cart" size={27} color="#0063E6" />
                     <Text style={Styles.TextTitle}>Meu Carrinho</Text>
@@ -42,7 +38,7 @@ export default function Cart() {
                         justifyContent: 'space-between',
                     }}>
                     <Text style={{ color: "#64748B" }}>{user.cart && user.cart.length || 0} Itens no carrinho</Text>
-                    <Text style={{ color: "#020817", fontWeight: 900 }}>R$ {total}</Text>
+                    <Text style={{ color: "#020817", fontWeight: '900' }}>R$ {total}</Text>
                 </View>
                 {user.cart && user.cart.length > 0 ? (
                     <FlatList
@@ -52,14 +48,12 @@ export default function Cart() {
                             .filter((item): item is Product => !!item)}
                         keyExtractor={item => item.id.toString()}
                         numColumns={2}
-                        columnWrapperStyle={{ justifyContent: 'space-between',  }}
-                        contentContainerStyle={{ paddingBottom: 100 }}
+                        columnWrapperStyle={{ justifyContent: 'space-between' }}
                         renderItem={({ item }) => <ProductCard key={item.id} item={item} />}
                     />
                 ) : (
                     <Text style={{ color: "#64748B" }}>Seu carrinho está vazio.</Text>
                 )}
-            </View>
-        </GestureHandlerRootView>
-    )
+         </GestureHandlerRootView>
+    );
 }

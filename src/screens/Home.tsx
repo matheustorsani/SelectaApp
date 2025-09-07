@@ -8,7 +8,7 @@ import { Styles } from '../styles/Styles';
 
 export default function Home() {
     return (
-        <GestureHandlerRootView style={{ flex: 1, padding: 16, paddingBottom: 0}}>
+        <GestureHandlerRootView style={{ flex: 1, padding: 16, paddingBottom: 0 }}>
             <Text style={Styles.TextTitle}>Para você</Text>
             <Text style={Styles.TextSubtitle}>Produtos baseados com base no seu perfil e histórico</Text>
             <FlatList

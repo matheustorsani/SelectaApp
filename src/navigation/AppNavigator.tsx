@@ -20,9 +20,9 @@ export default function AppNavigator() {
         tabBar={(props: any) => <Footer {...props} />}
       >
         <Tab.Screen name="Home" component={Home} />
-        <Tab.Screen name="Favoritos" component={Favorites} />
+        {/* <Tab.Screen name="Favoritos" component={Favorites} />
         <Tab.Screen name="Carrinho" component={Cart} />
-        <Tab.Screen name="Perfil" component={Profile} />
+        <Tab.Screen name="Perfil" component={Profile} /> */}
       </Tab.Navigator>
     </NavigationContainer>
   );
