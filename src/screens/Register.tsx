@@ -72,7 +72,7 @@ export default function Register() {
                     onChangeText={setPassword}
                     mode="outlined"
                     style={{ marginBottom: 8, width: 300, borderRadius: 5, backgroundColor: "#fff" }}
-                    error={password !== "" && !passwordRegex.test(password)}
+                    // error={password !== "" && !passwordRegex.test(password)}
                     secureTextEntry
                 />
                 <TextInput
@@ -99,6 +99,17 @@ export default function Register() {
                 ) : (
                     <Button onPress={handleRegister} mode="contained" style={Styles.btn}>Cadastrar</Button>
                 )}
+            </View>
+            <View style={{
+                marginTop: 20,
+                justifyContent: "center",
+                alignItems: "center",
+                flexDirection: "column",
+                alignContent: "center",
+                gap: 2
+            }}>
+                <Text style={{ color: "#64748B" }}>Quer ser uma empresa parceira da Selecta?</Text>
+                <Text style={{ fontSize: 13, color: "#005FDB" }}>Inscreva-se no nosso programa de parcerias empresariais</Text>
             </View>
         </View>
     );

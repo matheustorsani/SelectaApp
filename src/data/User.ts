@@ -9,4 +9,5 @@ export interface User {
     pedidos?: number[];
     favoritos?: number[];
     cart?: number[];
+    categories?: string[]
 }
