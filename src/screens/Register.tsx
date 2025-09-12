@@ -1,11 +1,13 @@
 import React, { useState } from "react";
-import { View, Image, Text } from "react-native";
+import { View, Image, Text, TouchableOpacity } from "react-native";
 import { TextInput, Button } from "react-native-paper";
 import { saveUser } from "../services/UserService";
 import { User } from "../data/User";
 import { Styles } from "../styles/Styles";
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
 
-export default function Register() {
+
+export default function Register({ navigation }: NativeStackScreenProps<any>) {
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -108,6 +110,12 @@ export default function Register() {
                 alignContent: "center",
                 gap: 2
             }}>
+                <View style={{ flexDirection: 'row', alignItems: "center" }}>
+                    <Text style={{ color: "#64748B" }}>Já possui uma conta? </Text>
+                    <TouchableOpacity onPress={() => { navigation.navigate("Login") }}>
+                        <Text style={{ color: "#0074D9", fontWeight: "semibold" }}>Entrar</Text>
+                    </TouchableOpacity>
+                </View>
                 <Text style={{ color: "#64748B" }}>Quer ser uma empresa parceira da Selecta?</Text>
                 <Text style={{ fontSize: 13, color: "#005FDB" }}>Inscreva-se no nosso programa de parcerias empresariais</Text>
             </View>
