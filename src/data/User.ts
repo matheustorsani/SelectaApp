@@ -6,8 +6,8 @@ export interface User {
     avatar: string;
     phone?: string;
     address?: string;
-    pedidos?: number[];
-    favoritos?: number[];
+    orders?: number[];
+    favorites?: number[];
     cart?: number[];
-    categories?: string[]
+    categories?: number[];
 }

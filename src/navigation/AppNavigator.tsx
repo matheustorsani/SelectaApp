@@ -9,6 +9,7 @@ import Footer from "../components/Footer";
 import Register from "../screens/Register";
 import Categories from "../screens/Categories";
 import Login from "../screens/Login";
+import Search from "../screens/Search";
 
 const Tab = createBottomTabNavigator();
 
@@ -16,19 +17,20 @@ export default function AppNavigator() {
   return (
     <NavigationContainer>
       <Tab.Navigator
-        initialRouteName="Login"
+        initialRouteName="Home"
         screenOptions={{
           header: () => <Header />,
         }}
         tabBar={(props: any) => <Footer {...props} />}
       >
-        <Tab.Screen name="Register" component={Register} options={{ headerShown: false, tabBarStyle: { display: "none" } }} />
-        <Tab.Screen name="Categories" component={Categories} options={{ headerShown: false, tabBarStyle: { display: "none" } }} />
         <Tab.Screen name="Home" component={Home} />
+        <Tab.Screen name="Search" component={Search} />
         <Tab.Screen name="Favoritos" component={Favorites} />
         <Tab.Screen name="Carrinho" component={Cart} />
         <Tab.Screen name="Perfil" component={Profile} />
-        <Tab.Screen name="Login" component={Login} options={{ headerShown: false, tabBarStyle: { display: "none" } }} />
+        <Tab.Screen name="Register" component={Register} options={{ headerShown: false }} />
+        <Tab.Screen name="Login" component={Login} options={{ headerShown: false }} />
+        <Tab.Screen name="Categories" component={Categories} options={{ headerShown: false }} />
       </Tab.Navigator>
     </NavigationContainer>
   );

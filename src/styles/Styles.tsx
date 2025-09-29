@@ -69,4 +69,20 @@ export const Styles = StyleSheet.create({
     row: {
         justifyContent: "space-between",
     },
+    SearchBar: {
+        flexDirection: "row",
+        alignItems: "center",
+        backgroundColor: "#F1F5F9",
+        paddingHorizontal: 12,
+        paddingVertical: 4,
+        borderRadius: 26,
+        marginBottom: 16,
+        borderWidth: 1,
+        borderColor: "#ddd",
+    },
+    SearchBarInput: {
+        flex: 1,
+        fontSize: 16,
+        color: "#020817",
+    },
 })

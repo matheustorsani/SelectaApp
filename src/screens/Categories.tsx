@@ -4,8 +4,12 @@ import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import Icon from 'react-native-vector-icons/Feather';
 import IconI from 'react-native-vector-icons/Ionicons';
 import { Lucide } from '@react-native-vector-icons/lucide';
+import { UserContext } from "../context/UserContext";
+import { NativeStackScreenProps } from "@react-navigation/native-stack";
 
-export default function Categories() {
+export default function Categories({ navigation }: NativeStackScreenProps<any>) {
+    const { user, setUser } = React.useContext(UserContext);
+
     const [selectedMainCategories, setSelectedMainCategories] = useState<number[]>([]);
     const [selectedCategories, setSelectedCategories] = useState<number[]>([]);
 
@@ -43,6 +47,22 @@ export default function Categories() {
                 : [...prevSelected, id]
         );
     };
+
+    const addSelectedCategoriesToUser = () => {
+        const allSelectedIds = [...selectedMainCategories, ...selectedCategories!];
+        if (!user) { 
+            alert("Erro: Por favor, realize o login."); 
+            return navigation.navigate("Login");
+        }
+        if (allSelectedIds.length === 0) return;
+        setUser({
+            ...user,
+            categories: allSelectedIds
+        });
+        navigation.navigate("Home");
+        console.log({ ...user, categories: allSelectedIds });
+    };
+
     return (
         <GestureHandlerRootView style={{ flex: 1, justifyContent: "center", alignItems: "center", padding: 16 }}>
             <View>
@@ -90,7 +110,7 @@ export default function Categories() {
                         />
                     ))}
                 </View>
-                <View style={{ marginTop: 30, alignItems: "center",justifyContent: "flex-end", flexDirection: "row", width: "100%", gap: 20 }}>
+                <View style={{ marginTop: 30, alignItems: "center", justifyContent: "flex-end", flexDirection: "row", width: "100%", gap: 20 }}>
                     <TouchableOpacity><Text style={{ color: "#64748B" }}>Pular</Text></TouchableOpacity>
                     <TouchableOpacity style={{
                         backgroundColor: (selectedCategories.length === 0 && selectedMainCategories.length === 0) ? "#0074d9a2" : "#005FDB",
@@ -99,7 +119,10 @@ export default function Categories() {
                         borderRadius: 25,
                         minWidth: 150,
                         alignItems: "center"
-                    }} disabled={selectedCategories.length === 0 && selectedMainCategories.length === 0}>
+                    }}
+                        disabled={selectedCategories.length === 0 && selectedMainCategories.length === 0}
+                        onPress={addSelectedCategoriesToUser}
+                    >
                         <Text style={{ color: "#fff", fontWeight: "bold", fontSize: 16 }}>Continuar</Text>
                     </TouchableOpacity>
                 </View>

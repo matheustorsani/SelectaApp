@@ -5,7 +5,7 @@ import { saveUser } from "../services/UserService";
 import { User } from "../data/User";
 import { Styles } from "../styles/Styles";
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
-
+import { useUser } from "../context/useUser";
 
 export default function Register({ navigation }: NativeStackScreenProps<any>) {
     const [name, setName] = useState("");
@@ -14,21 +14,24 @@ export default function Register({ navigation }: NativeStackScreenProps<any>) {
     const [confirmPassword, setConfirmPassword] = useState("");
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{6,}$/;
+
+    const { setUser } = useUser();
+
     const handleRegister = async () => {
+        const nameTrim = name.trim();
+        const emailTrim = email.trim();
+
         const newUser: User = {
             id: 1,
-            name,
-            email,
+            name: nameTrim,
+            email: emailTrim,
             password,
             avatar: require("../../assets/Sample_User_Icon.png"),
-            pedidos: [],
-            favoritos: [],
-            cart: [],
         };
 
+        setUser(newUser);
         await saveUser(newUser);
-        console.log(newUser)
-        // navigation.replace("Welcome");
+        navigation.navigate("Categories");
     };
 
     return (
@@ -51,7 +54,7 @@ export default function Register({ navigation }: NativeStackScreenProps<any>) {
                     placeholder="Digite seu nome completo"
                     placeholderTextColor="#64748B"
                     value={name}
-                    onChangeText={setName}
+                    onChangeText={(text) => setName(text.replace(/\s+/g, " ").trimStart())}
                     mode="outlined"
                     style={{ marginBottom: 8, width: 300, borderRadius: 5, backgroundColor: "#fff" }}
                 />
@@ -60,7 +63,7 @@ export default function Register({ navigation }: NativeStackScreenProps<any>) {
                     placeholder="Digite seu email"
                     placeholderTextColor="#64748B"
                     value={email}
-                    onChangeText={setEmail}
+                    onChangeText={(text) => setEmail(text.trim())}
                     mode="outlined"
                     style={{ marginBottom: 8, width: 300, borderRadius: 5, backgroundColor: "#fff" }}
                     keyboardType="email-address"
@@ -91,12 +94,12 @@ export default function Register({ navigation }: NativeStackScreenProps<any>) {
 
                 {(name === "" || email === "" || password === "" || confirmPassword === "" || !emailRegex.test(email)) ? (
                     <>
-                        <Button disabled onPress={handleRegister} mode="contained" style={Styles.btn}>Cadastrar</Button>
+                        <Button disabled mode="contained" style={Styles.btn}>Cadastrar</Button>
                     </>
                 ) : password !== confirmPassword ? (
                     <>
                         <Text style={{ color: "red", marginBottom: 8 }}>As senhas devem ser iguais.</Text>
-                        <Button disabled onPress={handleRegister} mode="contained" style={Styles.btn}>Cadastrar</Button>
+                        <Button disabled mode="contained" style={Styles.btn}>Cadastrar</Button>
                     </>
                 ) : (
                     <Button onPress={handleRegister} mode="contained" style={Styles.btn}>Cadastrar</Button>

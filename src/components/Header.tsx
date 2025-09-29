@@ -1,5 +1,6 @@
 import React from 'react';
-import { SafeAreaView, View, Text, ScrollView, TouchableOpacity, StyleSheet, Image, StatusBar } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { View, Text, ScrollView, TouchableOpacity, StyleSheet, Image, StatusBar } from 'react-native';
 const categories = ['Eletrônicos', 'Moda', 'Casa e Banho', 'Esportes', 'Livros', 'Beleza'];
 
 export default function Header() {
@@ -31,9 +32,7 @@ export default function Header() {
 const styles = StyleSheet.create({
   safeArea: {
     flex: 0,
-    backgroundColor: '#fff',
-    paddingTop: (StatusBar.currentHeight ?? 0) + 10,
-    paddingBottom: 10,
+    backgroundColor: '#fff'
   },
   logoContainer: {
     alignItems: 'center',

@@ -2,19 +2,17 @@ import React from 'react';
 import { View, Text, TouchableOpacity, Image } from 'react-native';
 import { Product } from '../data/Products';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import { useFavorites } from '../context/FavoritesContext';
-
-interface ProductCard {
-  item: Product
+import { useUser } from '../context/useUser'; 
+interface ProductCardProps {
+  item: Product;
 }
 
-export function ProductCard({ item }: ProductCard) {
-  const { toggleFavorite, isFavorite } = useFavorites();
+export function ProductCard({ item }: ProductCardProps) {
+  const { toggleFavorite, isFavorite } = useUser();
 
   return (
     <TouchableOpacity style={{
       width: '48%',
-      marginBottom: 16,
       backgroundColor: '#fff',
       borderRadius: 8,
       padding: 8,
@@ -28,6 +26,7 @@ export function ProductCard({ item }: ProductCard) {
             </Text>
           </View>
         ) : <View />}
+        
         <TouchableOpacity onPress={() => toggleFavorite(item.id)}>
           <Icon
             name={isFavorite(item.id) ? "heart" : "heart-o"}
@@ -35,10 +34,14 @@ export function ProductCard({ item }: ProductCard) {
             color="#FF5252"
           />
         </TouchableOpacity>
-
       </View>
-      <Image source={item.image} style={{ width: 120, height: 120, alignSelf: 'center' }} />
+
+      <Image
+        source={typeof item.image === 'string' ? { uri: item.image } : item.image}
+        style={{ width: 120, height: 120, alignSelf: 'center' }}
+      />
       <Text>{item.name}</Text>
+
       <View style={{ flexDirection: 'row', alignItems: 'center', paddingTop: 5 }}>
         {Array.from({ length: 5 }).map((_, i) => (
           <Icon
@@ -53,6 +56,7 @@ export function ProductCard({ item }: ProductCard) {
           {item.rate ?? ''} ({item.totalRatings ?? ''})
         </Text>
       </View>
+
       <Text style={{ color: '#0063E6', fontWeight: 'bold', marginTop: 4 }}>
         R$ {(item.discount ? item.price - ((item.discount / 100) * item.price) : item.price).toFixed(2)}
       </Text>
