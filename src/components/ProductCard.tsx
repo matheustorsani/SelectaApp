@@ -2,13 +2,20 @@ import React from 'react';
 import { View, Text, TouchableOpacity, Image } from 'react-native';
 import { Product } from '../data/Products';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import { useUser } from '../context/useUser'; 
+import { useUser } from '../context/useUser';
+import { useNavigation } from '@react-navigation/native';
+import { RootStackParams } from '../navigation/AppNavigator';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+
 interface ProductCardProps {
   item: Product;
 }
 
+type ProductProp = NativeStackNavigationProp<RootStackParams, 'ProductDetails'>;
+
 export function ProductCard({ item }: ProductCardProps) {
   const { toggleFavorite, isFavorite } = useUser();
+  const navigation = useNavigation<ProductProp>();
 
   return (
     <TouchableOpacity style={{
@@ -17,7 +24,8 @@ export function ProductCard({ item }: ProductCardProps) {
       borderRadius: 8,
       padding: 8,
       elevation: 2,
-    }}>
+    }} onPress={() => navigation.navigate('ProductDetails', { productId: item.id })}
+    >
       <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
         {item.discount ? (
           <View style={{ backgroundColor: '#FF5252', borderRadius: 4, paddingHorizontal: 6, paddingVertical: 2 }}>
@@ -26,7 +34,7 @@ export function ProductCard({ item }: ProductCardProps) {
             </Text>
           </View>
         ) : <View />}
-        
+
         <TouchableOpacity onPress={() => toggleFavorite(item.id)}>
           <Icon
             name={isFavorite(item.id) ? "heart" : "heart-o"}

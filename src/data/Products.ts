@@ -2,20 +2,23 @@ type ProductCategory = 'Eletrônicos' | 'Moda' | 'Casa e Banho' | 'Esportes' | '
 type ProductStatus = "Indisponível" | "Disponível" | "Esgotado";
 type ProductCondition = 0 | 1; // 0: Novo, 1: Usado
 
+
 export interface Product {
     id: number,
     idVendedor: number,
     name: string,
-    description: string,
+    description?: string,
     price: number,
     discount?: number,
+    amount?: number,
     image: string,
-    category: ProductCategory,
+    category: string,
     peso: number,
     status: ProductStatus
     condition: ProductCondition
-    rate: number, // Avaliação de 0 a 5
+    rate?: number, // Avaliação de 0 a 5
     totalRatings?: number
+    specifications?: { key: string, value: string }[]
 }
 
 export const products: Product[] = [
@@ -32,7 +35,8 @@ export const products: Product[] = [
         status: "Disponível",
         condition: 0,
         rate: 4,
-        totalRatings: 234
+        totalRatings: 234,
+        amount: 1,
     },
     {
         id: 2,
@@ -55,7 +59,7 @@ export const products: Product[] = [
         name: 'Smartphone Premium 128GB',
         description: 'Smartphone',
         price: 1199.99,
-        discount: 9,
+        discount: 0,
         image: require("../../assets/smartphone.png"),
         category: 'Eletrônicos',
         peso: 0.5,

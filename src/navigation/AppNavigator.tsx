@@ -10,6 +10,19 @@ import Register from "../screens/Register";
 import Categories from "../screens/Categories";
 import Login from "../screens/Login";
 import Search from "../screens/Search";
+import ProductDetails from "../screens/ProductDetails";
+
+export type RootStackParams = {
+  Home: undefined,
+  Search: undefined,
+  Favoritos: undefined,
+  Carrinho: undefined,
+  Perfil: undefined,
+  Register: undefined,
+  Login: undefined,
+  Categories: undefined,
+  ProductDetails: { productId: number }
+}
 
 const Tab = createBottomTabNavigator();
 
@@ -31,6 +44,7 @@ export default function AppNavigator() {
         <Tab.Screen name="Register" component={Register} options={{ headerShown: false }} />
         <Tab.Screen name="Login" component={Login} options={{ headerShown: false }} />
         <Tab.Screen name="Categories" component={Categories} options={{ headerShown: false }} />
+        <Tab.Screen name="ProductDetails" component={ProductDetails} />
       </Tab.Navigator>
     </NavigationContainer>
   );

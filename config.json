@@ -1,0 +1,16 @@
+{
+    "API": {
+        "endpoint": "https://selectaapi-ehg0gcd6cmapggeq.brazilsouth-01.azurewebsites.net/",
+        "timeout": 5000,
+        "routes": {
+            "getAllCategory": "selectaAPI/Category/get-all-categories",
+            "allProducts": "selectaAPI/Home/all",
+            "searchProducts": "selectaAPI/Home/search",
+            "highlightsProducts": "selectaAPI/Home/highlights",
+            "wishListProducts": "selectaAPI/Home/wish-list",
+            "forYouProducts": "selectaAPI/Home/for-you",
+            "notifications": "selectaAPI/Home/notifications",
+            "bestSellers": "selectaAPI/Home/best-sellers"
+        }
+    }
+}
