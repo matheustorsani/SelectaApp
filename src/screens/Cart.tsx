@@ -1,15 +1,24 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { View, Text } from "react-native";
 import { FlatList } from "react-native-gesture-handler";
 import { Styles } from "../styles/Styles";
 import Icon from "react-native-vector-icons/Feather";
 import { useUser } from "../context/useUser";
-import { Product, products } from "../data/Products";
+import { getProducts, Product } from '../data/Products';
 import { ProductCard } from "../components/ProductCard";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 
 export default function Cart({ navigation }: NativeStackScreenProps<any>) {
     const { user } = useUser();
+    const [products, setProducts] = useState<Product[]>([]);
+
+    useEffect(() => {
+        const loadProducts = async () => {
+            const data = await getProducts();
+            setProducts(data);
+        };
+        loadProducts();
+    }, []);
 
     if (!user) {
         return (
@@ -70,7 +79,7 @@ export default function Cart({ navigation }: NativeStackScreenProps<any>) {
                     >
                         <Text style={{ color: "#64748B" }}>{cartProducts.length} Itens no carrinho</Text>
                         <Text style={{ color: "#020817", fontWeight: "900" }}>R$ {total}</Text>
-                        
+
                     </View>
 
                     {cartProducts.length === 0 && (

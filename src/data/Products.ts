@@ -1,172 +1,50 @@
-type ProductCategory = 'Eletrônicos' | 'Moda' | 'Casa e Banho' | 'Esportes' | 'Livros' | 'Beleza';
-type ProductStatus = "Indisponível" | "Disponível" | "Esgotado";
-type ProductCondition = 0 | 1; // 0: Novo, 1: Usado
+import { allProducts } from "../services/apiService";
+import { ImageSourcePropType } from "react-native";
+
+type ProductStatus = "Ativo" | "Suspenso" | "Inativo";
+type ProductCondition = true | false; // true = Novo, false = Usado
 
 export interface Product {
     id: number,
     idVendedor: number,
     name: string,
-    description: string,
+    description?: string,
     price: number,
     discount?: number,
-    image: string,
-    category: ProductCategory,
+    amount?: number,
+    image: string | ImageSourcePropType,
+    category: string,
     peso: number,
     status: ProductStatus
     condition: ProductCondition
-    rate: number, // Avaliação de 0 a 5
+    rate?: number, // Avaliação de 0 a 5
     totalRatings?: number
+    specifications?: { key: string, value: string }[]
 }
 
-export const products: Product[] = [
-    {
-        id: 1,
-        idVendedor: 1,
-        name: 'Smartphone Premium 128GB',
-        description: 'Smartphone',
-        price: 1199.99,
-        discount: 25,
-        image: require("../../assets/smartphone.png"),
-        category: 'Eletrônicos',
-        peso: 0.5,
-        status: "Disponível",
-        condition: 0,
-        rate: 4,
-        totalRatings: 234
-    },
-    {
-        id: 2,
-        idVendedor: 1,
-        name: 'Smartphone Premium 128GB',
-        description: 'Smartphone',
-        price: 1199.99,
-        discount: 9,
-        image: require("../../assets/smartphone.png"),
-        category: 'Eletrônicos',
-        peso: 0.5,
-        status: "Disponível",
-        condition: 0,
-        rate: 3,
-        totalRatings: 234
-    },
-    {
-        id: 3,
-        idVendedor: 1,
-        name: 'Smartphone Premium 128GB',
-        description: 'Smartphone',
-        price: 1199.99,
-        discount: 9,
-        image: require("../../assets/smartphone.png"),
-        category: 'Eletrônicos',
-        peso: 0.5,
-        status: "Disponível",
-        condition: 0,
-        rate: 3,
-        totalRatings: 234
-    },
-    {
-        id: 4,
-        idVendedor: 1,
-        name: 'Smartphone Premium 128GB',
-        description: 'Smartphone',
-        price: 1199.99,
-        discount: 9,
-        image: require("../../assets/smartphone.png"),
-        category: 'Eletrônicos',
-        peso: 0.5,
-        status: "Disponível",
-        condition: 0,
-        rate: 3,
-        totalRatings: 234
-    },
-    {
-        id: 5,
-        idVendedor: 1,
-        name: 'Smartphone Premium 128GB',
-        description: 'Smartphone',
-        price: 1199.99,
-        discount: 9,
-        image: require("../../assets/smartphone.png"),
-        category: 'Eletrônicos',
-        peso: 0.5,
-        status: "Disponível",
-        condition: 0,
-        rate: 3,
-        totalRatings: 234
-    },
-    {
-        id: 6,
-        idVendedor: 1,
-        name: 'Smartphone Premium 128GB',
-        description: 'Smartphone',
-        price: 1199.99,
-        discount: 9,
-        image: require("../../assets/smartphone.png"),
-        category: 'Eletrônicos',
-        peso: 0.5,
-        status: "Disponível",
-        condition: 0,
-        rate: 3,
-        totalRatings: 234
-    },
-    {
-        id: 7,
-        idVendedor: 1,
-        name: 'Smartphone Premium 128GB',
-        description: 'Smartphone',
-        price: 1199.99,
-        discount: 9,
-        image: require("../../assets/smartphone.png"),
-        category: 'Eletrônicos',
-        peso: 0.5,
-        status: "Disponível",
-        condition: 0,
-        rate: 3,
-        totalRatings: 234
-    },
-    {
-        id: 8,
-        idVendedor: 1,
-        name: 'Smartphone Premium 128GB',
-        description: 'Smartphone',
-        price: 1199.99,
-        discount: 9,
-        image: require("../../assets/smartphone.png"),
-        category: 'Eletrônicos',
-        peso: 0.5,
-        status: "Disponível",
-        condition: 0,
-        rate: 3,
-        totalRatings: 234
-    },
-    {
-        id: 9,
-        idVendedor: 1,
-        name: 'Smartphone Premium 128GB',
-        description: 'Smartphone',
-        price: 1199.99,
-        discount: 9,
-        image: require("../../assets/smartphone.png"),
-        category: 'Eletrônicos',
-        peso: 0.5,
-        status: "Disponível",
-        condition: 0,
-        rate: 3,
-        totalRatings: 234
-    },
-    {
-        id: 10,
-        idVendedor: 1,
-        name: 'Smartphone Premium 128GB',
-        description: 'Smartphone',
-        price: 1199.99,
-        discount: 9,
-        image: require("../../assets/smartphone.png"),
-        category: 'Eletrônicos',
-        peso: 0.5,
-        status: "Disponível",
-        condition: 0,
-        rate: 3,
-        totalRatings: 234
-    },
-]
+export const getProducts = async (): Promise<Product[]> => {
+    try {
+        const data = await allProducts();
+        const products: Product[] = data.map((item: any) => ({
+            id: item.idProduto,
+            idVendedor: item.idVendedor,
+            name: item.nome,
+            amount: item.quantidade,
+            price: item.precoUnitario,
+            discount: item.discount,
+            image: item.image,
+            category: item.category,
+            peso: item.peso,
+            status: item.status,
+            condition: item.condition,
+            rate: item.rate,
+            totalRatings: item.totalRatings,
+            specifications: item.specifications
+        }))
+        
+        return products;
+    } catch (error) {
+        console.error("Erro ao buscar produtos:", error);
+        return [];
+    }
+}

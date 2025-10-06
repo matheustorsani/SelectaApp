@@ -1,11 +1,21 @@
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, useEffect } from "react";
 import { Text, FlatList } from "react-native";
-import { products, Product } from "../data/Products";
+import { getProducts, Product } from '../data/Products';
 import { ProductCard } from "../components/ProductCard";
 import { Styles } from "../styles/Styles";
 import { SearchBar } from "../components/SearchBar";
 
 export default function Search() {
+    const [products, setProducts] = useState<Product[]>([]);
+
+    useEffect(() => {
+        const loadProducts = async () => {
+            const data = await getProducts();
+            setProducts(data);
+        };
+        loadProducts();
+    }, []);
+
     const [query, setQuery] = useState("");
 
     const filteredProducts = useMemo(() => {

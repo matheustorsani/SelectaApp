@@ -1,13 +1,14 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { View, Text, TouchableOpacity, Image } from 'react-native';
-import { Product } from '../data/Products';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import { Product } from '../data/Products';
 import { useUser } from '../context/useUser'; 
+
 interface ProductCardProps {
   item: Product;
 }
 
-export function ProductCard({ item }: ProductCardProps) {
+export const ProductCard = memo(({ item }: ProductCardProps) => {
   const { toggleFavorite, isFavorite } = useUser();
 
   return (
@@ -67,4 +68,4 @@ export function ProductCard({ item }: ProductCardProps) {
       )}
     </TouchableOpacity>
   );
-}
+});

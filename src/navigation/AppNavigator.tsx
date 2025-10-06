@@ -10,6 +10,8 @@ import Register from "../screens/Register";
 import Categories from "../screens/Categories";
 import Login from "../screens/Login";
 import Search from "../screens/Search";
+import ProductDetails from "../screens/ProductDetails";
+import HeaderProductsDetails from "../components/HeaderProductsDetails";
 
 const Tab = createBottomTabNavigator();
 
@@ -23,6 +25,13 @@ export default function AppNavigator() {
         }}
         tabBar={(props: any) => <Footer {...props} />}
       >
+        <Tab.Screen
+          name="ProductDetails"
+          component={ProductDetails}
+          options={{
+            header: () => <HeaderProductsDetails />
+          }}
+        />
         <Tab.Screen name="Home" component={Home} />
         <Tab.Screen name="Search" component={Search} />
         <Tab.Screen name="Favoritos" component={Favorites} />

@@ -6,6 +6,7 @@ const categories = ['Eletrônicos', 'Moda', 'Casa e Banho', 'Esportes', 'Livros'
 export default function Header() {
   return (
     <SafeAreaView style={styles.safeArea}>
+      <StatusBar barStyle="dark-content" backgroundColor="#fff" />
       <View style={styles.logoContainer}>
         <Image
           source={require('../../assets/logo.png')}

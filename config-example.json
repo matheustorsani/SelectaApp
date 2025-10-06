@@ -1,0 +1,9 @@
+{
+    "API": {
+        "endpoint": "https://api.example.com",
+        "timeout": 5000,
+        "routes": {
+            "rota": "/v1/resource"
+        }
+    } 
+}

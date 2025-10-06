@@ -1,15 +1,24 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Text, View } from "react-native";
 import { FlatList } from "react-native-gesture-handler";
 import { Styles } from "../styles/Styles";
 import Icon from "react-native-vector-icons/Feather";
-import { Product, products } from "../data/Products";
+import { getProducts, Product } from '../data/Products';
 import { ProductCard } from "../components/ProductCard";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { useUser } from "../context/useUser";
 
 export default function Favorites({ navigation }: NativeStackScreenProps<any>) {
     const { user } = useUser();
+    const [products, setProducts] = useState<Product[]>([]);
+
+    useEffect(() => {
+        const loadProducts = async () => {
+            const data = await getProducts();
+            setProducts(data);
+        };
+        loadProducts();
+    }, []);
 
     if (!user) {
         return (
