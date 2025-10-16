@@ -6,7 +6,7 @@ import { ProfileBoxActivity } from "../components/ProfileBoxActivity";
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { Alert } from "react-native";
-import { useUser } from "../context/useUser";
+import { useUser } from "../hook/useUser";
 
 export default function Profile({ navigation }: NativeStackScreenProps<any>) {
     const { user, setUser } = useUser();

@@ -2,9 +2,9 @@ import React from 'react';
 import { View, Text, TouchableOpacity, Image } from 'react-native';
 import { Product } from '../data/Products';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import { useUser } from '../context/useUser';
+import { useUser } from '../hook/useUser';
 import { useNavigation } from '@react-navigation/native';
-import { RootStackParams } from '../navigation/AppNavigator';
+import { RootStackParams } from "../data/RootStackParams";
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 
 interface ProductCardProps {

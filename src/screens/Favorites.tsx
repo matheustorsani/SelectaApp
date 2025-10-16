@@ -1,3 +1,6 @@
+// arrumar imports etc.
+// foca no productdetail, cpa q da mais trabalho
+
 import React from "react";
 import { Text, View } from "react-native";
 import { FlatList } from "react-native-gesture-handler";
@@ -6,7 +9,7 @@ import Icon from "react-native-vector-icons/Feather";
 import { Product, products } from "../data/Products";
 import { ProductCard } from "../components/ProductCard";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { useUser } from "../context/useUser";
+import { useUser } from "../hook/useUser";
 
 export default function Favorites({ navigation }: NativeStackScreenProps<any>) {
     const { user } = useUser();

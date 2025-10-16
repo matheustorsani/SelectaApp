@@ -5,7 +5,7 @@ import { saveUser } from "../services/UserService";
 import { User } from "../data/User";
 import { Styles } from "../styles/Styles";
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { useUser } from "../context/useUser";
+import { useUser } from "../hook/useUser";
 
 export default function Register({ navigation }: NativeStackScreenProps<any>) {
     const [name, setName] = useState("");

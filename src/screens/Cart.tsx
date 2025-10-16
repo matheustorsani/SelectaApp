@@ -1,9 +1,12 @@
+// arrumar imports etc.
+// foca no productdetail, cpa q da mais trabalho
+
 import React from "react";
 import { View, Text } from "react-native";
 import { FlatList } from "react-native-gesture-handler";
 import { Styles } from "../styles/Styles";
 import Icon from "react-native-vector-icons/Feather";
-import { useUser } from "../context/useUser";
+import { useUser } from "../hook/useUser";
 import { Product, products } from "../data/Products";
 import { ProductCard } from "../components/ProductCard";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
