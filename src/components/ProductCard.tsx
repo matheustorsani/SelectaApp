@@ -1,10 +1,10 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, Image } from 'react-native';
-import { Product } from '../data/Products';
+import { Product } from '../types/Products';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { useUser } from '../hook/useUser';
 import { useNavigation } from '@react-navigation/native';
-import { RootStackParams } from "../data/RootStackParams";
+import { RootStackParams } from "../types/RootStackParams";
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 
 interface ProductCardProps {

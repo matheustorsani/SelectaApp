@@ -1,4 +1,4 @@
-import { User } from "../data/User";
+import { User } from "../types/User";
 import React, { useState, useEffect } from "react";
 import { saveUser, getUser } from "../services/UserService";
 

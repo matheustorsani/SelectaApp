@@ -1,7 +1,7 @@
 import axios from "axios";
 import { API } from "../../config.json";
 import { normalizeProduct } from "../utils/normalizeProducts";
-import { Product } from "../data/Products";
+import { Product } from "../types/Products";
 
 const api = axios.create({
     baseURL: API.endpoint,

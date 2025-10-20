@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { View, Image, Text, TouchableOpacity } from "react-native";
 import { TextInput, Button } from "react-native-paper";
 import { saveUser } from "../services/UserService";
-import { User } from "../data/User";
+import { User } from "../types/User";
 import { Styles } from "../styles/Styles";
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useUser } from "../hook/useUser";
