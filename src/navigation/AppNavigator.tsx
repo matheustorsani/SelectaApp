@@ -11,6 +11,7 @@ import Categories from "../screens/Categories";
 import Login from "../screens/Login";
 import Search from "../screens/Search";
 import ProductDetails from "../screens/ProductDetails";
+import { HeaderProductsDetails } from "../components/HeaderProductsDetails";
 
 export type RootStackParams = {
   Home: undefined,
@@ -39,12 +40,27 @@ export default function AppNavigator() {
         <Tab.Screen name="Home" component={Home} />
         <Tab.Screen name="Search" component={Search} />
         <Tab.Screen name="Favoritos" component={Favorites} />
+        {/*@ts-ignore*/}
         <Tab.Screen name="Carrinho" component={Cart} />
         <Tab.Screen name="Perfil" component={Profile} />
         <Tab.Screen name="Register" component={Register} options={{ headerShown: false }} />
         <Tab.Screen name="Login" component={Login} options={{ headerShown: false }} />
         <Tab.Screen name="Categories" component={Categories} options={{ headerShown: false }} />
-        <Tab.Screen name="ProductDetails" component={ProductDetails} />
+        <Tab.Screen
+          name="ProductDetails"
+          //@ts-ignore
+          component={ProductDetails}
+          options={({ route, navigation }) => ({
+            header: () => (
+              <HeaderProductsDetails
+                navigation={navigation}
+                // @ts-ignore
+                productId={route.params.productId ?? 0}
+              />
+            ),
+          })}
+        />
+
       </Tab.Navigator>
     </NavigationContainer>
   );

@@ -1,71 +1,69 @@
 import React from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { View, Text, ScrollView, TouchableOpacity, StyleSheet, Image, StatusBar } from 'react-native';
+import { View, TouchableOpacity, StyleSheet, StatusBar, Share, Text } from 'react-native';
 import Icon from 'react-native-vector-icons/Feather';
-import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { useUser } from '../hook/useUser';
+import { useProductDetails } from '../hook/useProductDetails';
+import IconFA from 'react-native-vector-icons/FontAwesome';
 
-// ELE PRECISA DE UM ID PARA SABER QUAL PRODUTO É,
-// PARA PODER FAVORITAR E COMPARTILHAR
+type Props = {
+    navigation: any;
+    productId: number;
+};
 
-// MAS POR ENQUANTO VAI FICAR ASSIM
+export const HeaderProductsDetails = ({ navigation, productId }: Props) => {
+    const { product, loading } = useProductDetails(productId);
+    const { isFavorite, toggleFavorite } = useUser();
 
-export const HeaderProductsDetails = ({ navigation }: NativeStackScreenProps<any>) => {
+    const handleShare = async () => {
+        if (!product) return;
+        try {
+            await Share.share({
+                message: `Olha esse produto: ${product.name} - preço: R$${product.price}`,
+            });
+        } catch (err) {
+            console.warn('Erro ao compartilhar:', err);
+        }
+    };
+
+    if (loading || !product) return null;
+
     return (
         <SafeAreaView style={styles.safeArea}>
             <StatusBar barStyle="dark-content" backgroundColor="#fff" />
-            <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingHorizontal: 16, paddingVertical: 16, paddingBottom: 0 }}>
-                <TouchableOpacity onPress={() => {
-                    if (typeof navigation !== 'undefined') {
-                        navigation.goBack();
-                    }
-                }}>
-                    <Text>
-                        <Icon name="arrow-left" size={24} color="#333" />
-                    </Text>
+            <View style={styles.container}>
+                <TouchableOpacity onPress={() => navigation.goBack()}>
+                    <Icon name="arrow-left" size={24} color="#333" />
                 </TouchableOpacity>
-                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                    <TouchableOpacity style={{ marginRight: 16 }}>
-                        <Text>
-                            <Icon name="heart" size={24} color="#333" />
-                        </Text>
+                <View style={styles.actions}>
+                    <TouchableOpacity
+                        style={{ marginRight: 16 }}
+                        onPress={() => toggleFavorite(product.id)}
+                    >
+                        <IconFA
+                            name={isFavorite(product.id) ? "heart" : "heart-o"}
+                            size={23}
+                            color="#FF5252"
+                        />
                     </TouchableOpacity>
-                    <TouchableOpacity>
-                        {/* // NÃO FAÇO IDEIA DE COMO VOU FAZER ISSO AQUI */}
-                        <Text>
-                            <Icon name="share-2" size={24} color="#333" />
-                        </Text>
+                    <TouchableOpacity onPress={handleShare}>
+                        <Icon name="share-2" size={24} color="#333" />
                     </TouchableOpacity>
                 </View>
             </View>
         </SafeAreaView>
     );
-}
+};
 
 const styles = StyleSheet.create({
-    safeArea: {
-        flex: 0,
-        backgroundColor: '#fff'
-    },
-    logoContainer: {
+    safeArea: { flex: 0, backgroundColor: '#fff' },
+    container: {
+        flexDirection: 'row',
         alignItems: 'center',
-        paddingVertical: 8,
+        justifyContent: 'space-between',
+        paddingHorizontal: 16,
+        paddingVertical: 20,
+        paddingBottom: 0
     },
-    logo: {
-        width: 120,
-        height: 40,
-    },
-    categoriesContainer: {
-        paddingHorizontal: 8,
-    },
-    categoryButton: {
-        paddingHorizontal: 12,
-        paddingVertical: 6,
-        borderRadius: 20,
-        backgroundColor: '#f0f0f0',
-        marginRight: 8,
-    },
-    categoryText: {
-        fontSize: 14,
-        color: '#333',
-    },
+    actions: { flexDirection: 'row', alignItems: 'center' },
 });

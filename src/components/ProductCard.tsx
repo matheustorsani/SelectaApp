@@ -9,6 +9,8 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 
 interface ProductCardProps {
   item: Product;
+  onToggleFavorite?: () => void;
+  isFavorite?: boolean;
 }
 
 type ProductProp = NativeStackNavigationProp<RootStackParams, 'ProductDetails'>;

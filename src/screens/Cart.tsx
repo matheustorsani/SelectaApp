@@ -1,18 +1,19 @@
-// arrumar imports etc.
-// foca no productdetail, cpa q da mais trabalho
-
 import React from "react";
-import { View, Text } from "react-native";
+import { View, Text, TouchableOpacity } from "react-native";
 import { FlatList } from "react-native-gesture-handler";
 import { Styles } from "../styles/Styles";
 import Icon from "react-native-vector-icons/Feather";
 import { useUser } from "../hook/useUser";
-import { Product, products } from "../types/Products";
 import { ProductCard } from "../components/ProductCard";
+import { useProducts } from "../hook/useProducts";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
+import { RootStackParams } from "../types/RootStackParams";
 
-export default function Cart({ navigation }: NativeStackScreenProps<any>) {
+type Props = NativeStackScreenProps<RootStackParams, "Carrinho">;
+
+export default function Cart({ navigation }: Props) {
     const { user } = useUser();
+    const { products } = useProducts();
 
     if (!user) {
         return (
@@ -28,9 +29,10 @@ export default function Cart({ navigation }: NativeStackScreenProps<any>) {
         );
     }
 
+    // Pega os produtos do carrinho usando o hook
     const cartProducts = (user.cart ?? [])
         .map((id) => products.find((p) => p.id === id))
-        .filter((item): item is Product => !!item);
+        .filter((item): item is typeof products[0] => !!item);
 
     const total =
         cartProducts.length > 0
@@ -51,7 +53,13 @@ export default function Cart({ navigation }: NativeStackScreenProps<any>) {
             keyExtractor={(item) => item.id.toString()}
             numColumns={2}
             columnWrapperStyle={{ justifyContent: "space-between", marginBottom: 16 }}
-            renderItem={({ item }) => <ProductCard key={item.id} item={item} />}
+            renderItem={({ item }) => (
+                <TouchableOpacity
+                    onPress={() => navigation.navigate("ProductDetails", { productId: item.id })}
+                >
+                    <ProductCard key={item.id} item={item} />
+                </TouchableOpacity>
+            )}
             ListHeaderComponent={() => (
                 <View style={{ marginBottom: 16 }}>
                     <View style={{ flexDirection: "row", alignItems: "center", gap: 10, marginBottom: 15 }}>
@@ -73,7 +81,6 @@ export default function Cart({ navigation }: NativeStackScreenProps<any>) {
                     >
                         <Text style={{ color: "#64748B" }}>{cartProducts.length} Itens no carrinho</Text>
                         <Text style={{ color: "#020817", fontWeight: "900" }}>R$ {total}</Text>
-                        
                     </View>
 
                     {cartProducts.length === 0 && (
