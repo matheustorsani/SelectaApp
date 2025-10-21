@@ -1,13 +1,31 @@
-import React from 'react';
-import { Text, FlatList } from 'react-native';
+import React, { useState } from 'react';
+import { Text, FlatList, RefreshControl, TouchableOpacity, View } from 'react-native';
 import { useProducts } from '../hook/useProducts';
 import { ProductCard } from '../components/ProductCard';
 import { Styles } from '../styles/Styles';
 import { LoadingSkeletonItems } from '../components/LoadingSkeletonItems';
 
 export default function Home() {
-    const { products, loading, loadProducts } = useProducts();
-    
+    const { products, loading, loadProducts, error } = useProducts();
+    const [refreshing, setRefreshing] = useState(false);
+
+    const onRefresh = async () => {
+        setRefreshing(true);
+        await loadProducts();
+        setRefreshing(false);
+    };
+
+    if (error) {
+        return (
+            <View style={[Styles.Main, { justifyContent: 'center', alignItems: 'center' }]}>
+                <Text style={{ marginBottom: 8, color: 'red' }}>{error}</Text>
+                <TouchableOpacity onPress={loadProducts} style={{ padding: 10, backgroundColor: '#007bff', borderRadius: 8 }}>
+                    <Text style={{ color: '#fff' }}>Tentar novamente</Text>
+                </TouchableOpacity>
+            </View>
+        );
+    }
+
     return (
         <FlatList
             style={Styles.Main}
@@ -16,7 +34,8 @@ export default function Home() {
             initialNumToRender={10}
             maxToRenderPerBatch={10}
             windowSize={5}
-            removeClippedSubviews={true}
+            removeClippedSubviews
+            refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
             onEndReached={loadProducts}
             onEndReachedThreshold={0.5}
             ListEmptyComponent={loading ? <LoadingSkeletonItems /> : <Text>Não há produtos.</Text>}
@@ -33,7 +52,7 @@ export default function Home() {
                 <>
                     <Text style={Styles.TextTitle}>Para você</Text>
                     <Text style={Styles.TextSubtitle}>
-                        Produtos baseados com base no seu perfil e histórico
+                        Produtos baseados no seu perfil e histórico
                     </Text>
                 </>
             }

@@ -18,7 +18,7 @@ export default function ProductDetails({ route }: Props) {
     const { product, loading, amount, error, toggleAmount } = useProductDetails(route.params.productId);
 
     if (loading) return <LoadingSkeletonProduct />;
-    if (!product) return <Text>Produto não encontrado.</Text>;
+    if (error || !product) return <Text>{error}</Text>;
 
     return (
         <ScrollView style={Styles.Main} contentContainerStyle={{ paddingBottom: 40 }}>
