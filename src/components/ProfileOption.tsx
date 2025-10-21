@@ -8,7 +8,7 @@ type ProfileOptionProps = {
     subtitle: string;
 };
 
-export function ProfileOption({ icon, title, subtitle }: ProfileOptionProps) {
+export const ProfileOption = ({ icon, title, subtitle }: ProfileOptionProps) => {
     return (
         <TouchableOpacity>
             <View style={{ flexDirection: "row", alignItems: "center" }}>

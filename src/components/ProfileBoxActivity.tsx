@@ -8,11 +8,11 @@ type ProfileBoxActivityProps = {
 };
 
 
-export function ProfileBoxActivity({title, subtitle}: ProfileBoxActivityProps) {
+export const ProfileBoxActivity = ({ title, subtitle }: ProfileBoxActivityProps) => {
     return (
         <View style={Styles.ProfileBoxActivity}>
             <Text style={{ fontSize: 28, fontWeight: "900", color: "#0063E6" }}>{title}</Text>
-            <Text style= {{ color: "#64748B" }}>{subtitle}</Text>
+            <Text style={{ color: "#64748B" }}>{subtitle}</Text>
         </View>
     )
 }

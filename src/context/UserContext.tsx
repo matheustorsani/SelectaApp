@@ -1,6 +1,7 @@
 import { User } from "../types/User";
 import React, { useState, useEffect } from "react";
 import { saveUser, getUser } from "../services/UserService";
+import { toggleFavorite as toggleFavoriteService } from "../services/FavoriteService";
 
 export const UserContext = React.createContext<{
   user: User | null;
@@ -9,8 +10,8 @@ export const UserContext = React.createContext<{
   isFavorite: (productId: number) => boolean;
 }>({
   user: null,
-  setUser: () => {},
-  toggleFavorite: () => {},
+  setUser: () => { },
+  toggleFavorite: () => { },
   isFavorite: () => false,
 });
 
@@ -31,13 +32,7 @@ export const UserProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const toggleFavorite = (productId: number) => {
     if (!user) return;
-
-    const favorites = user.favorites ?? [];
-    const updatedFavorites = favorites.includes(productId)
-      ? favorites.filter((id) => id !== productId)
-      : [...favorites, productId];
-
-    const updatedUser = { ...user, favorites: updatedFavorites };
+    const updatedUser = toggleFavoriteService(user, productId);
     setUser(updatedUser);
   };
 
