@@ -65,8 +65,8 @@ export default function Profile({ navigation }: NativeStackScreenProps<any>) {
 
             <View style={{ flexDirection: "row", justifyContent: "space-between", marginBottom: 32 }}>
                 <ProfileBoxActivity title={user.orders?.length || 0} subtitle="Pedidos" />
-                <ProfileBoxActivity title={user.favorites?.length || 0} subtitle="Favoritos" />
-                <ProfileBoxActivity title={user.cart?.length || 0} subtitle="Carrinho" />
+                <ProfileBoxActivity title={user.favorites?.length || 0} subtitle="Favoritos" onPress={() => navigation.navigate("Favoritos")} />
+                <ProfileBoxActivity title={user.cart?.length || 0} subtitle="Carrinho" onPress={() => navigation.navigate("Carrinho")} />
             </View>
 
             <View style={{ flexDirection: "column", justifyContent: "center", gap: 20 }}>
@@ -78,6 +78,7 @@ export default function Profile({ navigation }: NativeStackScreenProps<any>) {
                             ? "Nenhum Produto Salvo."
                             : `${user.favorites.length} produtos salvos`
                     }
+                    onPress={() => navigation.navigate("Favoritos")}
                 />
                 <ProfileOption icon="shopping-bag" title="Meus Pedidos" subtitle="Ver histórico de compras" />
                 <ProfileOption icon="bell" title="Notificação" subtitle="Gerir preferências" />

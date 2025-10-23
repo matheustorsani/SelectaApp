@@ -43,8 +43,8 @@ export default function AppNavigator() {
         {/*@ts-ignore*/}
         <Tab.Screen name="Carrinho" component={Cart} />
         <Tab.Screen name="Perfil" component={Profile} />
-        <Tab.Screen name="Register" component={Register} options={{ headerShown: false }} />
         <Tab.Screen name="Login" component={Login} options={{ headerShown: false }} />
+        <Tab.Screen name="Register" component={Register} options={{ headerShown: false }} />
         <Tab.Screen name="Categories" component={Categories} options={{ headerShown: false }} />
         <Tab.Screen
           name="ProductDetails"

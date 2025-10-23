@@ -1,4 +1,4 @@
-import { Product } from "../types/Products"; // ajusta o caminho pro teu projeto
+import { Product } from "../types/Products";
 
 export function normalizeProduct(item: any): Product {
   return {

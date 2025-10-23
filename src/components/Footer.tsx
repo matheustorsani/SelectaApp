@@ -15,7 +15,7 @@ const icons: Record<string, string> = {
 };
 
 const Footer: React.FC<BottomTabBarProps> = ({ state, descriptors, navigation }) => {
-  if (state.index > 5) return null;
+  if (state.index > 7) return null;
   return (
     <View style={Styles.footerContainer}>
       {state.routes

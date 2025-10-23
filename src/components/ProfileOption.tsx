@@ -6,11 +6,12 @@ type ProfileOptionProps = {
     icon: string;
     title: string;
     subtitle: string;
+    onPress?: () => any;
 };
 
-export const ProfileOption = ({ icon, title, subtitle }: ProfileOptionProps) => {
+export const ProfileOption = ({ icon, title, subtitle, onPress }: ProfileOptionProps) => {
     return (
-        <TouchableOpacity>
+        <TouchableOpacity onPress={onPress}>
             <View style={{ flexDirection: "row", alignItems: "center" }}>
                 <Icon name={icon} size={20} style={{ marginRight: 14, color: "#64748B" }} />
                 <View style={{ flexDirection: "column" }}>

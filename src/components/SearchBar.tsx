@@ -12,7 +12,7 @@ interface SearchBarProps {
 export const SearchBar: React.FC<SearchBarProps> = ({
     onChangeText,
     value,
-    placeholder = "Buscar produtos...",
+    placeholder = "API OFF",
 }) => {
     const [text, setText] = useState(value || "");
 
@@ -30,6 +30,8 @@ export const SearchBar: React.FC<SearchBarProps> = ({
                 value={text}
                 onChangeText={handleChange}
                 placeholderTextColor="#64748B"
+                // tirar dps
+                editable={false}
             />
         </View>
     );
