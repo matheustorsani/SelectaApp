@@ -1,10 +1,44 @@
-import React from "react";
+import React, { useState } from "react";
 import { View, Image, Text, TouchableOpacity } from "react-native";
 import { TextInput, Button } from "react-native-paper";
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { Styles } from "../styles/Styles";
+import { login } from "../services/ApiService";
+import { useUser } from "../hook/useUser";
+import { saveUser } from "../services/UserService";
 
 export default function Login({ navigation }: NativeStackScreenProps<any>) {
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [error, setError] = useState("");
+    const { setUser } = useUser();
+
+    const handleLogin = async () => {
+        try {
+            const emailTrim = email.trim();
+            const user = await login(emailTrim, password);
+
+            console.log("Login OK:", user);
+            setError("");
+
+            const loggedInUser = {
+                id: user.idCliente,
+                name: user.nomeCliente,
+                email: user.nomeCliente,
+                password: password,
+                avatar: require("../../assets/Sample_User_Icon.png"),
+            };
+
+            setUser(loggedInUser);
+            await saveUser(loggedInUser);
+            navigation.navigate("Profile");
+        } catch (err: any) {
+            setError(err.message);
+            console.log("Erro de login:", err.message);
+        }
+    };
+
+
     return (
         <View style={{ flex: 1, justifyContent: "center", alignItems: "center", padding: 16 }}>
             <Image source={require('../../assets/logo.png')} />
@@ -20,8 +54,11 @@ export default function Login({ navigation }: NativeStackScreenProps<any>) {
                 boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
                 backgroundColor: "#fff"
             }}>
+                {error !== "" && <Text style={{ color: "red" }}>{error}</Text>}
                 <TextInput
                     label={"Email"}
+                    value={email}
+                    onChangeText={(text) => setEmail(text.trim())}
                     placeholder="Digite seu email"
                     placeholderTextColor="#64748B"
                     mode="outlined"
@@ -30,6 +67,8 @@ export default function Login({ navigation }: NativeStackScreenProps<any>) {
                 />
                 <TextInput
                     label={"Senha"}
+                    value={password}
+                    onChangeText={setPassword}
                     placeholder="Digite sua senha"
                     placeholderTextColor="#64748B"
                     mode="outlined"
@@ -37,7 +76,7 @@ export default function Login({ navigation }: NativeStackScreenProps<any>) {
                     // error={password !== "" && !passwordRegex.test(password)}
                     secureTextEntry
                 />
-                <Button mode="contained" style={Styles.btn}>Entrar</Button>
+                <Button mode="contained" style={Styles.btn} onPress={handleLogin}>Entrar</Button>
             </View>
             <View style={{ flexDirection: 'row', marginTop: 20, alignItems: "center" }}>
                 <Text style={{ color: "#64748B" }}>Não tem uma conta? </Text>

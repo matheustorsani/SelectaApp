@@ -2,8 +2,8 @@ import React from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { View, TouchableOpacity, StyleSheet, StatusBar, Share, Text } from 'react-native';
 import Icon from 'react-native-vector-icons/Feather';
-import { useUser } from '../hook/useUser';
-import { useProductDetails } from '../hook/useProductDetails';
+import { useUser } from '../../hook/useUser';
+import { useProductDetails } from '../../hook/useProductDetails';
 import IconFA from 'react-native-vector-icons/FontAwesome';
 
 type Props = {

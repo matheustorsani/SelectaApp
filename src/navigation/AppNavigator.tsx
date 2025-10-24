@@ -11,7 +11,9 @@ import Categories from "../screens/Categories";
 import Login from "../screens/Login";
 import Search from "../screens/Search";
 import ProductDetails from "../screens/ProductDetails";
-import { HeaderProductsDetails } from "../components/HeaderProductsDetails";
+import { HeaderProductsDetails } from "../components/Headers/HeaderProductsDetails";
+import { HeaderMyOrders } from "../components/Headers/HeaderMyOrders";
+import { MyOrders } from "../screens/MyOrders";
 
 export type RootStackParams = {
   Home: undefined,
@@ -39,10 +41,17 @@ export default function AppNavigator() {
       >
         <Tab.Screen name="Home" component={Home} />
         <Tab.Screen name="Search" component={Search} />
-        <Tab.Screen name="Favoritos" component={Favorites} />
+        <Tab.Screen name="Favorites" component={Favorites} />
         {/*@ts-ignore*/}
-        <Tab.Screen name="Carrinho" component={Cart} />
-        <Tab.Screen name="Perfil" component={Profile} />
+        <Tab.Screen name="Cart" component={Cart} />
+        <Tab.Screen name="Profile" component={Profile} />
+        <Tab.Screen
+          name="MyOrders"
+          component={MyOrders}
+          options={() => ({
+            /* @ts-ignore */
+            header: () => <HeaderMyOrders />,
+          })} />
         <Tab.Screen name="Login" component={Login} options={{ headerShown: false }} />
         <Tab.Screen name="Register" component={Register} options={{ headerShown: false }} />
         <Tab.Screen name="Categories" component={Categories} options={{ headerShown: false }} />

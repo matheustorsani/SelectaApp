@@ -60,7 +60,6 @@ export default function Categories({ navigation }: NativeStackScreenProps<any>) 
             categories: allSelectedIds
         });
         navigation.navigate("Home");
-        console.log({ ...user, categories: allSelectedIds });
     };
 
     return (

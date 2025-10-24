@@ -6,6 +6,7 @@ import { User } from "../types/User";
 import { Styles } from "../styles/Styles";
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useUser } from "../hook/useUser";
+import { register } from "../services/ApiService";
 
 export default function Register({ navigation }: NativeStackScreenProps<any>) {
     const [name, setName] = useState("");
@@ -21,17 +22,12 @@ export default function Register({ navigation }: NativeStackScreenProps<any>) {
         const nameTrim = name.trim();
         const emailTrim = email.trim();
 
-        const newUser: User = {
-            id: 1,
-            name: nameTrim,
-            email: emailTrim,
-            password,
-            avatar: require("../../assets/Sample_User_Icon.png"),
-        };
+        //  NÃO LOGA NINGUEM PQ VAI DAR PAU
+        // DAQUI A POUCO ARRUMO ISSO
+        // #VAICAUA
 
-        setUser(newUser);
-        await saveUser(newUser);
-        navigation.navigate("Categories");
+        await register(nameTrim, emailTrim, password);
+        //navigation.navigate("Categories");
     };
 
     return (
@@ -94,15 +90,15 @@ export default function Register({ navigation }: NativeStackScreenProps<any>) {
 
                 {(name === "" || email === "" || password === "" || confirmPassword === "" || !emailRegex.test(email)) ? (
                     <>
-                        <Button disabled mode="contained" style={Styles.btn}>Cadastrar</Button>
+                        <Button disabled mode="contained" style={Styles.btn}>NÃO CADASTRE, TA QUEBRADO</Button>
                     </>
                 ) : password !== confirmPassword ? (
                     <>
                         <Text style={{ color: "red", marginBottom: 8 }}>As senhas devem ser iguais.</Text>
-                        <Button disabled mode="contained" style={Styles.btn}>Cadastrar</Button>
+                        <Button disabled mode="contained" style={Styles.btn}>NÃO CADASTRE, TA QUEBRADO</Button>
                     </>
                 ) : (
-                    <Button onPress={handleRegister} mode="contained" style={Styles.btn}>Cadastrar</Button>
+                    <Button disabled onPress={handleRegister} mode="contained" style={Styles.btn}>NÃO CADASTRE, TA QUEBRADO</Button>
                 )}
             </View>
             <View style={{

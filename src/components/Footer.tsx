@@ -4,13 +4,13 @@ import Icon from "react-native-vector-icons/FontAwesome";
 import { BottomTabBarProps } from "@react-navigation/bottom-tabs";
 import { Styles } from "../styles/Styles";
 
-const FOOTER_ROUTES = ["Home", "Favoritos", "Carrinho", "Perfil", "Search"];
+const FOOTER_ROUTES = ["Home", "Favorites", "Cart", "Profile", "Search"];
 
 const icons: Record<string, string> = {
   Home: "home",
-  Favoritos: "heart",
-  Carrinho: "shopping-cart",
-  Perfil: "user",
+  Favorites: "heart",
+  Cart: "shopping-cart",
+  Profile: "user",
   Search: "search",
 };
 

@@ -8,15 +8,15 @@ const api = axios.create({
     timeout: API.timeout,
 });
 
-const responseBody = async (route: string) => {
-    const response = await api.get(route);
+const responseBody = async <T = any>(route: string): Promise<T> => {
+    const response = await api.get<T>(route);
     return response.data;
 };
 
 // CATEGORIAS
-export const getAllCategory = async () => {
+export const getAllCategory = async (): Promise<any[]> => {
     try {
-        return await responseBody(API.routes.getAllCategory);
+        return await responseBody<any[]>(API.routes.getAllCategory);
     } catch (error) {
         console.error("Ocorreu um erro ao buscar as categorias:", error);
         throw error;
@@ -26,7 +26,7 @@ export const getAllCategory = async () => {
 // TODOS OS PRODUTOS
 export const allProducts = async (): Promise<Product[]> => {
     try {
-        const data = await responseBody(API.routes.allProducts);
+        const data = await responseBody<any[]>(API.routes.allProducts);
         return data.map(normalizeProduct);
     } catch (error) {
         console.error("Ocorreu um erro ao buscar os produtos:", error);
@@ -37,8 +37,8 @@ export const allProducts = async (): Promise<Product[]> => {
 // PESQUISAR PRODUTOS
 export const searchProducts = async (query: string): Promise<Product[]> => {
     try {
-        const data = await responseBody(
-            `${API.routes.searchProducts}?name=${query.toLowerCase()}`
+        const data = await responseBody<any[]>(
+            `${API.routes.searchProducts}?name=${encodeURIComponent(query.toLowerCase())}`
         );
         return data.map(normalizeProduct);
     } catch (error) {
@@ -50,7 +50,7 @@ export const searchProducts = async (query: string): Promise<Product[]> => {
 // DESTAQUES
 export const highlights = async (): Promise<Product[]> => {
     try {
-        const data = await responseBody(API.routes.highlightsProducts);
+        const data = await responseBody<any[]>(API.routes.highlightsProducts);
         return data.map(normalizeProduct);
     } catch (error) {
         console.error("Ocorreu um erro ao buscar os produtos em destaque:", error);
@@ -61,7 +61,9 @@ export const highlights = async (): Promise<Product[]> => {
 // PARA VOCÊ
 export const forYou = async (id: number): Promise<Product[]> => {
     try {
-        const data = await responseBody(`${API.routes.forYouProducts}?id=${id}`);
+        const data = await responseBody<any[]>(
+            `${API.routes.forYouProducts}?id=${id}`
+        );
         return data.map(normalizeProduct);
     } catch (error) {
         console.error("Ocorreu um erro ao buscar os produtos para você:", error);
@@ -70,9 +72,9 @@ export const forYou = async (id: number): Promise<Product[]> => {
 };
 
 // NOTIFICAÇÕES
-export const notifications = async (id: number) => {
+export const notifications = async (id: number): Promise<any> => {
     try {
-        return await responseBody(`${API.routes.notifications}?id=${id}`);
+        return await responseBody<any>(`${API.routes.notifications}?id=${id}`);
     } catch (error) {
         console.error("Ocorreu um erro ao buscar as notificações:", error);
         throw error;
@@ -82,10 +84,73 @@ export const notifications = async (id: number) => {
 // MAIS VENDIDOS
 export const bestSellers = async (): Promise<Product[]> => {
     try {
-        const data = await responseBody(API.routes.bestSellers);
+        const data = await responseBody<any[]>(API.routes.bestSellers);
         return data.map(normalizeProduct);
     } catch (error) {
         console.error("Ocorreu um erro ao buscar os mais vendidos:", error);
         throw error;
+    }
+};
+
+// IMAGENS - PRINCIPAIS 
+export const mainImages = async (id: number): Promise<any> => {
+    try {
+        return await responseBody<any>(`${API.routes.mainImages}/${id}`);
+    } catch (error) {
+        console.error("Ocorreu um erro ao buscar as imagens principais:", error);
+        throw error;
+    }
+};
+
+// register
+export const register = async (
+    name: string,
+    email: string,
+    password: string
+): Promise<any> => {
+    try {
+        const response = await axios.post(
+            "https://selectaapi-ehg0gcd6cmapggeq.brazilsouth-01.azurewebsites.net/selectaAPI/Client/client-register",
+            {
+                nome: name,
+                email,
+                senha: password,
+            },
+            {
+                headers: {
+                    accept: "*/*",
+                    "Content-Type": "application/json",
+                },
+            }
+        );
+        return response.data;
+    } catch (error) {
+        console.error("Ocorreu um erro ao registrar o usuário:", error);
+        throw error;
+    }
+};
+
+// login
+export const login = async (email: string, password: string): Promise<any> => {
+    try {
+        const response = await axios.post(
+            "https://selectaapi-ehg0gcd6cmapggeq.brazilsouth-01.azurewebsites.net/selectaAPI/Login/client-login",
+            { email, senha: password },
+            { headers: { accept: "*/*", "Content-Type": "application/json" } }
+        );
+
+        return response.data;
+    } catch (error: any) {
+        if (error.response) {
+            const raw = error.response?.data ?? "Erro desconhecido";
+            const message = String(raw).trim();
+            const capitalizedMessage =
+                message.length > 0 ? message.charAt(0).toUpperCase() + message.slice(1) : message;
+            throw Error(capitalizedMessage);
+        } else if (error.request) {
+            throw Error("Sem resposta do servidor");
+        } else {
+            throw Error("Ocorreu um erro ao realizar o login:", error.message);
+        }
     }
 };

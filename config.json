@@ -10,7 +10,8 @@
             "wishListProducts": "selectaAPI/Home/wish-list",
             "forYouProducts": "selectaAPI/Home/for-you",
             "notifications": "selectaAPI/Home/notifications",
-            "bestSellers": "selectaAPI/Home/best-sellers"
+            "bestSellers": "selectaAPI/Home/best-sellers",
+            "mainImages": "selectaAPI/Product/get-principal-image"
         }
     }
 }

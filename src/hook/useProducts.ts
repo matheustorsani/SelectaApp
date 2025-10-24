@@ -15,8 +15,6 @@ export function useProducts() {
         setLoading(true);
         setError(null);
 
-
-
         for (let i = 0; i < retries; i++) {
             try {
                 const data = await fn();
