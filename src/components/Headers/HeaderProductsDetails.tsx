@@ -5,13 +5,17 @@ import Icon from 'react-native-vector-icons/Feather';
 import { useUser } from '../../hook/useUser';
 import { useProductDetails } from '../../hook/useProductDetails';
 import IconFA from 'react-native-vector-icons/FontAwesome';
+import { useNavigation } from '@react-navigation/native';
+import { RootStackNavigationProp } from '../../types/Navigation';
+import { safeGoBack } from '../../utils/safeGoBack';
 
 type Props = {
-    navigation: any;
     productId: number;
 };
 
-export const HeaderProductsDetails = ({ navigation, productId }: Props) => {
+export const HeaderProductsDetails = ({ productId }: Props) => {
+    const navigation = useNavigation<RootStackNavigationProp>();
+
     const { product, loading } = useProductDetails(productId);
     const { isFavorite, toggleFavorite } = useUser();
 
@@ -32,7 +36,7 @@ export const HeaderProductsDetails = ({ navigation, productId }: Props) => {
         <SafeAreaView style={styles.safeArea}>
             <StatusBar barStyle="dark-content" backgroundColor="#fff" />
             <View style={styles.container}>
-                <TouchableOpacity onPress={() => navigation.goBack()}>
+                <TouchableOpacity onPress={() => safeGoBack(navigation)}>
                     <Icon name="arrow-left" size={24} color="#333" />
                 </TouchableOpacity>
                 <View style={styles.actions}>

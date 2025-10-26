@@ -4,7 +4,7 @@ import { Product } from '../types/Products';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { useUser } from '../hook/useUser';
 import { useNavigation } from '@react-navigation/native';
-import { RootStackParams } from "../types/RootStackParams";
+import { RootStackParams } from "../types/Navigation";
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 
 interface ProductCardProps {

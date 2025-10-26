@@ -1,7 +1,7 @@
 import React from "react";
 import { ScrollView, Text } from "react-native";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { RootStackParams } from "../types/RootStackParams";
+import { RootStackParams } from "../types/Navigation";
 import { useProductDetails } from "../hook/useProductDetails";
 import { ProductPrice } from "../components/ProductDetails/ProductPrice";
 import { ProductHeader } from "../components/ProductDetails/ProductHeader";
@@ -15,7 +15,8 @@ import { LoadingSkeletonProduct } from "../components/LoadingSkeletonProduct";
 type Props = NativeStackScreenProps<RootStackParams, "ProductDetails">;
 
 export default function ProductDetails({ route }: Props) {
-    const { product, loading, amount, error, toggleAmount } = useProductDetails(route.params.productId);
+    const productId = route.params.productId
+    const { product, loading, amount, error, toggleAmount } = useProductDetails(productId);
 
     if (loading) return <LoadingSkeletonProduct />;
     if (!product) return <Text>{error}</Text>;

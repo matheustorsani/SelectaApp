@@ -41,7 +41,6 @@ export const OrderSituation = ({ order, data, situation, trackingCode, item }: O
 
         setUser(updatedUser);
         console.log(u);
-
     }
 
     return (

@@ -7,9 +7,9 @@ import { useUser } from "../hook/useUser";
 import { ProductCard } from "../components/ProductCard";
 import { useProducts } from "../hook/useProducts";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { RootStackParams } from "../types/RootStackParams";
+import { RootStackParams } from "../types/Navigation";
 
-type Props = NativeStackScreenProps<RootStackParams, "Carrinho">;
+type Props = NativeStackScreenProps<RootStackParams, "Cart">;
 
 export default function Cart({ navigation }: Props) {
     const { user } = useUser();

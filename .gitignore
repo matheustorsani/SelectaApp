@@ -36,3 +36,6 @@ yarn-error.*
 
 # typescript
 *.tsbuildinfo
+
+# só pro commit n ficar feio 
+./src/screens/EditProduct.tsx

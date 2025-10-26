@@ -82,7 +82,7 @@ export default function Profile({ navigation }: NativeStackScreenProps<any>) {
                 />
                 <ProfileOption icon="shopping-bag" title="Meus Pedidos" subtitle="Ver histórico de compras" onPress={() => navigation.navigate("MyOrders")}/>
                 <ProfileOption icon="bell" title="Notificação" subtitle="Gerir preferências" />
-                <ProfileOption icon="box" title="Meus produtos" subtitle="Gerencie seus produtos a venda" />
+                <ProfileOption icon="box" title="Meus produtos" subtitle="Gerencie seus produtos a venda" onPress={() => navigation.navigate("MyProducts")}/>
                 <ProfileOption icon="trending-up" title="Minhas vendas" subtitle="Histórico de vendas realizadas" />
                 <ProfileOption icon="help-circle" title="Meus Tickets" subtitle="Suporte e atendimento" />
                 <ProfileOption icon="user" title="Dados Cadastrais" subtitle="Edite suas informações" />

@@ -81,6 +81,35 @@ export const notifications = async (id: number): Promise<any> => {
     }
 };
 
+export const wishList = async (id: number): Promise<any> => {
+    try {
+        return await responseBody<any>(`${API.routes.wishList}?id=${id}`);
+    } catch (error) {
+        console.error("Ocorreu um erro ao buscar a lista de desejos:", error);
+        throw error;
+    }
+};
+
+export const addWishList = async (idClient: number, idProduct: number): Promise<any> => {
+    try {
+        return await responseBody<any>(`${API.routes.addWishList}?id=${idProduct}&idCliente=${idClient}`);
+    } catch (error) {
+        console.error("Ocorreu um erro ao adicionar o produto à lista de desejos:", error);
+        throw error;
+    }
+};
+
+export const getProductById = async (id: number): Promise<Product> => {
+    try {
+        const data = await responseBody<any>(`${API.routes.getProductById}?id=${id}`);
+        return data.map(normalizeProduct)
+    }
+    catch (error) {
+        console.error("Ocorreu um erro ao buscar o produto pelo ID:", error);
+        throw error;
+    }
+};
+
 // MAIS VENDIDOS
 export const bestSellers = async (): Promise<Product[]> => {
     try {
