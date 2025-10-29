@@ -13,6 +13,7 @@
  */
 
 import React, { useState } from 'react';
+import { Styles } from '../src/styles/Styles';
 import { View, Text, ScrollView, Image, TouchableOpacity } from 'react-native';
 import { TextInput, Button } from 'react-native-paper';
 
@@ -37,7 +38,8 @@ export default function ReactNativeElementsExample() {
     const [text, setText] = useState('');
 
     return (
-        <ScrollView style={{ flex: 1, padding: 20, backgroundColor: '#f5f5f5' }}>
+        // SEMPRE UTILIZAR STYLES.MAIN NO CONTAINER PRINCIPAL
+        <ScrollView style={Styles.Main}>
             {/** View: contêiner de layout */}
             <View style={{ padding: 20, backgroundColor: '#fff', borderRadius: 10, marginBottom: 20 }}>
                 <Text style={{ fontSize: 20, fontWeight: 'bold' }}>Olá!</Text>
