@@ -3,6 +3,9 @@ import { View, Text } from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome";
 import IconO from "react-native-vector-icons/Octicons";
 
+/**
+ * @returns Componente que exibe informações do vendedor do produto.
+ */
 export const SellerInfo = () => (
   <View
     style={{

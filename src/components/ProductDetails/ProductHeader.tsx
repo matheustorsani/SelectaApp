@@ -5,6 +5,13 @@ import { Product } from "../../types/Products";
 
 type Props = { product: Product };
 
+/**
+ * Cabeçalho do componente de detalhes do produto.
+ * Exibe a imagem do produto, avaliação em estrelas e nome.
+ * 
+ * @param {Props} props - Produto em si, confira em types/Products.
+ * @returns Componente de cabeçalho do produto.
+ */
 export const ProductHeader = ({ product }: Props) => (
   <View>
     <Image

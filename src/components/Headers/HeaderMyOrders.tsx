@@ -6,6 +6,13 @@ import { RootStackNavigationProp } from '../../types/Navigation';
 import { safeGoBack } from '../../utils/safeGoBack';
 import { useNavigation } from '@react-navigation/native';
 
+/**
+ * Cabeçalho para a tela de "Meus Pedidos".
+ * Inclui um botão de voltar, título e ícone de notificações.
+ * 
+ * @returns Cabeçalho para a tela de "Meus Pedidos".
+ */
+
 export const HeaderMyOrders = () => {
     const navigation = useNavigation<RootStackNavigationProp>();
     return (

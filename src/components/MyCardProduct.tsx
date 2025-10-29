@@ -4,14 +4,25 @@ import { View, Text, Image, TouchableOpacity } from "react-native"
 import Icon from "react-native-vector-icons/FontAwesome";
 
 type CardProps = {
+    /** Nome do produto */
     name: string;
+    /** Categoria do Produto */
     category: string;
+    /** Preço do produto */
     price: string;
+    /** Imagem do produto */
     image: any;
+    /** Avaliação do produto */
     rating: number;
+    /** Total de avaliações do produto */
     totalRatings: number;
 }
 
+/**
+ * Componente de cartão de produto para a tela "Meus Produtos".
+ * @param {CardProps} props - Propriedades do cartão de produto, incluindo nome, categoria, preço, imagem, avaliação e total de avaliações.
+ * @returns Componente de cartão de produto para a tela "Meus Produtos".
+ */
 export const MyCardProduct = ({ name, category, image, price, rating, totalRatings }: CardProps) => {
     const navigation = useNavigation<any>();
 
@@ -36,7 +47,7 @@ export const MyCardProduct = ({ name, category, image, price, rating, totalRatin
                 <View style={{ flexDirection: "row", gap: 5, alignItems: "center" }}>
                     <Icon name="star" size={14} color="#F97A1F" />
                     <Text>{rating}</Text>
-                    <Text style={{ color: "#000", backgroundColor: "#F0F2F5", borderRadius: 8, fontWeight: "bold", paddingHorizontal: 10, paddingVertical: 2 }}>{totalRatings} Avalições</Text>
+                    <Text style={{ color: "#000", backgroundColor: "#F0F2F5", borderRadius: 8, fontWeight: "bold", paddingHorizontal: 10, paddingVertical: 2 }}>{totalRatings} Avaliações</Text>
                 </View>
                 <Text style={{ fontSize: 16, fontWeight: "bold", marginTop: 5, color: "#1D77ED" }}>{price}</Text>
             </View>

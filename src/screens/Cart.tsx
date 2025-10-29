@@ -7,9 +7,9 @@ import { useUser } from "../hook/useUser";
 import { ProductCard } from "../components/ProductCard";
 import { useProducts } from "../hook/useProducts";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { RootStackParams } from "../types/Navigation";
+import { TabParamList } from "../types/Navigation";
 
-type Props = NativeStackScreenProps<RootStackParams, "Cart">;
+type Props = NativeStackScreenProps<TabParamList, "Cart">;
 
 export default function Cart({ navigation }: Props) {
     const { user } = useUser();
@@ -21,7 +21,7 @@ export default function Cart({ navigation }: Props) {
                 <Text>Entre ou se cadastre!</Text>
                 <Text
                     style={{ color: "blue", marginTop: 10 }}
-                    onPress={() => navigation.navigate("Login")}
+                    //onPress={() => navigation.navigate("Login")}
                 >
                     Ir para Login/Cadastro
                 </Text>
@@ -55,7 +55,7 @@ export default function Cart({ navigation }: Props) {
             columnWrapperStyle={{ justifyContent: "space-between", marginBottom: 16 }}
             renderItem={({ item }) => (
                 <TouchableOpacity
-                    onPress={() => navigation.navigate("ProductDetails", { productId: item.id })}
+                    //onPress={() => navigation.navigate("ProductDetails", { productId: item.id })}
                 >
                     <ProductCard key={item.id} item={item} />
                 </TouchableOpacity>

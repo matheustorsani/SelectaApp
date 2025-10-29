@@ -1,6 +1,9 @@
 import { Skeleton } from 'moti/skeleton';
 import { View } from 'react-native';
 
+/**
+ * @returns Componente de Carregamento do esqueleto dos Itens, usado em src/screens/Home.
+ */
 export const LoadingSkeletonItems = () => (
   <View style={{ flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'space-between' }}>
     {Array.from({ length: 6 }).map((_, i) => (

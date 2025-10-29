@@ -2,6 +2,10 @@ import React from "react";
 import { View, Text } from "react-native";
 import { Button } from "react-native-paper";
 
+
+/**
+ * @returns Componente de Perguntas Frequentes do Produto.
+ */
 export const ProductFAQ = () => (
   <View style={{ borderWidth: 1, borderColor: "#ccc", padding: 10, borderRadius: 8, marginBottom: 20 }}>
     <Text style={{ fontSize: 18, fontWeight: "bold", textAlign: "center", marginBottom: 12 }}>

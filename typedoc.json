@@ -1,0 +1,14 @@
+{
+    "entryPoints": [
+        "src",
+        "docs/ReactNativeElements.tsx"
+    ],
+    "entryPointStrategy": "expand",
+    "out": "docs-html",
+    "includeVersion": true,
+    "excludePrivate": true,
+    "excludeExternals": true,
+    "readme": "none",
+    "theme": "default",
+    "tsconfig": "tsconfig.json"
+}

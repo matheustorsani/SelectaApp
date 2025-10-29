@@ -3,7 +3,12 @@ import { View, Text } from "react-native";
 import { Product } from "../../types/Products";
 
 type Props = { product: Product };
-
+/** 
+ * Componente que exibe o preço do produto, incluindo desconto se aplicável.
+ * 
+ * @param {Props} props - Produto com preço e possível desconto.
+ * @returns Componente exibindo o preço do produto.
+ */
 export const ProductPrice = ({ product }: Props) => {
   const hasDiscount = !!product.discount;
   const finalPrice = hasDiscount

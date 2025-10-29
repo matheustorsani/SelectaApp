@@ -1,11 +1,11 @@
-import React from "react";
+import React, { JSX } from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
 import { RootStackParams, TabParamList } from "../types/Navigation";
 
-
+// 📱 Screens
 import Home from "../screens/Home";
 import Search from "../screens/Search";
 import Favorites from "../screens/Favorites";
@@ -19,6 +19,7 @@ import Login from "../screens/Login";
 import Register from "../screens/Register";
 import Categories from "../screens/Categories";
 
+// 🧩 Components
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import { HeaderProductsDetails } from "../components/Headers/HeaderProductsDetails";
@@ -29,11 +30,21 @@ import { HeaderEditProduct } from "../components/Headers/HeaderEditProduct";
 const Tab = createBottomTabNavigator<TabParamList>();
 const Stack = createNativeStackNavigator<RootStackParams>();
 
-function Tabs() {
+/**
+ * @component Tabs
+ * 
+ * Controla as rotas principais do app via bottom tab.
+ * Inclui o Header e Footer personalizados para cada aba.
+ * 
+ * @returns {JSX.Element} Navegação entre abas (Home, Search, Favorites, Cart, Profile).
+ */
+function Tabs(): JSX.Element {
   return (
     <Tab.Navigator
       initialRouteName="Home"
-      screenOptions={{ header: () => <Header /> }}
+      screenOptions={{
+        header: () => <Header />,
+      }}
       tabBar={(props) => <Footer {...props} />}
     >
       <Tab.Screen name="Home" component={Home} />
@@ -45,7 +56,15 @@ function Tabs() {
   );
 }
 
-export default function AppNavigator() {
+/**
+ * @component AppNavigator
+ * 
+ * Gerencia todas as rotas do app, incluindo stack principal e abas.
+ * Cada rota pode ter seu header customizado.
+ * 
+ * @returns {JSX.Element} Container principal de navegação.
+ */
+export default function AppNavigator(): JSX.Element {
   return (
     <NavigationContainer>
       <Stack.Navigator screenOptions={{ headerShown: false }}>
@@ -53,32 +72,40 @@ export default function AppNavigator() {
 
         <Stack.Screen
           name="ProductDetails"
-          options={({ route, navigation }) => ({
-            headerShown: true,
-            header: () => <HeaderProductsDetails productId={route.params?.productId} />,
-          })}
           component={ProductDetails}
+          options={({ route }) => ({
+            headerShown: true,
+            header: () => (
+              <HeaderProductsDetails productId={route.params?.productId} />
+            ),
+          })}
         />
 
         <Stack.Screen
           name="MyOrders"
-          options={{ headerShown: true, header: () => <HeaderMyOrders /> }}
           component={MyOrders}
+          options={{
+            headerShown: true,
+            header: () => <HeaderMyOrders />,
+          }}
         />
 
         <Stack.Screen
           name="MyProducts"
-          options={{ headerShown: true, header: () => <HeaderMyProducts /> }}
           component={MyProducts}
+          options={{
+            headerShown: true,
+            header: () => <HeaderMyProducts />,
+          }}
         />
 
         <Stack.Screen
           name="EditProduct"
-          options={({ route }) => ({
-            headerShown: true,
-            header: () => <HeaderEditProduct/>,
-          })}
           component={EditProduct}
+          options={{
+            headerShown: true,
+            header: () => <HeaderEditProduct />,
+          }}
         />
 
         <Stack.Screen name="Login" component={Login} />

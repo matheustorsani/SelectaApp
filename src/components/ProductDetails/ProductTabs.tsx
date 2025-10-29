@@ -4,6 +4,12 @@ import { Product } from "../../types/Products";
 
 type Props = { product: Product };
 
+/**
+ * Componente de abas para detalhes do produto.
+ * Permite alternar entre descrição e especificações do produto.
+ * @param {Props} props - Produto com detalhes a serem exibidos.
+ * @returns Componente de abas para detalhes do produto.
+ */
 export const ProductTabs = ({ product }: Props) => {
   const [tab, setTab] = useState<"description" | "specifications">("description");
 

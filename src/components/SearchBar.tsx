@@ -8,7 +8,11 @@ interface SearchBarProps {
     value?: string;
     placeholder?: string;
 }
-
+/**
+ * 
+ * @component
+ * @returns Uma barra de busca reutilizável.
+ */
 export const SearchBar: React.FC<SearchBarProps> = ({
     onChangeText,
     value,

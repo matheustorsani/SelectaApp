@@ -3,6 +3,10 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { View, Text, ScrollView, TouchableOpacity, StyleSheet, Image, StatusBar } from 'react-native';
 const categories = ['Eletrônicos', 'Moda', 'Casa e Banho', 'Esportes', 'Livros', 'Beleza'];
 
+/**
+ * @returns Componente de cabeçalho com logo e categorias.
+ */
+
 export default function Header() {
   return (
     <SafeAreaView style={styles.safeArea}>

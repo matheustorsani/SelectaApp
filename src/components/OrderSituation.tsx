@@ -26,11 +26,49 @@ const statusIcons: Record<string, string> = {
     "Em Trânsito": "local-shipping",
     "Processando": "hourglass-empty",
 };
-
+/**
+ * Componente responsável por exibir o status de um pedido, incluindo:
+ * - Código do pedido e data;
+ * - Situação atual (Processando, Em Trânsito ou Entregue);
+ * - Produto associado (nome, quantidade e preço);
+ * - Código de rastreamento (com opção de copiar);
+ * 
+ * Também inclui ícones e cores dinâmicas conforme o status do pedido.
+ * 
+ * @component
+ * @param {OrderSituationProps} props - Propriedades do componente.
+ * @param {string} props.order - Número do pedido.
+ * @param {string} props.data - Data do pedido.
+ * @param {"Entregue" | "Em Trânsito" | "Processando"} props.situation - Situação atual do pedido.
+ * @param {string} [props.trackingCode] - Código de rastreamento do pedido (opcional).
+ * @param {Product} [props.item] - Produto relacionado ao pedido (opcional).
+ * 
+ * @returns Um componente visual que mostra as informações do pedido e seu status.
+ * 
+ * @example
+ * ```tsx
+ * <OrderSituation
+ *   order="12345"
+ *   data="25/10/2025"
+ *   situation="Em Trânsito"
+ *   trackingCode="BR123456789"
+ *   item={{ name: "Camiseta Azul", amount: 1, price: 89.90 }}
+ * />
+ * ```
+ */
 export const OrderSituation = ({ order, data, situation, trackingCode, item }: OrderSituationProps) => {
     const { user: u, setUser } = useUser();
-    // função secreta...
-    const handleCopy = async () => {
+
+    /**
+     * Copia o código de rastreamento para a área de transferência.
+     * Também atualiza o usuário local (apenas para fins de teste).
+     * Você pode editar essa função para testar ou integrar com sua lógica real de atualização de usuário.
+     * 
+     * @async
+     * @function
+     * @returns {Promise<void>}
+     */
+    const handleCopy = async (): Promise<void> => {
         await Clipboard.setStringAsync(trackingCode || "");
         if (!u || !setUser) return;
 

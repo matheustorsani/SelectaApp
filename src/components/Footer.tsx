@@ -12,7 +12,21 @@ const icons: Record<string, string> = {
   Profile: "user",
   Search: "search",
 };
-
+/**
+ * Componente de rodapé (Footer) personalizado para navegação por abas.
+ *
+ * Aqui o ideal é não mexer muito, apenas ajustar estilos se necessário.
+ * @param FOOTER_ROUTES Lista de rotas que devem exibir o rodapé.
+ * @param icons Mapeamento de nomes de rotas para ícones do FontAwesome.
+ * 
+ * Exibe ícones e rótulos correspondentes às rotas definidas em `FOOTER_ROUTES`.
+ * O botão ativo é destacado visualmente.
+ *
+ * @param props Propriedades fornecidas automaticamente pelo `BottomTabBarProps`
+ * do React Navigation, contendo o estado atual da navegação, descritores e métodos de navegação.
+ *
+ * @returns Componente de rodapé exibindo os botões de navegação ativos.
+ */
 const Footer: React.FC<BottomTabBarProps> = ({ state, descriptors, navigation }) => {
   const currentRouteName = state.routes[state.index].name;
   if (!FOOTER_ROUTES.includes(currentRouteName)) return null;

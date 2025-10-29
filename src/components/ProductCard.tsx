@@ -14,7 +14,35 @@ interface ProductCardProps {
 }
 
 type ProductProp = NativeStackNavigationProp<RootStackParams, 'ProductDetails'>;
-
+/**
+ * Componente visual que exibe as informações principais de um produto em formato de card.
+ * Inclui imagem, nome, preço, desconto, avaliações e botão de favoritar.
+ * 
+ * Quando clicado, o card navega para a tela de detalhes do produto (`ProductDetails`).
+ * 
+ * @component
+ * @param {ProductCardProps} props - Propriedades do componente.
+ * @param {Product} props.item - Objeto contendo os dados do produto a serem exibidos.
+ * @param {() => void} [props.onToggleFavorite] - Função opcional para alternar o estado de favorito.
+ * @param {boolean} [props.isFavorite] - Indica se o produto já está marcado como favorito.
+ * 
+ * @returns Um card interativo com as informações do produto.
+ * 
+ * @example
+ * ```tsx
+ * <ProductCard
+ *   item={{
+ *     id: '123',
+ *     name: 'Tênis Esportivo',
+ *     price: 299.90,
+ *     discount: 20,
+ *     image: 'https://exemplo.com/imagem.jpg',
+ *     rate: 4,
+ *     totalRatings: 85
+ *   }}
+ * />
+ * ```
+ */
 export function ProductCard({ item }: ProductCardProps) {
   const { toggleFavorite, isFavorite } = useUser();
   const navigation = useNavigation<ProductProp>();

@@ -13,6 +13,14 @@ type Props = {
     productId: number;
 };
 
+/** 
+ * Componente de cabeçalho para a tela de detalhes do produto.
+ * Inclui um botão de voltar, ícone de favorito e ícone de compartilhamento.
+ * 
+ * @param {Props} props - Id do produto, obrigatório.
+ * @returns Cabeçalho para detalhes do produto.
+ */
+
 export const HeaderProductsDetails = ({ productId }: Props) => {
     const navigation = useNavigation<RootStackNavigationProp>();
 

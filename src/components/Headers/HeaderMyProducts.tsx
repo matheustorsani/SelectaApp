@@ -5,6 +5,13 @@ import Icon from 'react-native-vector-icons/Feather';
 import { useNavigation } from '@react-navigation/native';
 import { RootStackNavigationProp } from '../../types/Navigation';
 
+/**
+ * Cabeçalho para a tela de "Meus Produtos".
+ * Inclui um botão de voltar, título e ícone de notificações.
+ * 
+ * @returns Cabeçalho para a tela de "Meus Produtos".
+ */
+
 export const HeaderMyProducts = () => {
     const navigation = useNavigation<RootStackNavigationProp>();
 

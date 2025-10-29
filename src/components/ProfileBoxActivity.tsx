@@ -8,7 +8,13 @@ type ProfileBoxActivityProps = {
     onPress?: () => any;
 };
 
-
+/**
+ * Componente de caixa de atividade do perfil.
+ * Exibe um título numérico e um subtítulo descritivo.
+ * 
+ * @param {ProfileBoxActivityProps} props - Propriedades do componente, incluindo título, subtítulo e ação ao pressionar.
+ * @returns Componente de caixa de atividade do perfil.
+ */
 export const ProfileBoxActivity = ({ title, subtitle, onPress  }: ProfileBoxActivityProps) => {
     return (
         <TouchableOpacity style={Styles.ProfileBoxActivity} onPress={onPress}>

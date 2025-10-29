@@ -8,7 +8,31 @@ type ProfileOptionProps = {
     subtitle: string;
     onPress?: () => any;
 };
-
+/**
+ * Componente que representa uma opção dentro do menu de perfil.
+ * 
+ * Exibe um ícone, um título e um subtítulo, e pode executar uma ação ao ser pressionado.
+ * Geralmente utilizado para navegação entre seções da conta do usuário.
+ * 
+ * @component
+ * @param {ProfileOptionProps} props - Propriedades do componente.
+ * @param {string} props.icon - Nome do ícone exibido à esquerda da opção.
+ * @param {string} props.title - Título principal da opção.
+ * @param {string} props.subtitle - Texto secundário (descrição curta) exibido abaixo do título.
+ * @param {() => void} [props.onPress] - Função executada ao pressionar a opção (geralmente usada para navegação).
+ * 
+ * @returns Um botão estilizado que exibe as informações da opção de perfil.
+ * 
+ * @example
+ * ```tsx
+ * <ProfileOption
+ *   icon="user"
+ *   title="Meus dados"
+ *   subtitle="Gerencie suas informações pessoais"
+ *   onPress={() => navigation.navigate('ProfileDetails')}
+ * />
+ * ```
+ */
 export const ProfileOption = ({ icon, title, subtitle, onPress }: ProfileOptionProps) => {
     return (
         <TouchableOpacity onPress={onPress}>

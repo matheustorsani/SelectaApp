@@ -6,6 +6,13 @@ import { NavigationProp, useNavigation } from '@react-navigation/native';
 import { safeGoBack } from '../../utils/safeGoBack';
 import { RootStackNavigationProp } from '../../types/Navigation';
 
+/** 
+ * Componente de cabeçalho para a tela de edição de produto.
+ * Inclui um botão de voltar, título e ícone de exclusão.
+ * 
+ * @returns Componente de cabeçalho para edição de produto.
+ */
+
 export const HeaderEditProduct = () => {
     const navigation = useNavigation<RootStackNavigationProp>();
     return (
