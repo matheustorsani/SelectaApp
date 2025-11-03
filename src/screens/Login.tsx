@@ -1,11 +1,12 @@
 import React, { useState } from "react";
-import { View, Image, Text, TouchableOpacity } from "react-native";
+import { View, Image, Text, TouchableOpacity, Platform } from "react-native";
 import { TextInput, Button } from "react-native-paper";
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { Styles } from "../styles/Styles";
 import { login } from "../services/ApiService";
 import { useUser } from "../hook/useUser";
 import { saveUser } from "../services/UserService";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
 export default function Login({ navigation }: NativeStackScreenProps<any>) {
     const [email, setEmail] = useState("");
@@ -40,6 +41,14 @@ export default function Login({ navigation }: NativeStackScreenProps<any>) {
 
 
     return (
+        <KeyboardAwareScrollView
+                    style={Styles.Main}
+                    contentContainerStyle={{ flexGrow: 1 }}
+                    extraScrollHeight={Platform.OS == "ios" ? 80 : 60}
+                    enableOnAndroid
+                    keyboardOpeningTime={0}
+                    showsVerticalScrollIndicator={false}
+                >
         <View style={{ flex: 1, justifyContent: "center", alignItems: "center", padding: 16 }}>
             <Image source={require('../../assets/logo.png')} />
             <View style={{
@@ -85,6 +94,7 @@ export default function Login({ navigation }: NativeStackScreenProps<any>) {
                 </TouchableOpacity>
             </View>
         </View>
+        </KeyboardAwareScrollView>
     );
 }
 

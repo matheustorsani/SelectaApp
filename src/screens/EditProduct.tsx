@@ -1,7 +1,8 @@
 import React, { useState } from "react";
-import { View, Text, Platform, ScrollView, Image } from "react-native";
+import { View, Text, Platform, ScrollView, Image, TouchableOpacity } from "react-native";
 import { Styles } from "../styles/Styles";
 import Icon from 'react-native-vector-icons/Feather';
+import Icona from 'react-native-vector-icons/AntDesign';
 import { TextInput, Switch } from "react-native-paper";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
@@ -95,31 +96,69 @@ export const EditProduct = () => {
                     </View>
                 </View>
             </View>
+
             <View style={{ flexDirection: "column", alignItems: "center", borderWidth: 1, borderColor: '#d9d9d9', borderRadius: 10, padding: 15, backgroundColor: "#fff" }}>
                 <View style={{ flexDirection: "row", alignSelf: "flex-start", alignItems: "center", marginBottom: 10, gap: 5 }}>
                     <Icon name="settings" size={20} color="#000" />
                     <Text style={{ fontSize: 20, fontWeight: "bold" }}>Especificações</Text>
                 </View>
 
-                <View style={{ flexDirection: "row", alignSelf: "stretch", justifyContent: "space-between" }}>
-                    <TextInput
-                        label={"Quantidade em estoque*"}
-                        placeholder="Digite a quantidade em estoque"
-                        placeholderTextColor="#64748B"
-                        mode="outlined"
-                        style={{ marginBottom: 8, width: '48%', borderRadius: 5, backgroundColor: "#fff" }}
-                        activeOutlineColor="#1D77ED"
-                        keyboardType="numeric"
-                    />
-                    <TextInput
-                        label={"Quantidade em estoque*"}
-                        placeholder="Digite a quantidade em estoque"
-                        placeholderTextColor="#64748B"
-                        mode="outlined"
-                        style={{ marginBottom: 8, width: '48%', borderRadius: 5, backgroundColor: "#fff" }}
-                        activeOutlineColor="#1D77ED"
-                        keyboardType="numeric"
-                    />
+                <View style={{ justifyContent: "space-between", gap: 5, alignItems: "center" }}>
+                    <View style={{ flexDirection: "row", paddingHorizontal: 10, justifyContent: "space-between", gap: 5, alignItems: "center" }}>
+                        <TextInput
+                            label={"Nome da especificação*"}
+                            placeholder="Digite o nome da especificação"
+                            placeholderTextColor="#64748B"
+                            mode="outlined"
+                            style={{ marginBottom: 8, width: '48%', borderRadius: 5, backgroundColor: "#fff" }}
+                            activeOutlineColor="#1D77ED"
+                            keyboardType="default"
+                        />
+                        <TextInput
+                            label={"Valor*"}
+                            placeholder="Digite o valor"
+                            placeholderTextColor="#64748B"
+                            mode="outlined"
+                            style={{ marginBottom: 8, width: '48%', borderRadius: 5, backgroundColor: "#fff" }}
+                            activeOutlineColor="#1D77ED"
+                            keyboardType="default"
+                        />
+                        <TouchableOpacity
+                            style={{
+                                width: 30,
+                                height: 30,
+                                justifyContent: "center",
+                                alignItems: "center",
+                                backgroundColor: "#f3f4f6",
+                                borderRadius: 5
+                            }}>
+                            <Icon name="plus" size={30} color="#1D77ED" />
+                        </TouchableOpacity>
+                    </View>
+                    <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center", width: '100%', marginTop: 20, paddingHorizontal: 5 }}>
+                        <Text>Tela: 6.7" AMOLED</Text>
+                        <Icona name="close" size={15} color="#000" />
+                    </View>
+                    <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center", width: '100%', marginTop: 20, paddingHorizontal: 5 }}>
+                        <Text>Processador: Snapdragon 8 Gen 2 </Text>
+                        <Icona name="close" size={15} color="#000" />
+                    </View>
+                    <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center", width: '100%', marginTop: 20, paddingHorizontal: 5 }}>
+                        <Text>RAM: 8GB</Text>
+                        <Icona name="close" size={15} color="#000" />
+                    </View>
+                    <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center", width: '100%', marginTop: 20, paddingHorizontal: 5 }}>
+                        <Text>Armazenamento: 256GB</Text>
+                        <Icona name="close" size={15} color="#000" />
+                    </View>
+                    <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center", width: '100%', marginTop: 20, paddingHorizontal: 5 }}>
+                        <Text>Câmera: 108MP + 12MP + 5MP</Text>
+                        <Icona name="close" size={15} color="#000" />
+                    </View>
+                    <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center", width: '100%', marginTop: 20, paddingHorizontal: 5 }}>
+                        <Text>Bateria: 5000mAh</Text>
+                        <Icona name="close" size={15} color="#000" />
+                    </View>
                 </View>
             </View>
         </KeyboardAwareScrollView >

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, Image, Text, TouchableOpacity } from "react-native";
+import { View, Image, Text, TouchableOpacity, Platform } from "react-native";
 import { TextInput, Button } from "react-native-paper";
 import { saveUser } from "../services/UserService";
 import { User } from "../types/User";
@@ -7,6 +7,7 @@ import { Styles } from "../styles/Styles";
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useUser } from "../hook/useUser";
 import { register } from "../services/ApiService";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
 export default function Register({ navigation }: NativeStackScreenProps<any>) {
     const [name, setName] = useState("");
@@ -31,6 +32,14 @@ export default function Register({ navigation }: NativeStackScreenProps<any>) {
     };
 
     return (
+        <KeyboardAwareScrollView
+                            style={Styles.Main}
+                            contentContainerStyle={{ flexGrow: 1 }}
+                            extraScrollHeight={Platform.OS == "ios" ? 80 : 60}
+                            enableOnAndroid
+                            keyboardOpeningTime={0}
+                            showsVerticalScrollIndicator={false}
+                        >
         <View style={{ flex: 1, justifyContent: "center", alignItems: "center", padding: 16 }}>
             <Image source={require('../../assets/logo.png')} />
             <View style={{
@@ -119,6 +128,7 @@ export default function Register({ navigation }: NativeStackScreenProps<any>) {
                 <Text style={{ fontSize: 13, color: "#005FDB" }}>Inscreva-se no nosso programa de parcerias empresariais</Text>
             </View>
         </View>
+        </KeyboardAwareScrollView>
     );
 }
 
