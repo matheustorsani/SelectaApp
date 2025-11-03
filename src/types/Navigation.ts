@@ -1,5 +1,6 @@
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { BottomTabNavigationProp } from "@react-navigation/bottom-tabs";
+import { ControlsProps } from "./Delivery";
 
 /**
  * Parâmetros disponíveis nas abas inferiores (Bottom Tabs) do aplicativo.
@@ -61,6 +62,8 @@ export type RootStackParams = {
   MyOrders: undefined;
   /** Tela de produtos do usuário */
   MyProducts: undefined;
+  /** Tela de entrega */
+  Delivery: ControlsProps;
 };
 
 /**

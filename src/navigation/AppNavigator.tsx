@@ -15,6 +15,7 @@ import ProductDetails from "../screens/ProductDetails";
 import { MyOrders } from "../screens/MyOrders";
 import { MyProducts } from "../screens/MyProducts";
 import { EditProduct } from "../screens/EditProduct";
+import Delivery from "../screens/Delivery";
 import Login from "../screens/Login";
 import Register from "../screens/Register";
 import Categories from "../screens/Categories";
@@ -26,6 +27,7 @@ import { HeaderProductsDetails } from "../components/Headers/HeaderProductsDetai
 import { HeaderMyOrders } from "../components/Headers/HeaderMyOrders";
 import { HeaderMyProducts } from "../components/Headers/HeaderMyProducts";
 import { HeaderEditProduct } from "../components/Headers/HeaderEditProduct";
+import { Controls } from "../components/Delivery/Controls";
 
 const Tab = createBottomTabNavigator<TabParamList>();
 const Stack = createNativeStackNavigator<RootStackParams>();
@@ -106,6 +108,10 @@ export default function AppNavigator(): JSX.Element {
             headerShown: true,
             header: () => <HeaderEditProduct />,
           }}
+        />
+        <Stack.Screen
+          name="Delivery"
+          component={Delivery}
         />
 
         <Stack.Screen name="Login" component={Login} />

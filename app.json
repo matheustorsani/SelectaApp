@@ -20,6 +20,10 @@
         "foregroundImage": "",
         "backgroundColor": "#ffffff"
       },
+      "permissions": [
+        "ACCESS_FINE_LOCATION",
+        "ACCESS_COARSE_LOCATION"
+      ],
       "edgeToEdgeEnabled": true
     },
     "web": {
@@ -35,6 +39,9 @@
     },
     "updates": {
       "url": "https://u.expo.dev/cf4305c9-3e74-47ae-b032-46fe0d2e2f15"
-    }
+    },
+    "plugins": [
+      "expo-audio"
+    ]
   }
 }

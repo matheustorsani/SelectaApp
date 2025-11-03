@@ -4,6 +4,7 @@ import { Styles } from "../styles/Styles";
 import { ProfileOption } from "../components/ProfileOption";
 import { ProfileBoxActivity } from "../components/ProfileBoxActivity";
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import IconFA from 'react-native-vector-icons/FontAwesome';
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { Alert } from "react-native";
 import { useUser } from "../hook/useUser";
@@ -80,11 +81,21 @@ export default function Profile({ navigation }: NativeStackScreenProps<any>) {
                     }
                     onPress={() => navigation.navigate("Favorites")}
                 />
-                <ProfileOption icon="shopping-bag" title="Meus Pedidos" subtitle="Ver histórico de compras" onPress={() => navigation.navigate("MyOrders")}/>
+                <ProfileOption icon="shopping-bag" title="Meus Pedidos" subtitle="Ver histórico de compras" onPress={() => navigation.navigate("MyOrders")} />
                 <ProfileOption icon="bell" title="Notificação" subtitle="Gerir preferências" />
-                <ProfileOption icon="box" title="Meus produtos" subtitle="Gerencie seus produtos a venda" onPress={() => navigation.navigate("MyProducts")}/>
+                <ProfileOption icon="box" title="Meus produtos" subtitle="Gerencie seus produtos a venda" onPress={() => navigation.navigate("MyProducts")} />
                 <ProfileOption icon="trending-up" title="Minhas vendas" subtitle="Histórico de vendas realizadas" />
                 <ProfileOption icon="help-circle" title="Meus Tickets" subtitle="Suporte e atendimento" />
+                {/* DESCULPA REACT */}
+                <TouchableOpacity onPress={() => navigation.navigate("Delivery")}>
+                    <View style={{ flexDirection: "row", alignItems: "center" }}>
+                        <IconFA name="motorcycle" size={20} style={{ marginRight: 14, color: "#64748B" }} />
+                        <View style={{ flexDirection: "column" }}>
+                            <Text style={{ color: "#020817", fontSize: 16 }}>Delivery</Text>
+                            <Text style={{ color: "#64748B" }}>Entregue pedidos</Text>
+                        </View>
+                    </View>
+                </TouchableOpacity>
                 <ProfileOption icon="user" title="Dados Cadastrais" subtitle="Edite suas informações" />
                 <ProfileOption icon="settings" title="Configurações" subtitle="Conta e privacidade" />
 
