@@ -34,7 +34,8 @@ export default function Home() {
             initialNumToRender={10}
             maxToRenderPerBatch={10}
             windowSize={5}
-            removeClippedSubviews
+            removeClippedSubviews={true}
+            
             refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
             onEndReached={loadProducts}
             onEndReachedThreshold={0.5}

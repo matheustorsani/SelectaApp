@@ -44,12 +44,16 @@ export const UserContext = React.createContext<{
   favoriteProducts: Product[];
   toggleFavorite: (productId: number) => Promise<void>;
   isFavorite: (productId: number) => boolean;
+  reloadFavorites: (userId?: number) => Promise<void>;
+  loadingFavorites: number[];
 }>({
   user: null,
   setUser: () => { },
   favoriteProducts: [],
   toggleFavorite: async () => { },
   isFavorite: () => false,
+  reloadFavorites: async () => { },
+  loadingFavorites: [],
 });
 /**
  * Provedor do contexto do usuário.
@@ -66,6 +70,7 @@ export const UserContext = React.createContext<{
 export const UserProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [user, setUserState] = useState<User | null>(null);
   const [favoriteProducts, setFavoriteProducts] = useState<Product[]>([]);
+  const [loadingFavorites, setLoadingFavorites] = useState<number[]>([]);
 
   useEffect(() => {
     (async () => {
@@ -105,6 +110,43 @@ export const UserProvider: React.FC<{ children: React.ReactNode }> = ({ children
   };
 
   /**
+  * Recarrega a lista de produtos favoritos do usuário e atualiza o estado local.
+  *
+  * Esta função obtém o ID do usuário a partir do parâmetro opcional `userId` ou, se não
+  * fornecido, do usuário atualmente armazenado no contexto (`user?.id`). Se nenhum ID
+  * estiver disponível, a função retorna imediatamente sem realizar nenhuma operação.
+  *
+  * Em seguida, solicita ao servidor a lista de favoritos através da função `favorites(id)`
+  * e atualiza o estado local chamando `setFavoriteProducts` com os resultados obtidos.
+  * Erros durante a requisição são capturados e registrados no console, sem propagar exceções.
+  *
+  * @async
+  * @param {number} [userId] - ID do usuário a partir do qual recarregar os favoritos. Se não fornecido, usa o ID do usuário atual no contexto.
+  * @returns {Promise<void>} Uma Promise que é resolvida após a tentativa de recarregar os favoritos (ou imediatamente se não houver ID).
+  * @remarks
+  * - Efeito colateral: atualiza o estado `favoriteProducts` no contexto.
+  * - Erros de rede ou de resposta são tratados localmente (logados com `console.error`) e não são lançados.
+  *
+  * @example
+  * // Recarrega os favoritos do usuário atual no contexto
+  * await reloadFavorites();
+  *
+  * @example
+  * // Recarrega os favoritos do usuário com ID 42
+  * await reloadFavorites(42);
+  */
+  const reloadFavorites = async (userId?: number) => {
+    const id = userId ?? user?.id;
+    if (!id) return;
+    try {
+      const serverFavorites = await favorites(id);
+      setFavoriteProducts(serverFavorites);
+    } catch (error) {
+      console.error("Erro ao carregar favoritos do usuário:", error);
+    }
+  };
+
+  /**
    * Alterna o status de favorito de um produto para o usuário atual.
    * 
    * @function
@@ -113,23 +155,24 @@ export const UserProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const toggleFavorite = async (productId: number) => {
     if (!user || !user.id) return;
     const currentlyFavorite = isFavorite(productId);
-    console.log(currentlyFavorite)
     try {
+      setLoadingFavorites((prev) => [...prev, productId]);
       if (currentlyFavorite) {
         await removeFavorite(user.id, productId);
       } else {
         await addFavorites(user.id, productId);
       }
-      const updatedFavorites = await favorites(user.id);
-      setFavoriteProducts(updatedFavorites);
+      await reloadFavorites();
     } catch (error) {
       console.error("Erro ao sincronizar favoritos com o servidor", error);
+    } finally {
+      setLoadingFavorites((prev) => prev.filter((id) => id !== productId));
     }
   };
 
   return (
     <UserContext.Provider
-      value={{ user, setUser, favoriteProducts, toggleFavorite, isFavorite }}
+      value={{ user, setUser, favoriteProducts, toggleFavorite, isFavorite, reloadFavorites, loadingFavorites }}
     >
       {children}
     </UserContext.Provider>

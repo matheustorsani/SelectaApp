@@ -8,17 +8,13 @@ import { RootStackNavigationProp } from "../types/Navigation";
 import { useNavigation } from "@react-navigation/native";
 
 export default function Favorites() {
-    const { user, favoriteProducts, toggleFavorite, isFavorite } = useUser();
+    const { user, favoriteProducts, toggleFavorite, isFavorite, reloadFavorites } = useUser();
     const [refreshing, setRefreshing] = useState(false);
     const navigation = useNavigation<RootStackNavigationProp>();
 
     const onRefresh = async () => {
         setRefreshing(true);
-        try {
-            if (user?.id) await toggleFavorite(-1);
-        } catch (error) {
-            console.error(error);
-        }
+        await reloadFavorites();
         setRefreshing(false);
     };
 

@@ -52,12 +52,15 @@ export const responsePost = async <T = any>(route: string, options: RequestOptio
  * @param {any} config - Configurações adicionais para a requisição DELETE.
  * @returns {Promise<T>} Dados retornados pela API.
  */
-export const responseDelete = async<T = any>(route: string, config?: any): Promise<T> => {
+export const responseDelete = async <T = any>(
+  route: string
+): Promise<T> => {
   try {
-    const response = await axios.delete<T>(route, config);
+    const response = await api.delete<T>(route);
     return response.data;
   } catch (error) {
     console.error("Erro na requisição DELETE:", error);
     throw error;
   }
 };
+

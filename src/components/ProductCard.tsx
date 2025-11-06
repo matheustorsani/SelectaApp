@@ -6,6 +6,7 @@ import { useUser } from '../hook/useUser';
 import { useNavigation } from '@react-navigation/native';
 import { RootStackNavigationProp, RootStackParams } from "../types/Navigation";
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { ActivityIndicator } from 'react-native-paper';
 
 interface ProductCardProps {
   item: Product;
@@ -43,8 +44,10 @@ interface ProductCardProps {
  * ```
  */
 export function ProductCard({ item }: ProductCardProps) {
-  const { toggleFavorite, isFavorite } = useUser();
+  const { toggleFavorite, isFavorite, loadingFavorites } = useUser();
   const navigation = useNavigation<RootStackNavigationProp>();
+
+  const isLoading = loadingFavorites.includes(item.id);
 
   return (
     <TouchableOpacity style={{
@@ -64,12 +67,16 @@ export function ProductCard({ item }: ProductCardProps) {
           </View>
         ) : <View />}
 
-        <TouchableOpacity onPress={() => toggleFavorite(item.id)}>
-          <Icon
-            name={isFavorite(item.id) ? "heart" : "heart-o"}
-            size={20}
-            color="#FF5252"
-          />
+        <TouchableOpacity onPress={() => toggleFavorite(item.id)} disabled={isLoading}>
+          {isLoading ? (
+            <ActivityIndicator size="small" color="#FF5252" />
+          ) :
+            <Icon
+              name={isFavorite(item.id) ? "heart" : "heart-o"}
+              size={20}
+              color="#FF5252"
+            />
+          }
         </TouchableOpacity>
       </View>
 

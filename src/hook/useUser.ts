@@ -12,6 +12,7 @@ import { Product } from "../types/Products";
  *   favoriteProducts: Product[];
  *   toggleFavorite: (productId: number) => Promise<void>;
  *   isFavorite: (productId: number) => boolean;
+ *   reloadFavorites: (userId?: number) => Promise<void>;
  * }}
  * Retorna o contexto do usuário, incluindo informações e funções utilitárias.
  */
@@ -21,6 +22,8 @@ export function useUser(): {
   favoriteProducts: Product[];
   toggleFavorite: (productId: number) => Promise<void>;
   isFavorite: (productId: number) => boolean;
+  reloadFavorites: (userId?: number) => Promise<void>;
+  loadingFavorites: number[];
 } {
   const context = useContext(UserContext);
 

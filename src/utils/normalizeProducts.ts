@@ -32,7 +32,9 @@ import { Product } from "../types/Products";
  *   ]
  * };
  *
- * const product = normalizeProduct(apiResponse);
+ * const product = data.map(normalizeProduct)
+ * // ou
+ * //const product = normalizeProduct(apiResponse);
  * console.log(product.name); // "Tênis Esportivo"
  * ```
  */

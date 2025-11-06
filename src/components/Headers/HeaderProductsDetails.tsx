@@ -8,6 +8,7 @@ import IconFA from 'react-native-vector-icons/FontAwesome';
 import { useNavigation } from '@react-navigation/native';
 import { RootStackNavigationProp } from '../../types/Navigation';
 import { safeGoBack } from '../../utils/safeGoBack';
+import { ActivityIndicator } from 'react-native-paper';
 
 type Props = {
     productId: number;
@@ -25,7 +26,9 @@ export const HeaderProductsDetails = ({ productId }: Props) => {
     const navigation = useNavigation<RootStackNavigationProp>();
 
     const { product, loading } = useProductDetails(productId);
-    const { isFavorite, toggleFavorite } = useUser();
+    const { isFavorite, toggleFavorite, loadingFavorites } = useUser();
+
+    const isLoading = loadingFavorites.includes(productId);
 
     const handleShare = async () => {
         if (!product) return;
@@ -51,12 +54,17 @@ export const HeaderProductsDetails = ({ productId }: Props) => {
                     <TouchableOpacity
                         style={{ marginRight: 16 }}
                         onPress={() => toggleFavorite(product.id)}
+                        disabled={isLoading}
                     >
-                        <IconFA
-                            name={isFavorite(product.id) ? "heart" : "heart-o"}
-                            size={23}
-                            color="#FF5252"
-                        />
+                        {isLoading ? (
+                            <ActivityIndicator size="small" color="#FF5252" />
+                        ) : (
+                            <IconFA
+                                name={isFavorite(product.id) ? "heart" : "heart-o"}
+                                size={23}
+                                color="#FF5252"
+                            />
+                        )}
                     </TouchableOpacity>
                     <TouchableOpacity onPress={handleShare}>
                         <Icon name="share-2" size={24} color="#333" />
@@ -75,7 +83,7 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         paddingHorizontal: 16,
         paddingVertical: 20,
-        paddingBottom: 0
+        paddingBottom: 15
     },
     actions: { flexDirection: 'row', alignItems: 'center' },
 });
