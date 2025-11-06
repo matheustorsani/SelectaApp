@@ -1,6 +1,7 @@
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { BottomTabNavigationProp } from "@react-navigation/bottom-tabs";
 import { ControlsProps } from "./Delivery";
+import { CompositeNavigationProp } from "@react-navigation/native";
 
 /**
  * Parâmetros disponíveis nas abas inferiores (Bottom Tabs) do aplicativo.
@@ -47,7 +48,10 @@ export type TabParamList = {
  */
 export type RootStackParams = {
   /** Tela principal que contém as abas inferiores */
-  Tabs: undefined;
+  Tabs: {
+    screen?: keyof TabParamList;
+    params?: object;
+  };
   /** Tela de login */
   Login: undefined;
   /** Tela de registro de novo usuário */

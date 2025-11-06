@@ -18,7 +18,7 @@ export default function Home() {
     if (error) {
         return (
             <View style={[Styles.Main, { justifyContent: 'center', alignItems: 'center' }]}>
-                <Text style={{ marginBottom: 8, color: 'red' }}>{error}</Text>
+                <Text style={{ marginBottom: 8, color: 'red', textAlign: "center" }}>{error}</Text>
                 <TouchableOpacity onPress={loadProducts} style={{ padding: 10, backgroundColor: '#007bff', borderRadius: 8 }}>
                     <Text style={{ color: '#fff' }}>Tentar novamente</Text>
                 </TouchableOpacity>

@@ -59,12 +59,10 @@ export const Controls: React.FC<ControlsProps> = ({
       <StatusBar barStyle="dark-content" backgroundColor="#fff" />
 
       <View style={styles.container}>
-        {/* Botão voltar */}
         <TouchableOpacity onPress={() => safeGoBack(navigation)}>
           <Icon name="arrow-left" size={24} color="#333" />
         </TouchableOpacity>
 
-        {/* Status central */}
         <View style={styles.centered}>
           <TouchableOpacity
             style={[styles.statusBox, { backgroundColor: statusColor[status] }]}
@@ -75,7 +73,6 @@ export const Controls: React.FC<ControlsProps> = ({
           </TouchableOpacity>
         </View>
 
-        {/* Botões dinâmicos */}
         {stage === "pickup" && (
           <>
             <TouchableOpacity onPress={onCompletePickup}>

@@ -6,7 +6,7 @@ import { MyProductsCard } from "../components/MyProductsCard";
 import Icon from "react-native-vector-icons/Feather";
 import { MyCardProduct } from "../components/MyCardProduct";
 
-export const MyProducts = ({ navigation }: NativeStackScreenProps<any>) => {
+export const MyProducts = () => {
     return (
         <ScrollView style={Styles.Main} contentContainerStyle={{ paddingBottom: 40 }} showsVerticalScrollIndicator={false}>
             <View style={{ flexDirection: "column" }}>
@@ -38,7 +38,6 @@ export const MyProducts = ({ navigation }: NativeStackScreenProps<any>) => {
                     totalRatings={1234}
                     image={require("../../assets/smartphone.png")}
                 />
-
             </View>
         </ScrollView>
     );

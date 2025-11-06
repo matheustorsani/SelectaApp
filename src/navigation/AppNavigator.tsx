@@ -27,7 +27,6 @@ import { HeaderProductsDetails } from "../components/Headers/HeaderProductsDetai
 import { HeaderMyOrders } from "../components/Headers/HeaderMyOrders";
 import { HeaderMyProducts } from "../components/Headers/HeaderMyProducts";
 import { HeaderEditProduct } from "../components/Headers/HeaderEditProduct";
-import { Controls } from "../components/Delivery/Controls";
 
 const Tab = createBottomTabNavigator<TabParamList>();
 const Stack = createNativeStackNavigator<RootStackParams>();

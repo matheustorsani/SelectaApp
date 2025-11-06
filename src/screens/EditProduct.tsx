@@ -2,9 +2,12 @@ import React, { useState } from "react";
 import { View, Text, Platform, ScrollView, Image, TouchableOpacity } from "react-native";
 import { Styles } from "../styles/Styles";
 import Icon from 'react-native-vector-icons/Feather';
-import Icona from 'react-native-vector-icons/AntDesign';
+import IconA from 'react-native-vector-icons/AntDesign';
 import { TextInput, Switch } from "react-native-paper";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
+
+// adicionar isso aqui na tela, pro usuario selecionar a categoria do produto
+// não aplicavel no momento, pois nao sei as categorias existentes da API e nao sei se é assim que deve ser feito.
 
 const categories = ['Eletrônicos', 'Moda', 'Casa e Banho', 'Esportes', 'Livros', 'Beleza'];
 
@@ -137,31 +140,30 @@ export const EditProduct = () => {
                     </View>
                     <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center", width: '100%', marginTop: 20, paddingHorizontal: 5 }}>
                         <Text>Tela: 6.7" AMOLED</Text>
-                        <Icona name="close" size={15} color="#000" />
+                        <IconA name="close" size={15} color="#000" />
                     </View>
                     <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center", width: '100%', marginTop: 20, paddingHorizontal: 5 }}>
                         <Text>Processador: Snapdragon 8 Gen 2 </Text>
-                        <Icona name="close" size={15} color="#000" />
+                        <IconA name="close" size={15} color="#000" />
                     </View>
                     <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center", width: '100%', marginTop: 20, paddingHorizontal: 5 }}>
                         <Text>RAM: 8GB</Text>
-                        <Icona name="close" size={15} color="#000" />
+                        <IconA name="close" size={15} color="#000" />
                     </View>
                     <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center", width: '100%', marginTop: 20, paddingHorizontal: 5 }}>
                         <Text>Armazenamento: 256GB</Text>
-                        <Icona name="close" size={15} color="#000" />
+                        <IconA name="close" size={15} color="#000" />
                     </View>
                     <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center", width: '100%', marginTop: 20, paddingHorizontal: 5 }}>
                         <Text>Câmera: 108MP + 12MP + 5MP</Text>
-                        <Icona name="close" size={15} color="#000" />
+                        <IconA name="close" size={15} color="#000" />
                     </View>
                     <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center", width: '100%', marginTop: 20, paddingHorizontal: 5 }}>
                         <Text>Bateria: 5000mAh</Text>
-                        <Icona name="close" size={15} color="#000" />
+                        <IconA name="close" size={15} color="#000" />
                     </View>
                 </View>
             </View>
-        </KeyboardAwareScrollView >
-
+        </KeyboardAwareScrollView>
     );
 }

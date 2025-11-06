@@ -5,13 +5,18 @@ import Icon from 'react-native-vector-icons/Feather';
 import IconI from 'react-native-vector-icons/Ionicons';
 import { Lucide } from '@react-native-vector-icons/lucide';
 import { UserContext } from "../context/UserContext";
-import { NativeStackScreenProps } from "@react-navigation/native-stack";
+import { RootStackNavigationProp } from "../types/Navigation";
+import { useNavigation } from "@react-navigation/native";
+import { CategoriesItemMain } from "../components/CategoriesItemMain";
+import { CategoriesItem } from "../components/CategoriesItem";
+import { resetToHome } from "../utils/resetToScreen";
 
-export default function Categories({ navigation }: NativeStackScreenProps<any>) {
+export default function Categories() {
     const { user, setUser } = React.useContext(UserContext);
-
     const [selectedMainCategories, setSelectedMainCategories] = useState<number[]>([]);
     const [selectedCategories, setSelectedCategories] = useState<number[]>([]);
+
+    const navigation = useNavigation<RootStackNavigationProp>();
 
     const mainCategories = [
         { id: 1, icon: <Icon name="smartphone" size={32} />, label: "Eletrônicos e Tecnologia" },
@@ -31,7 +36,7 @@ export default function Categories({ navigation }: NativeStackScreenProps<any>) 
         { id: 12, icon: <Icon name="gift" size={16} />, label: "Presentes e Ocasiões" },
     ];
 
-    const toggleMainCategory = (id) => {
+    const toggleMainCategory = (id: number) => {
         setSelectedMainCategories((prevSelected) =>
             prevSelected.includes(id)
                 ? prevSelected.filter((categoryId) => categoryId !== id)
@@ -59,7 +64,7 @@ export default function Categories({ navigation }: NativeStackScreenProps<any>) 
             ...user,
             categories: allSelectedIds
         });
-        navigation.navigate("Home");
+        resetToHome(navigation);
     };
 
     return (
@@ -128,53 +133,4 @@ export default function Categories({ navigation }: NativeStackScreenProps<any>) 
             </View>
         </GestureHandlerRootView>
     );
-}
-
-function CategoriesItemMain({ icon, label, isSelected, onPress }) {
-    return (
-        <TouchableOpacity
-            style={{
-                flexDirection: "column",
-                alignItems: "center",
-                justifyContent: "center",
-                borderWidth: 2,
-                paddingVertical: 24,
-                paddingHorizontal: 16,
-                borderStyle: "dashed",
-                borderRadius: 10,
-                padding: 24,
-                minHeight: 120,
-                width: "48%",
-                backgroundColor: isSelected ? "#BFDBFE" : "#fff",
-                gap: 10,
-                borderColor: isSelected ? "#0074D9" : "#BFDBFE"
-            }}
-            onPress={onPress}
-        >
-            {icon}
-            <Text style={{ textAlign: "center" }}>{label}</Text>
-        </TouchableOpacity>
-    );
-}
-
-function CategoriesItem({ icon, label, isSelected, onPress }) {
-    return (
-        <TouchableOpacity
-            style={{
-                borderWidth: 1,
-                borderRadius: 40,
-                borderColor: isSelected ? "#0074D9" : "#d1d1d1ff",
-                paddingHorizontal: 12,
-                paddingVertical: 5,
-                flexDirection: "row",
-                alignItems: "center",
-                gap: 6,
-                backgroundColor: isSelected ? "#BFDBFE" : "#fff",
-            }}
-            onPress={onPress}
-        >
-            {icon}
-            <Text style={{ fontWeight: "bold", fontSize: 12 }}>{label}</Text>
-        </TouchableOpacity>
-    );
-}
+};

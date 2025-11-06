@@ -2,7 +2,7 @@ import React from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { View, TouchableOpacity, StyleSheet, StatusBar, Text } from 'react-native';
 import Icon from 'react-native-vector-icons/Feather';
-import { NavigationProp, useNavigation } from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 import { safeGoBack } from '../../utils/safeGoBack';
 import { RootStackNavigationProp } from '../../types/Navigation';
 

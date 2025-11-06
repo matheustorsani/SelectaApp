@@ -3,14 +3,17 @@ import { Text, View, FlatList, RefreshControl } from "react-native";
 import { Styles } from "../styles/Styles";
 import Icon from "react-native-vector-icons/Feather";
 import { ProductCard } from "../components/ProductCard";
-import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { useUser } from "../hook/useUser";
 import { useProducts } from "../hook/useProducts";
+import { RootStackNavigationProp } from "../types/Navigation";
+import { useNavigation } from "@react-navigation/native";
 
-export default function Favorites({ navigation }: NativeStackScreenProps<any>) {
+export default function Favorites() {
     const { user, toggleFavorite, isFavorite } = useUser();
     const { products, loadProducts, loading, error } = useProducts();
     const [refreshing, setRefreshing] = useState(false);
+
+    const navigation = useNavigation<RootStackNavigationProp>();
 
     const onRefresh = async () => {
         setRefreshing(true);

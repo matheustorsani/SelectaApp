@@ -4,7 +4,7 @@ import { Product } from '../types/Products';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { useUser } from '../hook/useUser';
 import { useNavigation } from '@react-navigation/native';
-import { RootStackParams } from "../types/Navigation";
+import { RootStackNavigationProp, RootStackParams } from "../types/Navigation";
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 
 interface ProductCardProps {
@@ -13,7 +13,6 @@ interface ProductCardProps {
   isFavorite?: boolean;
 }
 
-type ProductProp = NativeStackNavigationProp<RootStackParams, 'ProductDetails'>;
 /**
  * Componente visual que exibe as informações principais de um produto em formato de card.
  * Inclui imagem, nome, preço, desconto, avaliações e botão de favoritar.
@@ -45,7 +44,7 @@ type ProductProp = NativeStackNavigationProp<RootStackParams, 'ProductDetails'>;
  */
 export function ProductCard({ item }: ProductCardProps) {
   const { toggleFavorite, isFavorite } = useUser();
-  const navigation = useNavigation<ProductProp>();
+  const navigation = useNavigation<RootStackNavigationProp>();
 
   return (
     <TouchableOpacity style={{

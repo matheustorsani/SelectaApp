@@ -5,12 +5,15 @@ import { ProfileOption } from "../components/ProfileOption";
 import { ProfileBoxActivity } from "../components/ProfileBoxActivity";
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import IconFA from 'react-native-vector-icons/FontAwesome';
-import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { Alert } from "react-native";
 import { useUser } from "../hook/useUser";
+import { RootStackNavigationProp } from "../types/Navigation";
+import { useNavigation } from "@react-navigation/native";
+import { resetToHome } from "../utils/resetToScreen";
 
-export default function Profile({ navigation }: NativeStackScreenProps<any>) {
+export default function Profile() {
     const { user, setUser } = useUser();
+    const navigation = useNavigation<RootStackNavigationProp>();
 
     if (!user) {
         return (
@@ -33,7 +36,7 @@ export default function Profile({ navigation }: NativeStackScreenProps<any>) {
                     text: "Sair",
                     onPress: () => {
                         setUser(null);
-                        navigation.navigate("Home");
+                        resetToHome(navigation)
                     }
                 }
             ]
@@ -66,8 +69,8 @@ export default function Profile({ navigation }: NativeStackScreenProps<any>) {
 
             <View style={{ flexDirection: "row", justifyContent: "space-between", marginBottom: 32 }}>
                 <ProfileBoxActivity title={user.orders?.length || 0} subtitle="Pedidos" />
-                <ProfileBoxActivity title={user.favorites?.length || 0} subtitle="Favoritos" onPress={() => navigation.navigate("Favorites")} />
-                <ProfileBoxActivity title={user.cart?.length || 0} subtitle="Carrinho" onPress={() => navigation.navigate("Cart")} />
+                <ProfileBoxActivity title={user.favorites?.length || 0} subtitle="Favoritos" onPress={() => navigation.navigate("Tabs", { screen: "Favorites" })} />
+                <ProfileBoxActivity title={user.cart?.length || 0} subtitle="Carrinho" onPress={() => navigation.navigate("Tabs", { screen: "Cart" })} />
             </View>
 
             <View style={{ flexDirection: "column", justifyContent: "center", gap: 20 }}>
@@ -79,7 +82,7 @@ export default function Profile({ navigation }: NativeStackScreenProps<any>) {
                             ? "Nenhum Produto Salvo."
                             : `${user.favorites.length} produtos salvos`
                     }
-                    onPress={() => navigation.navigate("Favorites")}
+                    onPress={() => navigation.navigate("Tabs", { screen: "Favorites" })}
                 />
                 <ProfileOption icon="shopping-bag" title="Meus Pedidos" subtitle="Ver histórico de compras" onPress={() => navigation.navigate("MyOrders")} />
                 <ProfileOption icon="bell" title="Notificação" subtitle="Gerir preferências" />
@@ -87,7 +90,7 @@ export default function Profile({ navigation }: NativeStackScreenProps<any>) {
                 <ProfileOption icon="trending-up" title="Minhas vendas" subtitle="Histórico de vendas realizadas" />
                 <ProfileOption icon="help-circle" title="Meus Tickets" subtitle="Suporte e atendimento" />
                 {/* DESCULPA REACT */}
-                <TouchableOpacity onPress={() => navigation.navigate("Delivery")}>
+                <TouchableOpacity onPress={() => navigation.navigate("Delivery", { status: 'offline' })}>
                     <View style={{ flexDirection: "row", alignItems: "center" }}>
                         <IconFA name="motorcycle" size={20} style={{ marginRight: 14, color: "#64748B" }} />
                         <View style={{ flexDirection: "column" }}>

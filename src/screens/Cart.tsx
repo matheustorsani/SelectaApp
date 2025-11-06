@@ -6,22 +6,21 @@ import Icon from "react-native-vector-icons/Feather";
 import { useUser } from "../hook/useUser";
 import { ProductCard } from "../components/ProductCard";
 import { useProducts } from "../hook/useProducts";
-import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { TabParamList } from "../types/Navigation";
+import { useNavigation } from "@react-navigation/native";
+import { RootStackNavigationProp } from "../types/Navigation";
 
-type Props = NativeStackScreenProps<TabParamList, "Cart">;
-
-export default function Cart({ navigation }: Props) {
+export default function Cart() {
     const { user } = useUser();
     const { products } = useProducts();
 
+    const navigation = useNavigation<RootStackNavigationProp>();
     if (!user) {
         return (
             <View style={{ flex: 1, justifyContent: "center", alignItems: "center", padding: 16 }}>
                 <Text>Entre ou se cadastre!</Text>
                 <Text
                     style={{ color: "blue", marginTop: 10 }}
-                    //onPress={() => navigation.navigate("Login")}
+                    onPress={() => navigation.navigate("Login")}
                 >
                     Ir para Login/Cadastro
                 </Text>
@@ -29,7 +28,6 @@ export default function Cart({ navigation }: Props) {
         );
     }
 
-    // Pega os produtos do carrinho usando o hook
     const cartProducts = (user.cart ?? [])
         .map((id) => products.find((p) => p.id === id))
         .filter((item): item is typeof products[0] => !!item);
@@ -55,7 +53,7 @@ export default function Cart({ navigation }: Props) {
             columnWrapperStyle={{ justifyContent: "space-between", marginBottom: 16 }}
             renderItem={({ item }) => (
                 <TouchableOpacity
-                    //onPress={() => navigation.navigate("ProductDetails", { productId: item.id })}
+                    onPress={() => navigation.navigate("ProductDetails", { productId: item.id })}
                 >
                     <ProductCard key={item.id} item={item} />
                 </TouchableOpacity>

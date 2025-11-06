@@ -16,9 +16,9 @@ export type Order = {
 
 export type ControlsProps = {
   status: Status;
-  order: Order | null;
-  stage: "waiting" | "pickup" | "delivery" | null;
-  userLocation: { latitude: number; longitude: number } | null;
+  order?: Order | null;
+  stage?: "waiting" | "pickup" | "delivery" | null;
+  userLocation?: { latitude: number; longitude: number } | null;
   goOnline?: () => void;
   goOffline?: () => void;
   onAcceptOrder?: () => void;

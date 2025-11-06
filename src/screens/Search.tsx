@@ -19,7 +19,8 @@ export default function Search() {
     }, [products, query]);
 
     useEffect(() => {
-        const debouncedSearch = debounce(async (text: string) => {
+        debounce(async (text: string) => {
+            text = query;
             if (!text.trim()) {
                 setFilteredProducts(products);
                 setSearching(false);
@@ -36,8 +37,6 @@ export default function Search() {
                 setSearching(false);
             }
         }, 600);
-
-        debouncedSearch(query);
     }, [query]);
 
     const onRefresh = async () => {
