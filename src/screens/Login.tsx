@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { View, Image, Text, TouchableOpacity, Platform } from "react-native";
 import { TextInput, Button } from "react-native-paper";
 import { Styles } from "../styles/Styles";
-import { login } from "../services/ApiService";
+import { login } from "../services/api/auth/login";
 import { useUser } from "../hook/useUser";
 import { saveUser } from "../services/UserService";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";

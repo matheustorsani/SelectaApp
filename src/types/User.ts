@@ -24,7 +24,6 @@
  *   phone: "+55 11 91234-5678",
  *   address: "Rua Exemplo, 123, São Paulo, SP",
  *   orders: [101, 102, 103],
- *   favorites: [1, 2, 3],
  *   cart: [4, 5],
  *   categories: [10, 12]
  * };
@@ -39,7 +38,6 @@ export interface User {
     phone?: string;
     address?: string;
     orders?: number[];
-    favorites?: number[];
     cart?: number[];
     categories?: number[];
 }

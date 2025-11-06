@@ -3,7 +3,7 @@ import { View, Image, Text, TouchableOpacity, Platform } from "react-native";
 import { TextInput, Button } from "react-native-paper";
 import { Styles } from "../styles/Styles";
 import { useUser } from "../hook/useUser";
-import { register } from "../services/ApiService";
+import { register } from "../services/api/auth/register";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { useNavigation } from "@react-navigation/native";
 import { RootStackNavigationProp } from "../types/Navigation";

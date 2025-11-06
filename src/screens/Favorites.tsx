@@ -1,23 +1,24 @@
-import React, { useState, useMemo } from "react";
+import React, { useState } from "react";
 import { Text, View, FlatList, RefreshControl } from "react-native";
 import { Styles } from "../styles/Styles";
 import Icon from "react-native-vector-icons/Feather";
 import { ProductCard } from "../components/ProductCard";
 import { useUser } from "../hook/useUser";
-import { useProducts } from "../hook/useProducts";
 import { RootStackNavigationProp } from "../types/Navigation";
 import { useNavigation } from "@react-navigation/native";
 
 export default function Favorites() {
-    const { user, toggleFavorite, isFavorite } = useUser();
-    const { products, loadProducts, loading, error } = useProducts();
+    const { user, favoriteProducts, toggleFavorite, isFavorite } = useUser();
     const [refreshing, setRefreshing] = useState(false);
-
     const navigation = useNavigation<RootStackNavigationProp>();
 
     const onRefresh = async () => {
         setRefreshing(true);
-        await loadProducts();
+        try {
+            if (user?.id) await toggleFavorite(-1);
+        } catch (error) {
+            console.error(error);
+        }
         setRefreshing(false);
     };
 
@@ -35,15 +36,6 @@ export default function Favorites() {
         );
     }
 
-    const favoriteProducts = useMemo(() => {
-        if (!user || products.length === 0) return [];
-
-        return (user.favorites ?? [])
-            .map((id) => products.find((p) => p.id === id))
-            .filter((p): p is typeof products[0] => !!p);
-
-    }, [user, products]);
-
     return (
         <FlatList
             style={Styles.Main}
@@ -52,9 +44,7 @@ export default function Favorites() {
             keyExtractor={(item) => item.id.toString()}
             numColumns={2}
             columnWrapperStyle={{ justifyContent: "space-between", marginBottom: 16 }}
-            refreshControl={
-                <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-            }
+            refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
             renderItem={({ item }) => (
                 <ProductCard
                     key={item.id}
@@ -65,14 +55,7 @@ export default function Favorites() {
             )}
             ListHeaderComponent={() =>
                 favoriteProducts.length > 0 ? (
-                    <View
-                        style={{
-                            flexDirection: "row",
-                            alignItems: "center",
-                            gap: 10,
-                            marginBottom: 16,
-                        }}
-                    >
+                    <View style={{ flexDirection: "row", alignItems: "center", gap: 10, marginBottom: 16 }}>
                         <Icon name="heart" size={27} color="#0063E6" />
                         <Text style={Styles.TextTitle}>Meus Favoritos</Text>
                     </View>
@@ -82,13 +65,7 @@ export default function Favorites() {
                     </Text>
                 )
             }
-            ListEmptyComponent={
-                loading ? (
-                    <Text>Carregando...</Text>
-                ) : error ? (
-                    <Text style={{ color: "red" }}>{error}</Text>
-                ) : null
-            }
+            ListEmptyComponent={<Text>{favoriteProducts.length === 0 ? "Nenhum favorito" : ""}</Text>}
         />
     );
 }

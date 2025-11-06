@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, Text, Platform, ScrollView, Image, TouchableOpacity } from "react-native";
+import { View, Text, Platform, Image, TouchableOpacity } from "react-native";
 import { Styles } from "../styles/Styles";
 import Icon from 'react-native-vector-icons/Feather';
 import IconA from 'react-native-vector-icons/AntDesign';

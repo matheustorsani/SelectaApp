@@ -11,8 +11,11 @@
             "forYouProducts": "selectaAPI/Home/for-you",
             "notifications": "selectaAPI/Home/notifications",
             "bestSellers": "selectaAPI/Home/best-sellers",
+            "login": "/selectaAPI/Login/client-login",
+            "register": "selectaAPI/Client/register-client",
             "wishList": "selectaAPI/Home/wish-list",
             "addWishList": "selectaAPI/Home/add-products-wishList",
+            "removeWishList": "selectaAPI/Home/remove-product-of-wish-list",
             "mainImages": "selectaAPI/Product/get-principal-image",
             "getProductById": "selectaAPI/Home/get-products-id"
         }

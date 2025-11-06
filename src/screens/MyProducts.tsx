@@ -1,6 +1,5 @@
 import React from "react";
 import { ScrollView, Text, View } from "react-native";
-import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { Styles } from "../styles/Styles";
 import { MyProductsCard } from "../components/MyProductsCard";
 import Icon from "react-native-vector-icons/Feather";

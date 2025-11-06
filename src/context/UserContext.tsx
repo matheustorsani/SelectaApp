@@ -1,7 +1,10 @@
 import { User } from "../types/User";
 import React, { useState, useEffect } from "react";
 import { saveUser, getUser } from "../services/UserService";
-import { toggleFavorite as toggleFavoriteService } from "../services/FavoriteService";
+import { Product } from "../types/Products";
+import { favorites } from "../services/api/favorites/favorites";
+import { removeFavorite } from "../services/api/favorites/removeFavorites";
+import { addFavorites } from "../services/api/favorites/addFavorites";
 
 /**
  * Contexto global responsável por gerenciar o estado do usuário logado na aplicação.
@@ -38,15 +41,16 @@ import { toggleFavorite as toggleFavoriteService } from "../services/FavoriteSer
 export const UserContext = React.createContext<{
   user: User | null;
   setUser: (user: User | null) => void;
-  toggleFavorite: (productId: number) => void;
+  favoriteProducts: Product[];
+  toggleFavorite: (productId: number) => Promise<void>;
   isFavorite: (productId: number) => boolean;
 }>({
   user: null,
   setUser: () => { },
-  toggleFavorite: () => { },
+  favoriteProducts: [],
+  toggleFavorite: async () => { },
   isFavorite: () => false,
 });
-
 /**
  * Provedor do contexto do usuário.
  * 
@@ -61,11 +65,20 @@ export const UserContext = React.createContext<{
  */
 export const UserProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [user, setUserState] = useState<User | null>(null);
+  const [favoriteProducts, setFavoriteProducts] = useState<Product[]>([]);
 
   useEffect(() => {
     (async () => {
       const storedUser = await getUser();
-      if (storedUser) setUserState(storedUser);
+      if (storedUser) {
+        setUserState(storedUser);
+        try {
+          const serverFavorites = await favorites(storedUser.id!);
+          setFavoriteProducts(serverFavorites);
+        } catch (error) {
+          console.error("Erro ao carregar favoritos do usuário:", error);
+        }
+      }
     })();
   }, []);
 
@@ -81,18 +94,6 @@ export const UserProvider: React.FC<{ children: React.ReactNode }> = ({ children
   };
 
   /**
-   * Alterna o status de favorito de um produto para o usuário atual.
-   * 
-   * @function
-   * @param {number} productId - ID do produto a ser adicionado ou removido dos favoritos.
-   */
-  const toggleFavorite = (productId: number) => {
-    if (!user) return;
-    const updatedUser = toggleFavoriteService(user, productId);
-    setUser(updatedUser);
-  };
-  
-  /**
    * Verifica se um produto está favoritado pelo usuário atual.
    * 
    * @function
@@ -100,11 +101,36 @@ export const UserProvider: React.FC<{ children: React.ReactNode }> = ({ children
    * @returns {boolean} `true` se o produto estiver nos favoritos, `false` caso contrário.
    */
   const isFavorite = (productId: number) => {
-    return user?.favorites?.includes(productId) ?? false;
+    return favoriteProducts.some((p) => p.id === productId);
+  };
+
+  /**
+   * Alterna o status de favorito de um produto para o usuário atual.
+   * 
+   * @function
+   * @param {number} productId - ID do produto a ser adicionado ou removido dos favoritos.
+  */
+  const toggleFavorite = async (productId: number) => {
+    if (!user || !user.id) return;
+    const currentlyFavorite = isFavorite(productId);
+    console.log(currentlyFavorite)
+    try {
+      if (currentlyFavorite) {
+        await removeFavorite(user.id, productId);
+      } else {
+        await addFavorites(user.id, productId);
+      }
+      const updatedFavorites = await favorites(user.id);
+      setFavoriteProducts(updatedFavorites);
+    } catch (error) {
+      console.error("Erro ao sincronizar favoritos com o servidor", error);
+    }
   };
 
   return (
-    <UserContext.Provider value={{ user, setUser, toggleFavorite, isFavorite }}>
+    <UserContext.Provider
+      value={{ user, setUser, favoriteProducts, toggleFavorite, isFavorite }}
+    >
       {children}
     </UserContext.Provider>
   );

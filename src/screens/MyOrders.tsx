@@ -3,7 +3,6 @@ import { View, Text, ScrollView } from "react-native";
 import { Styles } from "../styles/Styles";
 import { OrderSituation } from "../components/OrderSituation";
 import { useUser } from "../hook/useUser";
-import { getProductById } from "../services/ApiService";
 import { Product } from "../types/Products";
 
 export const MyOrders = () => {
@@ -49,3 +48,7 @@ export const MyOrders = () => {
         </ScrollView>
     );
 }
+function getProductById(id: number): any {
+    throw new Error("Function not implemented.");
+}
+
