@@ -15,6 +15,7 @@ export default function Register() {
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
     const [error, setError] = useState("");
+    const [loading, setLoading] = useState(false);
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{6,}$/;
 
@@ -28,6 +29,7 @@ export default function Register() {
         const emailTrim = email.trim();
 
         try {
+            setLoading(true);
             await register(nameTrim, emailTrim, password);
             setUser({
                 name: nameTrim,
@@ -39,6 +41,8 @@ export default function Register() {
             resetToCategories(navigation);
         } catch (err: any) {
             setError(err.message);
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -69,6 +73,7 @@ export default function Register() {
                     <TextInput
                         label={"Nome Completo"}
                         placeholder="Digite seu nome completo"
+                        disabled={loading}
                         placeholderTextColor="#64748B"
                         value={name}
                         onChangeText={(text) => setName(text.replace(/\s+/g, " ").trimStart())}
@@ -79,6 +84,7 @@ export default function Register() {
                         label={"Email"}
                         placeholder="Digite seu email"
                         placeholderTextColor="#64748B"
+                        disabled={loading}
                         value={email}
                         onChangeText={(text) => setEmail(text.trim())}
                         mode="outlined"
@@ -91,6 +97,7 @@ export default function Register() {
                         placeholder="Digite sua senha"
                         placeholderTextColor="#64748B"
                         value={password}
+                        disabled={loading}
                         onChangeText={setPassword}
                         mode="outlined"
                         style={{ marginBottom: 8, width: 300, borderRadius: 5, backgroundColor: "#fff" }}
@@ -101,6 +108,7 @@ export default function Register() {
                         label={"Confirmar senha"}
                         placeholder="Confirme sua senha"
                         placeholderTextColor="#64748B"
+                        disabled={loading}
                         value={confirmPassword}
                         onChangeText={setConfirmPassword}
                         mode="outlined"
@@ -108,19 +116,11 @@ export default function Register() {
                         secureTextEntry
                         error={confirmPassword !== "" && password !== confirmPassword}
                     />
+                    <Button disabled={
+                        (name === "" || email === "" || password === "" || confirmPassword === "" || !emailRegex.test(email))
+                        || password !== confirmPassword}
+                        onPress={handleRegister} mode="contained" loading={loading} style={Styles.btn}>Cadastrar</Button>
 
-                    {(name === "" || email === "" || password === "" || confirmPassword === "" || !emailRegex.test(email)) ? (
-                        <>
-                            <Button disabled mode="contained" style={Styles.btn}>Cadastrar</Button>
-                        </>
-                    ) : password !== confirmPassword ? (
-                        <>
-                            <Text style={{ color: "red", marginBottom: 8 }}>As senhas devem ser iguais.</Text>
-                            <Button disabled mode="contained" style={Styles.btn}>Cadastrar</Button>
-                        </>
-                    ) : (
-                        <Button onPress={handleRegister} mode="contained" style={Styles.btn}>Cadastrar</Button>
-                    )}
                 </View>
                 <View style={{
                     marginTop: 20,

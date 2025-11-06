@@ -2,10 +2,9 @@ import React from 'react';
 import { View, Text, TouchableOpacity, Image } from 'react-native';
 import { Product } from '../types/Products';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import { useUser } from '../hook/useUser';
+import { useFavorites } from '../hook/useFavorites';
 import { useNavigation } from '@react-navigation/native';
-import { RootStackNavigationProp, RootStackParams } from "../types/Navigation";
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { RootStackNavigationProp } from "../types/Navigation";
 import { ActivityIndicator } from 'react-native-paper';
 
 interface ProductCardProps {
@@ -44,7 +43,7 @@ interface ProductCardProps {
  * ```
  */
 export function ProductCard({ item }: ProductCardProps) {
-  const { toggleFavorite, isFavorite, loadingFavorites } = useUser();
+  const { toggleFavorite, isFavorite, loadingFavorites } = useFavorites();
   const navigation = useNavigation<RootStackNavigationProp>();
 
   const isLoading = loadingFavorites.includes(item.id);

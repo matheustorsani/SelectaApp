@@ -4,7 +4,6 @@ import { TextInput, Button } from "react-native-paper";
 import { Styles } from "../styles/Styles";
 import { login } from "../services/api/auth/login";
 import { useUser } from "../hook/useUser";
-import { saveUser } from "../services/UserService";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { useNavigation } from "@react-navigation/native";
 import { RootStackNavigationProp } from "../types/Navigation";
@@ -15,18 +14,19 @@ export default function Login() {
     const [password, setPassword] = useState("");
     const [error, setError] = useState("");
     const { setUser } = useUser();
+    const [loading, setLoading] = useState(false);
 
     const navigation = useNavigation<RootStackNavigationProp>();
 
     const handleLogin = async () => {
         try {
+            setLoading(true);
             const emailTrim = email.trim();
             const user = await login(emailTrim, password);
 
-            console.log("Login OK:", user);
             setError("");
 
-            const loggedInUser = {
+            const logged = {
                 id: user.idCliente,
                 name: user.nomeCliente,
                 email: user.nomeCliente,
@@ -34,12 +34,13 @@ export default function Login() {
                 avatar: require("../../assets/Sample_User_Icon.png"),
             };
 
-            setUser(loggedInUser);
-            await saveUser(loggedInUser);
+            setUser(logged);
             resetToHome(navigation);
         } catch (err: any) {
             setError(err.message);
             console.log("Erro de login:", err.message);
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -75,12 +76,14 @@ export default function Login() {
                         placeholder="Digite seu email"
                         placeholderTextColor="#64748B"
                         mode="outlined"
+                        disabled={loading}
                         style={{ marginBottom: 8, width: 300, borderRadius: 5, backgroundColor: "#fff" }}
                         keyboardType="email-address"
                     />
                     <TextInput
                         label={"Senha"}
                         value={password}
+                        disabled={loading}
                         onChangeText={setPassword}
                         placeholder="Digite sua senha"
                         placeholderTextColor="#64748B"
@@ -89,7 +92,7 @@ export default function Login() {
                         // error={password !== "" && !passwordRegex.test(password)}
                         secureTextEntry
                     />
-                    <Button mode="contained" style={Styles.btn} onPress={handleLogin}>Entrar</Button>
+                    <Button mode="contained" style={Styles.btn} onPress={handleLogin} disabled={loading || (!email || !password)} loading={loading}>Entrar</Button>
                 </View>
                 <View style={{ flexDirection: 'row', marginTop: 20, alignItems: "center" }}>
                     <Text style={{ color: "#64748B" }}>Não tem uma conta? </Text>

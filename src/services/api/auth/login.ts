@@ -16,7 +16,7 @@ export const login = async (email: string, password: string): Promise<any> => {
                 senha: password,
             },
         });
-        return response.data;
+        return response;
     } catch (error: any) {
         if (error.response) {
             const raw = error.response?.data ?? "Erro desconhecido";

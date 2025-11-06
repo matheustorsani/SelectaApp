@@ -4,6 +4,7 @@ import { View, TouchableOpacity, StyleSheet, StatusBar, Text } from 'react-nativ
 import Icon from 'react-native-vector-icons/Feather';
 import { useNavigation } from '@react-navigation/native';
 import { RootStackNavigationProp } from '../../types/Navigation';
+import { Styles } from '../../styles/Styles';
 
 /**
  * Cabeçalho para a tela de "Meus Produtos".
@@ -16,14 +17,14 @@ export const HeaderMyProducts = () => {
     const navigation = useNavigation<RootStackNavigationProp>();
 
     return (
-        <SafeAreaView style={styles.safeArea}>
+        <SafeAreaView style={Styles.safeArea}>
             <StatusBar barStyle="dark-content" backgroundColor="#fff" />
-            <View style={styles.container}>
+            <View style={Styles.container}>
                 <TouchableOpacity onPress={() => navigation.goBack()}>
                     <Icon name="arrow-left" size={24} color="#333" />
                 </TouchableOpacity>
                 <Text style={{ fontSize: 18, fontWeight: "bold" }}>Meus Produtos</Text>
-                <View style={styles.actions}>
+                <View style={Styles.actions}>
                     <TouchableOpacity
                         style={{ marginRight: 16 }}
                     >
@@ -38,16 +39,3 @@ export const HeaderMyProducts = () => {
         </SafeAreaView>
     );
 };
-
-const styles = StyleSheet.create({
-    safeArea: { flex: 0, backgroundColor: '#fff' },
-    container: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'space-between',
-        paddingHorizontal: 16,
-        paddingVertical: 20,
-        paddingBottom: 0
-    },
-    actions: { flexDirection: 'row', alignItems: 'center' },
-});

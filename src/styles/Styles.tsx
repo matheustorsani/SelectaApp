@@ -85,4 +85,14 @@ export const Styles = StyleSheet.create({
         fontSize: 16,
         color: "#020817",
     },
+    safeArea: { flex: 0, backgroundColor: '#fff' },
+    container: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        paddingHorizontal: 16,
+        paddingVertical: 20,
+        paddingBottom: 15
+    },
+    actions: { flexDirection: 'row', alignItems: 'center' },
 })

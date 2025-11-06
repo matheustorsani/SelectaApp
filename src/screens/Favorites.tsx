@@ -6,9 +6,11 @@ import { ProductCard } from "../components/ProductCard";
 import { useUser } from "../hook/useUser";
 import { RootStackNavigationProp } from "../types/Navigation";
 import { useNavigation } from "@react-navigation/native";
+import { useFavorites } from "../hook/useFavorites";
 
 export default function Favorites() {
-    const { user, favoriteProducts, toggleFavorite, isFavorite, reloadFavorites } = useUser();
+    const { user } = useUser();
+    const { favoriteProducts, toggleFavorite, isFavorite, reloadFavorites } = useFavorites();
     const [refreshing, setRefreshing] = useState(false);
     const navigation = useNavigation<RootStackNavigationProp>();
 

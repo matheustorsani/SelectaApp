@@ -22,7 +22,7 @@ export const register = async (
       },
     });
 
-    return response.data;
+    return response;
   } catch (error) {
     console.error("Ocorreu um erro ao registrar o usuário:", error);
     throw error;

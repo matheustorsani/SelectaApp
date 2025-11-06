@@ -4,7 +4,7 @@ import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import Icon from 'react-native-vector-icons/Feather';
 import IconI from 'react-native-vector-icons/Ionicons';
 import { Lucide } from '@react-native-vector-icons/lucide';
-import { UserContext } from "../context/UserContext";
+import { UserContext } from "../context/AuthContext";
 import { RootStackNavigationProp } from "../types/Navigation";
 import { useNavigation } from "@react-navigation/native";
 import { CategoriesItemMain } from "../components/CategoriesItemMain";

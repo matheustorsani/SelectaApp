@@ -1,14 +1,15 @@
 import React from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { View, TouchableOpacity, StyleSheet, StatusBar, Share, Text } from 'react-native';
+import { View, TouchableOpacity, StyleSheet, StatusBar, Share } from 'react-native';
 import Icon from 'react-native-vector-icons/Feather';
-import { useUser } from '../../hook/useUser';
 import { useProductDetails } from '../../hook/useProductDetails';
 import IconFA from 'react-native-vector-icons/FontAwesome';
 import { useNavigation } from '@react-navigation/native';
 import { RootStackNavigationProp } from '../../types/Navigation';
 import { safeGoBack } from '../../utils/safeGoBack';
 import { ActivityIndicator } from 'react-native-paper';
+import { useFavorites } from '../../hook/useFavorites';
+import { Styles } from '../../styles/Styles';
 
 type Props = {
     productId: number;
@@ -26,7 +27,7 @@ export const HeaderProductsDetails = ({ productId }: Props) => {
     const navigation = useNavigation<RootStackNavigationProp>();
 
     const { product, loading } = useProductDetails(productId);
-    const { isFavorite, toggleFavorite, loadingFavorites } = useUser();
+    const { isFavorite, toggleFavorite, loadingFavorites } = useFavorites();
 
     const isLoading = loadingFavorites.includes(productId);
 
@@ -44,13 +45,13 @@ export const HeaderProductsDetails = ({ productId }: Props) => {
     if (loading || !product) return null;
 
     return (
-        <SafeAreaView style={styles.safeArea}>
+        <SafeAreaView style={Styles.safeArea}>
             <StatusBar barStyle="dark-content" backgroundColor="#fff" />
-            <View style={styles.container}>
+            <View style={Styles.container}>
                 <TouchableOpacity onPress={() => safeGoBack(navigation)}>
                     <Icon name="arrow-left" size={24} color="#333" />
                 </TouchableOpacity>
-                <View style={styles.actions}>
+                <View style={Styles.actions}>
                     <TouchableOpacity
                         style={{ marginRight: 16 }}
                         onPress={() => toggleFavorite(product.id)}
@@ -74,16 +75,3 @@ export const HeaderProductsDetails = ({ productId }: Props) => {
         </SafeAreaView>
     );
 };
-
-const styles = StyleSheet.create({
-    safeArea: { flex: 0, backgroundColor: '#fff' },
-    container: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'space-between',
-        paddingHorizontal: 16,
-        paddingVertical: 20,
-        paddingBottom: 15
-    },
-    actions: { flexDirection: 'row', alignItems: 'center' },
-});

@@ -8,10 +8,12 @@ import IconFA from 'react-native-vector-icons/FontAwesome';
 import { useUser } from "../hook/useUser";
 import { RootStackNavigationProp } from "../types/Navigation";
 import { useNavigation } from "@react-navigation/native";
+import { useFavorites } from "../hook/useFavorites";
 import { resetToHome } from "../utils/resetToScreen";
 
 export default function Profile() {
-    const { user, setUser, favoriteProducts } = useUser();
+    const { user, logout: logoff } = useUser();
+    const { favoriteProducts } = useFavorites();
     const navigation = useNavigation<RootStackNavigationProp>();
 
     if (!user) {
@@ -28,19 +30,23 @@ export default function Profile() {
     const logout = () => {
         Alert.alert(
             "Confirmação",
-            "Tem certeza que deseja sair?",
+            "Tem certeza que deseja sair da sua conta?",
             [
-                { text: "Cancelar" },
+                {
+                    text: "Cancelar",
+                    style: "cancel"
+                },
                 {
                     text: "Sair",
+                    style: "destructive",
                     onPress: () => {
-                        setUser(null);
+                        logoff();
                         resetToHome(navigation);
                     }
                 }
             ]
-        );
-    };
+        )
+    }
 
     return (
         <ScrollView style={Styles.Main} contentContainerStyle={{ paddingBottom: 40 }} showsVerticalScrollIndicator={false}>
