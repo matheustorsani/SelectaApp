@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from "react";
 import { Product } from "../types/Products";
-import { useProducts } from "./useProducts";
+import { getProductById } from "../services/api/products/getProductById";
 
 /**
  * Hook para gerenciar os detalhes de um produto específico.
@@ -16,34 +16,36 @@ import { useProducts } from "./useProducts";
  * }}
  */
 export function useProductDetails(productId: number) {
-  const { products, loading: productsLoading, loadProducts, error: productsError } = useProducts();
-
   const [product, setProduct] = useState<Product>();
   const [amount, setAmount] = useState(1);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
 
-  /** Atualiza o estado do produto conforme o ID atual */
-  const updateProduct = useCallback(() => {
-    const found = products.find((p) => p.id === productId);
-    setProduct(found);
-    setAmount(1);
-    setError(!found && !productsLoading ? "Produto não encontrado." : null);
-    setLoading(false);
-  }, [products, productId, productsLoading]);
+  const fetchProduct = useCallback(async () => {
+    try {
+      setLoading(true);
+      const fetch = await getProductById(productId);
 
-  /** Recarrega os produtos se ainda não existirem, ou apenas atualiza o atual */
-  useEffect(() => {
-    if (productsLoading) return setLoading(true);
-
-    if (products.length === 0) {
-      loadProducts().then(updateProduct);
-    } else {
-      updateProduct();
+      if (!fetch) {
+        setError("Produto não encontrado.");
+        setProduct(undefined);
+      } else {
+        setProduct(fetch);
+        setError(null);
+        setAmount(1);
+      }
+    } catch (err) {
+      console.error(err);
+      setError("Erro ao carregar produto.");
+    } finally {
+      setLoading(false);
     }
-  }, [products, productsLoading, loadProducts, updateProduct]);
+  }, [productId]);
 
-  /** Incrementa ou decrementa a quantidade respeitando os limites */
+  useEffect(() => {
+    fetchProduct();
+  }, [fetchProduct]);
+
   const toggleAmount = useCallback(
     (increment: boolean) => {
       if (!product) return;
@@ -69,7 +71,7 @@ export function useProductDetails(productId: number) {
     product,
     loading,
     amount,
-    error: error || productsError,
-    toggleAmount,
+    error,
+    toggleAmount
   };
 }

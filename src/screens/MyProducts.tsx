@@ -6,6 +6,7 @@ import Icon from "react-native-vector-icons/Feather";
 import { MyCardProduct } from "../components/MyCardProduct";
 
 export const MyProducts = () => {
+    // Por enquanto, não existe um endpoint onde retorna todos os produtos de um determinado usuario.
     return (
         <ScrollView style={Styles.Main} contentContainerStyle={{ paddingBottom: 40 }} showsVerticalScrollIndicator={false}>
             <View style={{ flexDirection: "column" }}>
@@ -30,12 +31,7 @@ export const MyProducts = () => {
             <Text style={{ fontSize: 20, fontWeight: "bold", paddingTop: 20, paddingBottom: 10 }}>Meus produtos</Text>
             <View>
                 <MyCardProduct
-                    category="Smartphone"
-                    name="Smartphone Premium T3600"
-                    price="R$1299.99"
-                    rating={4.5}
-                    totalRatings={1234}
-                    image={require("../../assets/smartphone.png")}
+                    productId={1}
                 />
             </View>
         </ScrollView>

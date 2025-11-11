@@ -124,7 +124,7 @@ export interface Product {
     price: number;
     discount?: number;
     amount?: number;
-    image: string | ImageSourcePropType;
+    image: ImageSourcePropType | undefined;
     category: string;
     peso: number;
     status: ProductStatus;

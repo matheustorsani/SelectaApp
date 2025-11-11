@@ -12,7 +12,6 @@ import { FavoritesContext } from "../context/FavoritesContext";
  *  loadingFavorites: number[];
  *  reloadFavorites: () => Promise<void>;
  * }}
- * Retorna o contexto do usuário, incluindo informações e funções utilitárias.
  */
 export function useFavorites(): {
     favoriteProducts: Product[];

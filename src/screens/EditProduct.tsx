@@ -5,14 +5,22 @@ import Icon from 'react-native-vector-icons/Feather';
 import IconA from 'react-native-vector-icons/AntDesign';
 import { TextInput, Switch } from "react-native-paper";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
+import { Product } from "../types/Products";
+import { RootStackScreenProps } from "../types/Navigation";
+import { useProductDetails } from "../hook/useProductDetails";
+import { getProductById } from "../services/api/products/getProductById";
 
 // adicionar isso aqui na tela, pro usuario selecionar a categoria do produto
 // não aplicavel no momento, pois nao sei as categorias existentes da API e nao sei se é assim que deve ser feito.
 
 const categories = ['Eletrônicos', 'Moda', 'Casa e Banho', 'Esportes', 'Livros', 'Beleza'];
 
-export const EditProduct = () => {
+export const EditProduct = async ({ route }: RootStackScreenProps<"EditProduct">) => {
     const [isSwitchOn, setSwitch] = useState(false);
+    const product = await getProductById(route.params.productId);
+
+    if (!product) return <Text>Produto não encontrado.</Text>;
+
     return (
         <KeyboardAwareScrollView
             style={Styles.Main}
@@ -31,6 +39,7 @@ export const EditProduct = () => {
                     label={"Nome do produto*"}
                     placeholder="Digite o nome do produto"
                     placeholderTextColor="#64748B"
+                    value={product.name}
                     mode="outlined"
                     style={{ marginBottom: 8, width: 300, borderRadius: 5, backgroundColor: "#fff" }}
                     activeOutlineColor="#1D77ED"
@@ -39,6 +48,7 @@ export const EditProduct = () => {
                     label={"Descrição do produto*"}
                     placeholder="Digite a descrição do produto"
                     placeholderTextColor="#64748B"
+                    value={product.description}
                     mode="outlined"
                     style={{ marginBottom: 8, width: 300, borderRadius: 5, backgroundColor: "#fff" }}
                     activeOutlineColor="#1D77ED"
@@ -54,6 +64,7 @@ export const EditProduct = () => {
                     placeholder="Digite o preço do produto"
                     placeholderTextColor="#64748B"
                     mode="outlined"
+                    value={product.price.toString()}
                     style={{ marginBottom: 8, width: 300, borderRadius: 5, backgroundColor: "#fff" }}
                     activeOutlineColor="#1D77ED"
                     keyboardType="numeric"

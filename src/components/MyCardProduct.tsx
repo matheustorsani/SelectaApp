@@ -1,31 +1,42 @@
+import React, { useEffect, useState } from "react"
 import { useNavigation } from "@react-navigation/native";
-import React from "react"
 import { View, Text, Image, TouchableOpacity } from "react-native"
 import Icon from "react-native-vector-icons/FontAwesome";
 import { RootStackNavigationProp } from "../types/Navigation";
+import { getProductById } from "../services/api/products/getProductById";
+import { Product } from "../types/Products";
+import { LoadingSkeletonProduct } from "./LoadingSkeletonProduct";
 
 type CardProps = {
-    /** Nome do produto */
-    name: string;
-    /** Categoria do Produto */
-    category: string;
-    /** Preço do produto */
-    price: string;
-    /** Imagem do produto */
-    image: any;
-    /** Avaliação do produto */
-    rating: number;
-    /** Total de avaliações do produto */
-    totalRatings: number;
+    productId: number;
 }
-
 /**
  * Componente de cartão de produto para a tela "Meus Produtos".
- * @param {CardProps} props - Propriedades do cartão de produto, incluindo nome, categoria, preço, imagem, avaliação e total de avaliações.
- * @returns Componente de cartão de produto para a tela "Meus Produtos".
+ * @param {CardProps} - Id do produto a ser exibido.
+ * @returns Componente visual do cartão de produto.
  */
-export const MyCardProduct = ({ name, category, image, price, rating, totalRatings }: CardProps) => {
+export const MyCardProduct = ({ productId }: CardProps) => {
     const navigation = useNavigation<RootStackNavigationProp>();
+    const [product, setProduct] = useState<Product>();
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        const fetch = async () => {
+            try {
+                const data = await getProductById(productId);
+                setProduct(data.id ? data : undefined);
+                setLoading(false);
+            } catch (error) {
+                console.error("Erro ao buscar produto:", error);
+                setLoading(false);
+            }
+        }
+        fetch();
+    }, [productId]);
+
+
+    if (loading) return <LoadingSkeletonProduct />;
+    if (!product) return null;
 
     return (
         <TouchableOpacity activeOpacity={0.6} style={{
@@ -37,20 +48,20 @@ export const MyCardProduct = ({ name, category, image, price, rating, totalRatin
             borderColor: "#E2E4E9",
             borderRadius: 10,
             marginBottom: 15
-        }} onPress={() => navigation.navigate("EditProduct", { productId: 1 })}>
-            <Image source={image} style={{ width: 60, height: 60, borderRadius: 10, marginRight: 15 }} />
+        }} onPress={() => navigation.navigate("EditProduct", { productId: productId })}>
+            <Image source={product.image} style={{ width: 60, height: 60, borderRadius: 10, marginRight: 15 }} />
             <View>
                 <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between", width: 250 }}>
-                    <Text>{name}</Text>
-                    <Icon name="edit" size={16}/>
+                    <Text>{product.name}</Text>
+                    <Icon name="edit" size={16} />
                 </View>
-                <Text style={{ color: "#6C7493" }}>{category}</Text>
+                <Text style={{ color: "#6C7493" }}>{product.category}</Text>
                 <View style={{ flexDirection: "row", gap: 5, alignItems: "center" }}>
                     <Icon name="star" size={14} color="#F97A1F" />
-                    <Text>{rating}</Text>
-                    <Text style={{ color: "#000", backgroundColor: "#F0F2F5", borderRadius: 8, fontWeight: "bold", paddingHorizontal: 10, paddingVertical: 2 }}>{totalRatings} Avaliações</Text>
+                    <Text>{product.rate}</Text>
+                    <Text style={{ color: "#000", backgroundColor: "#F0F2F5", borderRadius: 8, fontWeight: "bold", paddingHorizontal: 10, paddingVertical: 2 }}>{product.totalRatings} Avaliações</Text>
                 </View>
-                <Text style={{ fontSize: 16, fontWeight: "bold", marginTop: 5, color: "#1D77ED" }}>{price}</Text>
+                <Text style={{ fontSize: 16, fontWeight: "bold", marginTop: 5, color: "#1D77ED" }}>{product.price}</Text>
             </View>
         </TouchableOpacity>
     );

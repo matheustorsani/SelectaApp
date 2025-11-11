@@ -1,7 +1,7 @@
-import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { NativeStackNavigationProp, NativeStackScreenProps } from "@react-navigation/native-stack";
 import { BottomTabNavigationProp } from "@react-navigation/bottom-tabs";
 import { ControlsProps } from "./Delivery";
-import { CompositeNavigationProp } from "@react-navigation/native";
+import { Product } from "./Products";
 
 /**
  * Parâmetros disponíveis nas abas inferiores (Bottom Tabs) do aplicativo.
@@ -70,14 +70,24 @@ export type RootStackParams = {
   Delivery: ControlsProps;
 };
 
-/**
- * Tipo de navegação para a pilha principal (Root Stack),
- * utilizado com `useNavigation<RootStackNavigationProp>()`.
- */
+
 export type RootStackNavigationProp = NativeStackNavigationProp<RootStackParams>;
 
-/**
- * Tipo de navegação para as abas inferiores (Bottom Tabs),
- * utilizado com `useNavigation<TabNavigationProp>()`.
- */
 export type TabNavigationProp = BottomTabNavigationProp<TabParamList>;
+
+
+/**
+ * Propriedades de tela tipadas para o stack raiz de navegação.
+ *
+ * Tipo utilitário que mapeia as props fornecidas pelo NativeStackNavigator para uma
+ * rota específica definida em RootStackParams. Garante tipagem segura dos objetos
+ * `navigation` e `route` conforme a chave da rota selecionada.
+ *
+ * @typeParam T - Chave de rota presente em RootStackParams (por exemplo: "EditProduct" | "ProductDetails").
+ *
+ * @see RootStackParams
+ * 
+ * @example
+ * // function MyScreen({ navigation, route }: RootStackScreenProps<'ProductDetails'>) { ... }
+ */
+export type RootStackScreenProps<T extends keyof RootStackParams> = NativeStackScreenProps<RootStackParams, T>;
