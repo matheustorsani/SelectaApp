@@ -37,6 +37,7 @@ export default function Favorites() {
     return (
         <FlatList
             style={Styles.Main}
+            contentContainerStyle={{ paddingBottom: 40 }}
             showsVerticalScrollIndicator={false}
             data={favoriteProducts}
             keyExtractor={(item) => item.id.toString()}

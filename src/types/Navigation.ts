@@ -68,6 +68,12 @@ export type RootStackParams = {
   MyProducts: undefined;
   /** Tela de entrega */
   Delivery: ControlsProps;
+  /** Tela de Minhas Vendas */
+  MySales: undefined;
+  /** Tela de Meus Tickets */
+  MyTickets: undefined;
+  /** Tela de configurações */
+  Preferences: undefined;
 };
 
 

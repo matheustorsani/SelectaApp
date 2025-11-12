@@ -4,15 +4,15 @@ import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import Icon from 'react-native-vector-icons/Feather';
 import IconI from 'react-native-vector-icons/Ionicons';
 import { Lucide } from '@react-native-vector-icons/lucide';
-import { UserContext } from "../context/AuthContext";
 import { RootStackNavigationProp } from "../types/Navigation";
 import { useNavigation } from "@react-navigation/native";
 import { CategoriesItemMain } from "../components/CategoriesItemMain";
 import { CategoriesItem } from "../components/CategoriesItem";
 import { resetToHome } from "../utils/resetToScreen";
+import { useUser } from "../hook/useUser";
 
-export default function Categories() {
-    const { user, setUser } = React.useContext(UserContext);
+export const Categories = () => {
+    const { user, setUser } = useUser();
     const [selectedMainCategories, setSelectedMainCategories] = useState<number[]>([]);
     const [selectedCategories, setSelectedCategories] = useState<number[]>([]);
 
@@ -55,8 +55,8 @@ export default function Categories() {
 
     const addSelectedCategoriesToUser = () => {
         const allSelectedIds = [...selectedMainCategories, ...selectedCategories!];
-        if (!user) { 
-            alert("Erro: Por favor, realize o login."); 
+        if (!user) {
+            alert("Erro: Por favor, realize o login.");
             return navigation.navigate("Login");
         }
         if (allSelectedIds.length === 0) return;

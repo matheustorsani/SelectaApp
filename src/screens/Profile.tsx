@@ -74,14 +74,14 @@ export default function Profile() {
 
             <View style={{ flexDirection: "row", justifyContent: "space-between", marginBottom: 32 }}>
                 <ProfileBoxActivity title={user.orders?.length || 0} subtitle="Pedidos" />
-                <ProfileBoxActivity 
-                    title={favoriteProducts.length} 
-                    subtitle="Favoritos" 
+                <ProfileBoxActivity
+                    title={favoriteProducts.length}
+                    subtitle="Favoritos"
                     onPress={() => navigation.navigate("Tabs", { screen: "Favorites" })}
                 />
-                <ProfileBoxActivity 
-                    title={user.cart?.length || 0} 
-                    subtitle="Carrinho" 
+                <ProfileBoxActivity
+                    title={user.cart?.length || 0}
+                    subtitle="Carrinho"
                     onPress={() => navigation.navigate("Tabs", { screen: "Cart" })}
                 />
             </View>
@@ -100,8 +100,8 @@ export default function Profile() {
                 <ProfileOption icon="shopping-bag" title="Meus Pedidos" subtitle="Ver histórico de compras" onPress={() => navigation.navigate("MyOrders")} />
                 <ProfileOption icon="bell" title="Notificação" subtitle="Gerir preferências" />
                 <ProfileOption icon="box" title="Meus produtos" subtitle="Gerencie seus produtos à venda" onPress={() => navigation.navigate("MyProducts")} />
-                <ProfileOption icon="trending-up" title="Minhas vendas" subtitle="Histórico de vendas realizadas" />
-                <ProfileOption icon="help-circle" title="Meus Tickets" subtitle="Suporte e atendimento" />
+                <ProfileOption icon="trending-up" title="Minhas vendas" subtitle="Histórico de vendas realizadas" onPress={() => navigation.navigate("MySales")} />
+                <ProfileOption icon="help-circle" title="Meus Tickets" subtitle="Suporte e atendimento" onPress={() => navigation.navigate("MyTickets")} />
 
                 <TouchableOpacity onPress={() => navigation.navigate("Delivery", { status: 'offline' })}>
                     <View style={{ flexDirection: "row", alignItems: "center" }}>
@@ -114,7 +114,7 @@ export default function Profile() {
                 </TouchableOpacity>
 
                 <ProfileOption icon="user" title="Dados Cadastrais" subtitle="Edite suas informações" />
-                <ProfileOption icon="settings" title="Configurações" subtitle="Conta e privacidade" />
+                <ProfileOption icon="settings" title="Configurações" subtitle="Conta e privacidade" onPress={() => navigation.navigate("Preferences")}/>
 
                 <View style={{ marginTop: 20, alignItems: "center", justifyContent: "center", width: "100%" }}>
                     <TouchableOpacity

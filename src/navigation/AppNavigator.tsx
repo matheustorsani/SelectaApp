@@ -11,22 +11,24 @@ import Search from "../screens/Search";
 import Favorites from "../screens/Favorites";
 import Cart from "../screens/Cart";
 import Profile from "../screens/Profile";
-import ProductDetails from "../screens/ProductDetails";
+import { ProductDetails } from "../screens/ProductDetails";
 import { MyOrders } from "../screens/MyOrders";
 import { MyProducts } from "../screens/MyProducts";
 import { EditProduct } from "../screens/EditProduct";
-import Delivery from "../screens/Delivery";
-import Login from "../screens/Login";
-import Register from "../screens/Register";
-import Categories from "../screens/Categories";
+import { MySales } from "../screens/MySales";
+import { Delivery } from "../screens/Delivery";
+import { Login } from "../screens/Login";
+import { Register } from "../screens/Register";
+import { Categories } from "../screens/Categories";
 
 // 🧩 Components
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import { HeaderProductsDetails } from "../components/Headers/HeaderProductsDetails";
-import { HeaderMyOrders } from "../components/Headers/HeaderMyOrders";
-import { HeaderMyProducts } from "../components/Headers/HeaderMyProducts";
 import { HeaderEditProduct } from "../components/Headers/HeaderEditProduct";
+import { GenericHeader } from "../components/Headers/GenericHeader";
+import { MyTickets } from "../screens/MyTickets";
+import { Preferences } from "../screens/Preferences";
 
 const Tab = createBottomTabNavigator<TabParamList>();
 const Stack = createNativeStackNavigator<RootStackParams>();
@@ -87,7 +89,16 @@ export default function AppNavigator(): JSX.Element {
           component={MyOrders}
           options={{
             headerShown: true,
-            header: () => <HeaderMyOrders />,
+            header: () => <GenericHeader name="Meus Pedidos" />,
+          }}
+        />
+
+        <Stack.Screen
+          name="MySales"
+          component={MySales}
+          options={{
+            headerShown: true,
+            header: () => <GenericHeader name="Minhas Vendas" />,
           }}
         />
 
@@ -96,10 +107,19 @@ export default function AppNavigator(): JSX.Element {
           component={MyProducts}
           options={{
             headerShown: true,
-            header: () => <HeaderMyProducts />,
+            header: () => <GenericHeader name="Meus Produtos" />,
           }}
         />
 
+        <Stack.Screen
+          name="MyTickets"
+          component={MyTickets}
+          options={{
+            headerShown: true,
+            header: () => <GenericHeader name="Meus Tickets" />,
+          }}
+        />
+        
         <Stack.Screen
           name="EditProduct"
           component={EditProduct}
@@ -108,6 +128,16 @@ export default function AppNavigator(): JSX.Element {
             header: () => <HeaderEditProduct />,
           }}
         />
+
+        <Stack.Screen
+          name="Preferences"
+          component={Preferences}
+          options={{
+            headerShown: true,
+            header: () => <GenericHeader name="Configurações" />,
+          }}
+        />
+
         <Stack.Screen
           name="Delivery"
           component={Delivery}

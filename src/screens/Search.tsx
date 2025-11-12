@@ -65,6 +65,7 @@ export default function Search() {
             initialNumToRender={10}
             maxToRenderPerBatch={10}
             windowSize={5}
+            contentContainerStyle={{ paddingBottom: 40 }}
             removeClippedSubviews
             refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
             onEndReached={!query ? loadProducts : null}

@@ -9,7 +9,8 @@
     "usb": "expo start --localhost",
     "android": "expo start --android",
     "ios": "expo start --ios",
-    "web": "expo start --web"
+    "web": "expo start --web",
+    "build": "expo build" 
   },
   "dependencies": {
     "@expo/metro-runtime": "~6.1.2",
@@ -23,6 +24,7 @@
     "@types/react-native-vector-icons": "^6.4.18",
     "axios": "^1.12.2",
     "expo": "^54.0.10",
+    "expo-application": "^7.0.7",
     "expo-audio": "~1.0.14",
     "expo-av": "~16.0.7",
     "expo-clipboard": "~8.0.7",

@@ -9,7 +9,7 @@ import { useNavigation } from "@react-navigation/native";
 import { RootStackNavigationProp } from "../types/Navigation";
 import { resetToHome } from "../utils/resetToScreen";
 
-export default function Login() {
+export const Login = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState("");

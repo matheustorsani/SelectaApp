@@ -5,9 +5,7 @@ import Icon from 'react-native-vector-icons/Feather';
 import IconA from 'react-native-vector-icons/AntDesign';
 import { TextInput, Switch } from "react-native-paper";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
-import { Product } from "../types/Products";
 import { RootStackScreenProps } from "../types/Navigation";
-import { useProductDetails } from "../hook/useProductDetails";
 import { getProductById } from "../services/api/products/getProductById";
 
 // adicionar isso aqui na tela, pro usuario selecionar a categoria do produto

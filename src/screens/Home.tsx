@@ -35,7 +35,7 @@ export default function Home() {
             maxToRenderPerBatch={10}
             windowSize={5}
             removeClippedSubviews={true}
-            
+            contentContainerStyle={{ paddingBottom: 40 }}
             refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
             onEndReached={loadProducts}
             onEndReachedThreshold={0.5}

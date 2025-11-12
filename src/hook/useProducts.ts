@@ -4,7 +4,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { searchProducts } from "../services/api/home/searchProducts";
 import { allProducts } from "../services/api/products/allProducts";
 
-const CACHE_KEY = "cache";
+const CACHE_KEY = "@Selecta:products_cache";
 
 /**
  * Hook para gerenciar a listagem de produtos.

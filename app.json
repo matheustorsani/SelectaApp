@@ -1,14 +1,14 @@
 {
   "expo": {
-    "name": "SelectaApp",
+    "name": "Selecta",
     "slug": "SelectaApp",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "",
+    "icon": "https://trello.com/1/cards/6894cd0b5583f3f78c80887d/attachments/6913d47639456738c8a34f81/download/ChatGPT_Image_Nov_12%2C_2025%2C_12_24_02_AM.png",
     "userInterfaceStyle": "light",
     "newArchEnabled": true,
     "splash": {
-      "image": "",
+      "image": "https://trello.com/1/cards/6894cd0b5583f3f78c80887d/attachments/6894d3c36cc6fae8ab70df7b/download/logo.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },

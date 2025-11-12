@@ -9,7 +9,7 @@ import { useNavigation } from "@react-navigation/native";
 import { RootStackNavigationProp } from "../types/Navigation";
 import { resetToCategories } from "../utils/resetToScreen";
 
-export default function Register() {
+export const Register = () => {
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");

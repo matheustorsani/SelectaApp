@@ -6,7 +6,7 @@ import { MapViewComponent } from "../components/Delivery/MapViewComponent";
 import { OrderFooter } from "../components/Delivery/OrderFooter";
 import { useDeliveryManager } from "../hook/useDeliveryManage";
 
-export default function Delivery() {
+export const Delivery = () => {
     const userLocation = useUserLocation();
     const delivery = useDeliveryManager(userLocation);
 

@@ -12,7 +12,7 @@ import { Styles } from "../styles/Styles";
 import { LoadingSkeletonProduct } from "../components/LoadingSkeletonProduct";
 
 
-export default function ProductDetails({ route }: RootStackScreenProps<"ProductDetails">) {
+export const ProductDetails = ({ route }: RootStackScreenProps<"ProductDetails">) => {
     const productId = route.params.productId
     const { product, loading, amount, error, toggleAmount } = useProductDetails(productId);
 
