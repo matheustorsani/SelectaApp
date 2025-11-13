@@ -113,8 +113,8 @@ export default function Profile() {
                     </View>
                 </TouchableOpacity>
 
-                <ProfileOption icon="user" title="Dados Cadastrais" subtitle="Edite suas informações" />
-                <ProfileOption icon="settings" title="Configurações" subtitle="Conta e privacidade" onPress={() => navigation.navigate("Preferences")}/>
+                <ProfileOption icon="user" title="Dados Cadastrais" subtitle="Edite suas informações" onPress={() => navigation.navigate("MyData")} />
+                <ProfileOption icon="settings" title="Configurações" subtitle="Conta e privacidade" onPress={() => navigation.navigate("Preferences")} />
 
                 <View style={{ marginTop: 20, alignItems: "center", justifyContent: "center", width: "100%" }}>
                     <TouchableOpacity

@@ -4,6 +4,9 @@ export const Styles = StyleSheet.create({
     Main: {
         flex: 1, padding: 16, paddingBottom: 0
     },
+    Card: {
+        marginBottom: 16, backgroundColor: "#fff"
+    },
     TextTitle: {
         fontSize: 24,
         fontWeight: 'bold',

@@ -74,6 +74,8 @@ export type RootStackParams = {
   MyTickets: undefined;
   /** Tela de configurações */
   Preferences: undefined;
+  /** Tela de Dados Cadastrais */
+  MyData: undefined;
 };
 
 

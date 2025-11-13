@@ -20,6 +20,7 @@ import { Delivery } from "../screens/Delivery";
 import { Login } from "../screens/Login";
 import { Register } from "../screens/Register";
 import { Categories } from "../screens/Categories";
+import { MyData } from "../screens/MyData";
 
 // 🧩 Components
 import Header from "../components/Header";
@@ -135,6 +136,15 @@ export default function AppNavigator(): JSX.Element {
           options={{
             headerShown: true,
             header: () => <GenericHeader name="Configurações" />,
+          }}
+        />
+
+        <Stack.Screen
+          name="MyData"
+          component={MyData}
+          options={{
+            headerShown: true,
+            header: () => <GenericHeader name="Dados Cadastrais" />,
           }}
         />
 

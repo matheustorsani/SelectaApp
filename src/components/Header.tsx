@@ -37,7 +37,8 @@ export default function Header() {
 const styles = StyleSheet.create({
   safeArea: {
     flex: 0,
-    backgroundColor: '#fff'
+    backgroundColor: '#fff',
+    paddingBottom: 10,
   },
   logoContainer: {
     alignItems: 'center',
