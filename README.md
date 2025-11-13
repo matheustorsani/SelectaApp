@@ -9,10 +9,11 @@ O Selecta é uma **loja virtual**, semelhante ao Mercado Livre, que tem como obj
 
 - [React Native](https://reactnative.dev/)
 - [React Navigation](https://reactnavigation.org/)
+- [React Native Maps](https://github.com/react-native-maps/react-native-maps)
 - [Axios](https://axios-http.com/ptbr/docs/intro)
 - [Expo](https://expo.dev/)  
 - [TypeScript](https://www.typescriptlang.org/)  
-- [React Navigation](https://reactnavigation.org/)
+
 
 --- 
 
