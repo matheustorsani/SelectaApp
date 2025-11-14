@@ -30,6 +30,7 @@ import { HeaderEditProduct } from "../components/Headers/HeaderEditProduct";
 import { GenericHeader } from "../components/Headers/GenericHeader";
 import { MyTickets } from "../screens/MyTickets";
 import { Preferences } from "../screens/Preferences";
+import { AddProduct } from "../screens/AddProduct";
 
 const Tab = createBottomTabNavigator<TabParamList>();
 const Stack = createNativeStackNavigator<RootStackParams>();
@@ -144,7 +145,16 @@ export default function AppNavigator(): JSX.Element {
           component={MyData}
           options={{
             headerShown: true,
-            header: () => <GenericHeader name="Dados Cadastrais" />,
+            header: () => <GenericHeader name="Configurações" />,
+          }}
+        />
+
+        <Stack.Screen
+          name="AddProduct"
+          component={AddProduct}
+          options={{
+            headerShown: true,
+            header: () => <GenericHeader name="Cadastrar Produto" />,
           }}
         />
 

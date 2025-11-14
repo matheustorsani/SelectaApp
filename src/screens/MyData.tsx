@@ -14,8 +14,7 @@ export const MyData = () => {
     const { user } = useUser();
     const [editable, setEditable] = useState(false);
 
-    if (!user) return navigation.popTo("Login");
-
+    if (!user) return;
 
     return (
         <KeyboardAwareScrollView

@@ -76,6 +76,8 @@ export type RootStackParams = {
   Preferences: undefined;
   /** Tela de Dados Cadastrais */
   MyData: undefined;
+  /** Tela de Adicionar novo produto */
+  AddProduct: undefined;
 };
 
 
