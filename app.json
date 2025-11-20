@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "Selecta",
-    "slug": "SelectaApp",
+    "slug": "selectaapp",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "https://trello.com/1/cards/6894cd0b5583f3f78c80887d/attachments/6913d47639456738c8a34f81/download/ChatGPT_Image_Nov_12%2C_2025%2C_12_24_02_AM.png",
@@ -22,16 +22,19 @@
       },
       "permissions": [
         "ACCESS_FINE_LOCATION",
-        "ACCESS_COARSE_LOCATION"
+        "ACCESS_COARSE_LOCATION",
+        "android.permission.RECORD_AUDIO",
+        "android.permission.MODIFY_AUDIO_SETTINGS"
       ],
-      "edgeToEdgeEnabled": true
+      "edgeToEdgeEnabled": true,
+      "package": "com.demetriuskiun.selectaapp"
     },
     "web": {
       "favicon": ""
     },
     "extra": {
       "eas": {
-        "projectId": "cf4305c9-3e74-47ae-b032-46fe0d2e2f15"
+        "projectId": "97773087-54f3-4b64-9357-f4d289ddd1b4"
       }
     },
     "runtimeVersion": {
@@ -41,7 +44,9 @@
       "url": "https://u.expo.dev/cf4305c9-3e74-47ae-b032-46fe0d2e2f15"
     },
     "plugins": [
-      "expo-audio"
-    ]
+      "expo-audio",
+      "expo-asset"
+    ],
+    "owner": "demetriuskiun"
   }
 }
