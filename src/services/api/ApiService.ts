@@ -9,6 +9,14 @@ const api = axios.create({
   timeout: API.timeout,
 });
 
+export class ApiOFF extends Error {
+  public readonly code = "API_OFFLINE";
+  constructor(message = "API OFFLINE.") {
+    super(message);
+    Object.setPrototypeOf(this, ApiOFF.prototype);
+  }
+}
+
 /**
  * Função utilitária para requisições GET genéricas.
  * 
@@ -17,6 +25,8 @@ const api = axios.create({
  * @returns {Promise<T>} Dados retornados pela API.
  */
 export const responseBody = async <T = any>(route: string): Promise<T> => {
+  if (!API.stats) throw new ApiOFF();
+
   const response = await api.get<T>(route);
   return response.data;
 };
@@ -34,6 +44,8 @@ interface RequestOptions {
  * @returns {Promise<T>} Dados retornados pela API.
  */
 export const responsePost = async <T = any>(route: string, options: RequestOptions = {}): Promise<T> => {
+  if (!API.stats) throw new ApiOFF();
+
   try {
     const response = await api.post<T>(route, options.body, {
       params: options.params,
@@ -55,6 +67,8 @@ export const responsePost = async <T = any>(route: string, options: RequestOptio
 export const responseDelete = async <T = any>(
   route: string
 ): Promise<T> => {
+  if (!API.stats) throw new ApiOFF();
+
   try {
     const response = await api.delete<T>(route);
     return response.data;

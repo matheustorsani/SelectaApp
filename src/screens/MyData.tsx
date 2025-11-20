@@ -8,13 +8,14 @@ import { RootStackNavigationProp } from "../types/Navigation";
 import { useNavigation } from "@react-navigation/native";
 import { CardHeader } from "../components/Headers/CardHeader";
 import Icon from "react-native-vector-icons/AntDesign";
+import { Error } from "../components/Error";
 
 export const MyData = () => {
     const navigation = useNavigation<RootStackNavigationProp>();
     const { user } = useUser();
     const [editable, setEditable] = useState(false);
 
-    if (!user) return;
+    if (!user) return Error({ error: "Você precisa estar logado para ver seus dados.", retryText: "Ir para o Login", onPress: () => navigation.navigate("Login") });
 
     return (
         <KeyboardAwareScrollView

@@ -4,10 +4,18 @@ import { Styles } from "../styles/Styles";
 import { OrderSituation } from "../components/OrderSituation";
 import { useUser } from "../hook/useUser";
 import { Product } from "../types/Products";
+import { getProductById } from "../services/api/products/getProductById";
+import { Error } from "../components/Error";
+import { useNavigation } from "@react-navigation/native";
+import { RootStackNavigationProp } from "../types/Navigation";
 
 export const MyOrders = () => {
     const [products, setProducts] = useState<Product[]>([]);
     const { user } = useUser();
+    const navigation = useNavigation<RootStackNavigationProp>()
+
+    if (!user) return Error({ error: "Você precisa estar logado para ver seus pedidos.", retryText: "Ir para o Login", onPress: () => navigation.navigate("Login") });
+
 
     useEffect(() => {
         const fetchAllProducts = async () => {
@@ -25,7 +33,7 @@ export const MyOrders = () => {
         };
 
         fetchAllProducts();
-    }, [user?.orders]);
+    }, [user.orders]);
     return (
         <ScrollView contentContainerStyle={{ paddingBottom: 40 }} showsVerticalScrollIndicator={false} style={Styles.Main}>
             <Text style={{ fontWeight: "bold", fontSize: 18 }}>Pedidos Recentes</Text>
@@ -48,7 +56,3 @@ export const MyOrders = () => {
         </ScrollView>
     );
 }
-function getProductById(id: number): any {
-    throw new Error("Function not implemented.");
-}
-

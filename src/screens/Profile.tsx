@@ -10,22 +10,14 @@ import { RootStackNavigationProp } from "../types/Navigation";
 import { useNavigation } from "@react-navigation/native";
 import { useFavorites } from "../hook/useFavorites";
 import { resetToHome } from "../utils/resetToScreen";
+import { Error } from "../components/Error";
 
 export default function Profile() {
     const { user, logout: logoff } = useUser();
     const { favoriteProducts } = useFavorites();
     const navigation = useNavigation<RootStackNavigationProp>();
 
-    if (!user) {
-        return (
-            <View style={{ flex: 1, justifyContent: "center", alignItems: "center", padding: 16 }}>
-                <Text>Entre ou se cadastre!</Text>
-                <TouchableOpacity onPress={() => navigation.navigate("Login")}>
-                    <Text style={{ color: "blue", marginTop: 10 }}>Ir para Login/Cadastro</Text>
-                </TouchableOpacity>
-            </View>
-        );
-    }
+    if (!user) return Error({ error: "Você precisa estar logado para ver seu perfil.", retryText: "Ir para o Login", onPress: () => navigation.navigate("Login") });
 
     const logout = () => {
         Alert.alert(

@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import { Text, FlatList, RefreshControl, TouchableOpacity, View } from 'react-native';
+import { Text, FlatList, RefreshControl } from 'react-native';
 import { useProducts } from '../hook/useProducts';
 import { ProductCard } from '../components/ProductCard';
 import { Styles } from '../styles/Styles';
 import { LoadingSkeletonItems } from '../components/LoadingSkeletonItems';
+import { Error } from '../components/Error';
 
 export default function Home() {
     const { products, loading, loadProducts, error } = useProducts();
@@ -15,16 +16,7 @@ export default function Home() {
         setRefreshing(false);
     };
 
-    if (error) {
-        return (
-            <View style={[Styles.Main, { justifyContent: 'center', alignItems: 'center' }]}>
-                <Text style={{ marginBottom: 8, color: 'red', textAlign: "center" }}>{error}</Text>
-                <TouchableOpacity onPress={loadProducts} style={{ padding: 10, backgroundColor: '#007bff', borderRadius: 8 }}>
-                    <Text style={{ color: '#fff' }}>Tentar novamente</Text>
-                </TouchableOpacity>
-            </View>
-        );
-    }
+    if (error) return Error({ error, onPress: onRefresh, retryText: "Tentar novamente" });
 
     return (
         <FlatList

@@ -7,6 +7,7 @@ import { useUser } from "../hook/useUser";
 import { RootStackNavigationProp } from "../types/Navigation";
 import { useNavigation } from "@react-navigation/native";
 import { useFavorites } from "../hook/useFavorites";
+import { Error } from "../components/Error";
 
 export default function Favorites() {
     const { user } = useUser();
@@ -20,19 +21,7 @@ export default function Favorites() {
         setRefreshing(false);
     };
 
-    if (!user) {
-        return (
-            <View style={{ flex: 1, justifyContent: "center", alignItems: "center", padding: 16 }}>
-                <Text>Entre ou se cadastre!</Text>
-                <Text
-                    style={{ color: "blue", marginTop: 10 }}
-                    onPress={() => navigation.navigate("Login")}
-                >
-                    Ir para Login/Cadastro
-                </Text>
-            </View>
-        );
-    }
+    if (!user) return Error({ error: "Você precisa estar logado para ver os favoritos.", retryText: "Ir para o Login", onPress: () => navigation.navigate("Login") });
 
     return (
         <FlatList

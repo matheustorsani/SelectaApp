@@ -8,25 +8,16 @@ import { ProductCard } from "../components/ProductCard";
 import { useProducts } from "../hook/useProducts";
 import { useNavigation } from "@react-navigation/native";
 import { RootStackNavigationProp } from "../types/Navigation";
+import { Error } from "../components/Error";
 
 export default function Cart() {
     const { user } = useUser();
     const { products } = useProducts();
 
     const navigation = useNavigation<RootStackNavigationProp>();
-    if (!user) {
-        return (
-            <View style={{ flex: 1, justifyContent: "center", alignItems: "center", padding: 16 }}>
-                <Text>Entre ou se cadastre!</Text>
-                <Text
-                    style={{ color: "blue", marginTop: 10 }}
-                    onPress={() => navigation.navigate("Login")}
-                >
-                    Ir para Login/Cadastro
-                </Text>
-            </View>
-        );
-    }
+    
+    if (!user) return Error({ error: "Você precisa estar logado para ver o carrinho.", retryText: "Ir para o Login", onPress: () => navigation.navigate("Login") });
+
 
     const cartProducts = (user.cart ?? [])
         .map((id) => products.find((p) => p.id === id))

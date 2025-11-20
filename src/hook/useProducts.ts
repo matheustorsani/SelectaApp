@@ -44,6 +44,14 @@ export function useProducts() {
           setLoading(false);
           return;
         } catch (err: any) {
+          
+          if (err?.code === "API_OFFLINE" || err instanceof Error && (err as any).code === "API_OFFLINE") {
+            console.warn("API offline.");
+            setError("A API está offline no momento. Por favor, tente novamente mais tarde.");
+            setLoading(false);
+            return;
+          }
+
           console.warn(`Tentativa ${i + 1} falhou:`, err?.message || err);
           if (i === retries - 1) {
             setError("Não foi possível carregar os produtos. Verifique sua conexão.");

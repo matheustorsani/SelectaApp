@@ -1,5 +1,6 @@
 {
     "API": {
+        "stats": false,
         "endpoint": "https://selectaapi-ehg0gcd6cmapggeq.brazilsouth-01.azurewebsites.net/",
         "timeout": 5000,
         "routes": {
