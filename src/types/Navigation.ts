@@ -78,6 +78,8 @@ export type RootStackParams = {
   MyData: undefined;
   /** Tela de Adicionar novo produto */
   AddProduct: undefined;
+  /** Tela de Checkout */
+  Checkout: undefined;
 };
 
 

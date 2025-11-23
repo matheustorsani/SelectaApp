@@ -31,6 +31,7 @@ import { GenericHeader } from "../components/Headers/GenericHeader";
 import { MyTickets } from "../screens/MyTickets";
 import { Preferences } from "../screens/Preferences";
 import { AddProduct } from "../screens/AddProduct";
+import { Checkout } from "../screens/Checkout";
 
 const Tab = createBottomTabNavigator<TabParamList>();
 const Stack = createNativeStackNavigator<RootStackParams>();
@@ -121,13 +122,22 @@ export default function AppNavigator(): JSX.Element {
             header: () => <GenericHeader name="Meus Tickets" />,
           }}
         />
-        
+
         <Stack.Screen
           name="EditProduct"
           component={EditProduct}
           options={{
             headerShown: true,
             header: () => <HeaderEditProduct />,
+          }}
+        />
+
+        <Stack.Screen
+          name="Checkout"
+          component={Checkout}
+          options={{
+            headerShown: true,
+            header: () => <GenericHeader name="Finalizar Compra" />,
           }}
         />
 

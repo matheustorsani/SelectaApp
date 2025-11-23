@@ -15,9 +15,8 @@ export default function Cart() {
     const { products } = useProducts();
 
     const navigation = useNavigation<RootStackNavigationProp>();
-    
-    if (!user) return Error({ error: "Você precisa estar logado para ver o carrinho.", retryText: "Ir para o Login", onPress: () => navigation.navigate("Login") });
 
+    if (!user) return Error({ error: "Você precisa estar logado para ver o carrinho.", retryText: "Ir para o Login", onPress: () => navigation.navigate("Login") });
 
     const cartProducts = (user.cart ?? [])
         .map((id) => products.find((p) => p.id === id))
@@ -54,6 +53,14 @@ export default function Cart() {
                     <View style={{ flexDirection: "row", alignItems: "center", gap: 10, marginBottom: 15 }}>
                         <Icon name="shopping-cart" size={27} color="#0063E6" />
                         <Text style={Styles.TextTitle}>Meu Carrinho</Text>
+                        <Text onPress={() => navigation.navigate("Checkout")}>dskskdsks</Text>
+                        <TouchableOpacity disabled={cartProducts.length === 0} style={{ marginLeft: "auto" }} onPress={() => undefined}>
+                            <Text style={{
+                                color: cartProducts.length > 0 ? "#0063E6" : "#c9c9c9",
+                                fontWeight: "600", fontSize: 15
+                            }}>Pagar</Text>
+                        </TouchableOpacity>
+
                     </View>
 
                     <View
@@ -75,7 +82,7 @@ export default function Cart() {
                     {cartProducts.length === 0 && (
                         <Text style={{ color: "#64748B", marginTop: 16 }}>Seu carrinho está vazio.</Text>
                     )}
-                </View>
+                </ View>
             )}
         />
     );

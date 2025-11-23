@@ -10,7 +10,7 @@ type Props = { product: Product };
  * @returns Componente exibindo o preço do produto.
  */
 export const ProductPrice = ({ product }: Props) => {
-  const hasDiscount = !!product.discount;
+  const hasDiscount = product.discount;
   const finalPrice = hasDiscount
     ? product.price - (product.price * (product.discount! / 100))
     : product.price;

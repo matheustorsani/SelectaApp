@@ -90,7 +90,7 @@ export default function Profile() {
                     onPress={() => navigation.navigate("Tabs", { screen: "Favorites" })}
                 />
                 <ProfileOption icon="shopping-bag" title="Meus Pedidos" subtitle="Ver histórico de compras" onPress={() => navigation.navigate("MyOrders")} />
-                <ProfileOption icon="bell" title="Notificação" subtitle="Gerir preferências" />
+                <ProfileOption icon="bell" title="Notificação" subtitle="Gerir preferências" onPress={() => navigation.navigate("ProductDetails", { productId: 1 })}/>
                 <ProfileOption icon="box" title="Meus produtos" subtitle="Gerencie seus produtos à venda" onPress={() => navigation.navigate("MyProducts")} />
                 <ProfileOption icon="trending-up" title="Minhas vendas" subtitle="Histórico de vendas realizadas" onPress={() => navigation.navigate("MySales")} />
                 <ProfileOption icon="help-circle" title="Meus Tickets" subtitle="Suporte e atendimento" onPress={() => navigation.navigate("MyTickets")} />

@@ -57,7 +57,7 @@ const statusIcons: Record<string, string> = {
  * ```
  */
 export const OrderSituation = ({ order, data, situation, trackingCode, item }: OrderSituationProps) => {
-    const { user: u, setUser } = useUser();
+    const { user, setUser } = useUser();
 
     /**
      * Copia o código de rastreamento para a área de transferência.
@@ -70,15 +70,15 @@ export const OrderSituation = ({ order, data, situation, trackingCode, item }: O
      */
     const handleCopy = async (): Promise<void> => {
         await Clipboard.setStringAsync(trackingCode || "");
-        if (!u || !setUser) return;
+        if (!user || !setUser) return;
 
         const updatedUser = {
-            ...u,
+            ...user,
             orders: [1, 2, 3]
         } as any;
 
         setUser(updatedUser);
-        console.log(u);
+        console.log(user);
     }
 
     return (
@@ -122,8 +122,6 @@ export const OrderSituation = ({ order, data, situation, trackingCode, item }: O
                     </TouchableOpacity>
                 </View>
             )}
-
-
         </View>
     )
 }

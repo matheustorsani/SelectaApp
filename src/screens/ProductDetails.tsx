@@ -8,9 +8,9 @@ import { QuantitySelector } from "../components/ProductDetails/QuantitySelector"
 import { SellerInfo } from "../components/ProductDetails/SellerInfo";
 import { ProductTabs } from "../components/ProductDetails/ProductTabs";
 import { ProductFAQ } from "../components/ProductDetails/ProductFAQ";
+import { ProductOptions } from "../components/ProductDetails/ProductOptions";
 import { Styles } from "../styles/Styles";
 import { LoadingSkeletonProduct } from "../components/LoadingSkeletonProduct";
-
 
 export const ProductDetails = ({ route }: RootStackScreenProps<"ProductDetails">) => {
     const productId = route.params.productId
@@ -23,8 +23,9 @@ export const ProductDetails = ({ route }: RootStackScreenProps<"ProductDetails">
         <ScrollView style={Styles.Main} contentContainerStyle={{ paddingBottom: 40 }}>
             <ProductHeader product={product} />
             <ProductPrice product={product} />
-            <QuantitySelector amount={amount} onToggle={toggleAmount} />
+            <QuantitySelector amount={amount} onToggle={() => toggleAmount} />
             {error && <Text style={{ color: "red", marginBottom: 8 }}>{error}</Text>}
+            <ProductOptions onAdd={() => undefined} onBuy={() => undefined} />
             <SellerInfo />
             <ProductTabs product={product} />
             <ProductFAQ />

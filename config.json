@@ -1,23 +1,22 @@
 {
     "API": {
-        "stats": false,
-        "endpoint": "https://selectaapi-ehg0gcd6cmapggeq.brazilsouth-01.azurewebsites.net/",
+        "stats": true,
+        "endpoint": "https://selectaapi2-bwe5hxd9gth5cdau.brazilsouth-01.azurewebsites.net/",
         "timeout": 5000,
         "routes": {
-            "getAllCategory": "selectaAPI/Category/get-all-categories",
+            "getAllCategory": "selectaAPI/Category/todas-categorias",
             "allProducts": "selectaAPI/Home/all",
-            "searchProducts": "selectaAPI/Home/search",
+            "searchProducts": "selectaAPI/Product/pesquisar-produtos",
             "highlightsProducts": "selectaAPI/Home/highlights",
-            "wishListProducts": "selectaAPI/Home/wish-list",
+            "wishList": "selectaAPI/Home/wish-list",
             "forYouProducts": "selectaAPI/Home/for-you",
             "notifications": "selectaAPI/Home/notifications",
             "bestSellers": "selectaAPI/Home/best-sellers",
             "login": "/selectaAPI/Login/client-login",
-            "register": "selectaAPI/Client/register-client",
-            "wishList": "selectaAPI/Home/wish-list",
+            "register": "selectaAPI/Client/client-register",
             "addWishList": "selectaAPI/Home/add-products-wishList",
             "removeWishList": "selectaAPI/Home/remove-product-of-wish-list",
-            "mainImages": "selectaAPI/Product/get-principal-image",
+            "mainImages": "selectaAPI/Product/buscar-imagem-principal",
             "getProductById": "selectaAPI/Home/get-products-id"
         }
     }
