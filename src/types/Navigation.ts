@@ -80,6 +80,8 @@ export type RootStackParams = {
   AddProduct: undefined;
   /** Tela de Checkout */
   Checkout: undefined;
+  /** Tela de Status do Pedido */
+  OrderStatus: undefined;
 };
 
 

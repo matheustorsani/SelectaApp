@@ -32,6 +32,7 @@ import { MyTickets } from "../screens/MyTickets";
 import { Preferences } from "../screens/Preferences";
 import { AddProduct } from "../screens/AddProduct";
 import { Checkout } from "../screens/Checkout";
+import { OrderStatus } from "../screens/OrderStatus";
 
 const Tab = createBottomTabNavigator<TabParamList>();
 const Stack = createNativeStackNavigator<RootStackParams>();
@@ -120,6 +121,15 @@ export default function AppNavigator(): JSX.Element {
           options={{
             headerShown: true,
             header: () => <GenericHeader name="Meus Tickets" />,
+          }}
+        />
+
+        <Stack.Screen
+          name="OrderStatus"
+          component={OrderStatus}
+          options={{
+            headerShown: true,
+            header: () => <GenericHeader name="Pedidos #1234567" />,
           }}
         />
 

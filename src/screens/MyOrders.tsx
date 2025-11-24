@@ -36,14 +36,14 @@ export const MyOrders = () => {
     }, [user.orders]);
     return (
         <ScrollView contentContainerStyle={{ paddingBottom: 40 }} showsVerticalScrollIndicator={false} style={Styles.Main}>
-            <Text style={{ fontWeight: "bold", fontSize: 18 }}>Pedidos Recentes</Text>
+            <Text style={{ fontWeight: "bold", fontSize: 18 }} onPress={() => navigation.navigate("OrderStatus")}>Pedidos Recentes</Text>
             <View style={{ marginTop: 16, gap: 16 }}>
                 {products.length > 0 ? (
                     products.map(item => (
                         <OrderSituation
                             key={item.id}
                             order={`PED-${new Date().getFullYear()}-00${item.id}`}
-                            data={"2024-06-15"}
+                            data={"2025-09-15"}
                             situation={"Entregue"}
                             trackingCode={"TRK123456789BR"}
                             item={item}
