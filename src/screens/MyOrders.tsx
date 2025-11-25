@@ -36,7 +36,7 @@ export const MyOrders = () => {
     }, [user.orders]);
     return (
         <ScrollView contentContainerStyle={{ paddingBottom: 40 }} showsVerticalScrollIndicator={false} style={Styles.Main}>
-            <Text style={{ fontWeight: "bold", fontSize: 18 }} onPress={() => navigation.navigate("OrderStatus")}>Pedidos Recentes</Text>
+            <Text style={{ fontWeight: "bold", fontSize: 18 }}>Pedidos Recentes</Text>
             <View style={{ marginTop: 16, gap: 16 }}>
                 {products.length > 0 ? (
                     products.map(item => (
@@ -47,6 +47,7 @@ export const MyOrders = () => {
                             situation={"Entregue"}
                             trackingCode={"TRK123456789BR"}
                             item={item}
+                            onPress={() => navigation.navigate("OrderStatus")}
                         />
                     ))
                 ) : (
