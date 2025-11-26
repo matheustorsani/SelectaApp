@@ -15,7 +15,7 @@ type Props = { product: Product };
 export const ProductHeader = ({ product }: Props) => (
   <View>
     <Image
-      source={typeof product.image === "string" ? { uri: product.image } : product.image}
+      source={{ uri: product.mainImage || product.image }}
       style={{ width: "100%", height: 300, borderRadius: 8, marginBottom: 12 }}
     />
     <View style={{ flexDirection: "row", alignItems: "center", marginBottom: 6 }}>

@@ -16,8 +16,9 @@
             "register": "selectaAPI/Client/registrar-cliente",
             "addWishList": "selectaAPI/Home/add-products-wishList",
             "removeWishList": "selectaAPI/Home/remove-product-of-wish-list",
-            "mainImages": "selectaAPI/Product/buscar-imagem-principal",
-            "getProductById": "selectaAPI/Home/get-products-id"
+            "mainImages": "selectaAPI/Product/produto/imagem-principal",
+            "getProductById": "selectaAPI/Home/buscar-produto-id",
+            "getUserById": "selectaAPI/Client/buscar-cliente-id"
         }
     }
 }

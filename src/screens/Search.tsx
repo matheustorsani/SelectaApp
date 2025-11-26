@@ -10,7 +10,6 @@ import { Error } from "../components/Error";
 export default function Search() {
     const { products, loading, loadProducts, search, error } = useProducts();
     const [query, setQuery] = useState("");
-    const [refreshing, setRefreshing] = useState(false);
 
     const debouncedSearch = useMemo(
         () =>
@@ -41,7 +40,7 @@ export default function Search() {
             windowSize={5}
             removeClippedSubviews={true}
             contentContainerStyle={{ paddingBottom: 40 }}
-            refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
+            refreshControl={<RefreshControl refreshing={loading} onRefresh={onRefresh} />}
             onEndReached={loadProducts}
             onEndReachedThreshold={0.5}
             getItemLayout={(data, index) => ({

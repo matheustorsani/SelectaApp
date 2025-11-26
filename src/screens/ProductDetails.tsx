@@ -21,12 +21,12 @@ export const ProductDetails = ({ route }: RootStackScreenProps<"ProductDetails">
 
     return (
         <ScrollView style={Styles.Main} contentContainerStyle={{ paddingBottom: 40 }}>
-            <ProductHeader product={product} />
+            <ProductHeader product={product}/>
             <ProductPrice product={product} />
             <QuantitySelector amount={amount} onToggle={() => toggleAmount} />
             {error && <Text style={{ color: "red", marginBottom: 8 }}>{error}</Text>}
             <ProductOptions onAdd={() => undefined} onBuy={() => undefined} />
-            <SellerInfo />
+            <SellerInfo seller={product.idVendedor}/>
             <ProductTabs product={product} />
             <ProductFAQ />
         </ScrollView>

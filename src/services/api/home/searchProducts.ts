@@ -12,7 +12,7 @@ import { API } from "../../../../config.json";
 export const searchProducts = async (query: string): Promise<Product[]> => {
     try {
         const data = await responseBody<any[]>(
-            `${API.routes.searchProducts}?name=${encodeURIComponent(query.toLowerCase())}`
+            `${API.routes.searchProducts}?query=${encodeURIComponent(query.toLowerCase())}`
         );
         return data.map(normalizeProduct);
     } catch (error) {

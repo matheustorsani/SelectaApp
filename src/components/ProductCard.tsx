@@ -47,7 +47,6 @@ export function ProductCard({ item }: ProductCardProps) {
   const navigation = useNavigation<RootStackNavigationProp>();
 
   const isLoading = loadingFavorites.includes(item.id);
-
   return (
     <TouchableOpacity style={{
       width: '48%',
@@ -80,7 +79,7 @@ export function ProductCard({ item }: ProductCardProps) {
       </View>
 
       <Image
-        source={typeof item.image === 'string' ? { uri: item.image } : item.image}
+        source={{ uri: item.mainImage ?? undefined }}
         style={{ width: 120, height: 120, alignSelf: 'center' }}
       />
       <Text>{item.name}</Text>

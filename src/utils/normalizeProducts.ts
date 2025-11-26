@@ -51,8 +51,9 @@ export function normalizeProduct(item: any): Product {
     category: item.category,
     peso: item.peso,
     status: item.status,
-    condition: item.condition,
-    rate: item.rate,
+    condition: item.condicao,
+    mainImage: item.mainImage,
+    rate: item.nota,
     totalRatings: item.totalRatings,
     specifications: item.specifications
   };
