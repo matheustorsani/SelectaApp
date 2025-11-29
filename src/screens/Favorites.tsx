@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Text, View, FlatList, RefreshControl } from "react-native";
 import { Styles } from "../styles/Styles";
 import Icon from "react-native-vector-icons/Feather";
@@ -17,10 +17,13 @@ export default function Favorites() {
 
     const onRefresh = async () => {
         setRefreshing(true);
-        console.log(user)
         await reloadFavorites();
         setRefreshing(false);
     };
+
+    useEffect(() => {
+        onRefresh();
+    }, []);
 
     if (!user) return Error({ error: "Você precisa estar logado para ver os favoritos.", retryText: "Ir para o Login", onPress: () => navigation.navigate("Login") });
 
@@ -35,7 +38,7 @@ export default function Favorites() {
             keyExtractor={(item) => item.id.toString()}
             numColumns={2}
             columnWrapperStyle={{ justifyContent: "space-between", marginBottom: 16 }}
-            refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
+            refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} colors={['#0063E6']}/>}
             renderItem={({ item }) => (
                 <ProductCard
                     key={item.id}

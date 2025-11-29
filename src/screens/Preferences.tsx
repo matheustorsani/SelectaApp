@@ -16,7 +16,7 @@ export const Preferences = () => {
         <ScrollView style={Styles.Main} contentContainerStyle={{ paddingBottom: 40 }} showsVerticalScrollIndicator={false}>
             <Card style={Styles.Card}>
                 <Card.Content>
-                    <CardHeader name="Minhas Preferências" icon="bell-o"/>
+                    <CardHeader name="Minhas Preferências" icon="bell"/>
                     <SwitchOptions title="Notificações Push" subtitle="Receber no dispositivo" enabled={true} />
                     <SwitchOptions title="Email" subtitle="Receber por email" />
                     <SwitchOptions title="SMS" subtitle="Receber por mensagens" />

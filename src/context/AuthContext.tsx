@@ -1,7 +1,7 @@
 import React, { createContext, useState, useEffect } from "react";
 import { User } from "../types/User";
 import { saveUser, getUser } from "../services/UserService";
-import { setBearer } from "../services/api/BearerManager";
+import { initBearer, setBearer } from "../services/api/BearerManager";
 
 export const AuthContext = createContext<{
     user: User | null;
@@ -32,6 +32,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
     useEffect(() => {
         (async () => {
+            await initBearer();
             const savedUser = await getUser();
             if (savedUser) setUserState(savedUser);
         })();

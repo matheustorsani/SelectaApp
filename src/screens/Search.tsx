@@ -43,7 +43,7 @@ export default function Search() {
             windowSize={5}
             removeClippedSubviews={true}
             contentContainerStyle={{ paddingBottom: 40 }}
-            refreshControl={<RefreshControl refreshing={loading} onRefresh={onRefresh} />}
+            refreshControl={<RefreshControl refreshing={loading} onRefresh={onRefresh} colors={['#0063E6']}/>}
             onEndReached={loadProducts}
             onEndReachedThreshold={0.5}
             getItemLayout={(data, index) => ({

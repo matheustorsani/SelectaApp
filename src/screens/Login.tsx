@@ -32,10 +32,9 @@ export const Login = () => {
 
             setError("");
 
-            const logged: User = {
-                id: user.idCliente,
+            const logged: User = {  
                 name: user.nomeCliente,
-                email: user.nomeCliente,
+                email: emailTrim,
                 bearer: user,
                 avatar: require("../../assets/Sample_User_Icon.png"),
             };

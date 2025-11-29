@@ -27,7 +27,8 @@ export async function getUser(): Promise<User | null> {
     if (!data) return null;
 
     const parsed = JSON.parse(data);
-    return typeof parsed === "object" && parsed ? (parsed as User) : null;
+
+    return parsed as User ?? null;
   } catch (error) {
     console.warn("Erro ao obter usuário:", error);
     return null;

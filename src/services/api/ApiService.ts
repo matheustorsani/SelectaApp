@@ -15,7 +15,7 @@ const api = axios.create({
  * Interceptor para adicionar o Authorization: Bearer TOKEN
  * em TODAS as requisições automaticamente.
  */
-api.interceptors.request.use(async (config) => {
+api.interceptors.request.use((config) => {
   const token = getBearer();
 
   if (token) {

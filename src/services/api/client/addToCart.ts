@@ -1,10 +1,10 @@
 import { responsePost } from "../ApiService";
 import { API } from "../../../../config.json";
 
-export const addToCart = async (productId: string, quantity: number) => {
+export const addToCart = async (productId: number, quantity: number) => {
     try {
         return await responsePost<any>(`${API.routes.addToCart}`, {
-            params: {
+            body: {
                 idProduto: productId,
                 quantidade: quantity
             }

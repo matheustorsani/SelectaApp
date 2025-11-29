@@ -79,7 +79,7 @@ export type RootStackParams = {
   /** Tela de Adicionar novo produto */
   AddProduct: undefined;
   /** Tela de Checkout */
-  Checkout: undefined;
+  Checkout: undefined | { buyNowProduct: Product, amount: number };
   /** Tela de Status do Pedido */
   OrderStatus: undefined;
 };

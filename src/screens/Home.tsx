@@ -29,7 +29,7 @@ export default function Home() {
             windowSize={5}
             removeClippedSubviews={true}
             contentContainerStyle={{ paddingBottom: 40 }}
-            refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
+            refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} colors={['#0063E6']} />}
             onEndReached={loadProducts}
             onEndReachedThreshold={0.5}
             ListEmptyComponent={

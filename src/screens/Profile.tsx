@@ -11,10 +11,12 @@ import { useNavigation } from "@react-navigation/native";
 import { useFavorites } from "../hook/useFavorites";
 import { resetToHome } from "../utils/resetToScreen";
 import { Error } from "../components/Error";
+import { useCart } from "../hook/useCart";
 
 export default function Profile() {
     const { user, logout: logoff } = useUser();
     const { favoriteProducts } = useFavorites();
+    const { cartProducts } = useCart();
     const navigation = useNavigation<RootStackNavigationProp>();
 
     if (!user) return Error({ error: "Você precisa estar logado para ver seu perfil.", retryText: "Ir para o Login", onPress: () => navigation.navigate("Login") });
@@ -44,7 +46,7 @@ export default function Profile() {
         <ScrollView style={Styles.Main} contentContainerStyle={{ paddingBottom: 40 }} showsVerticalScrollIndicator={false}>
             <View style={{ flexDirection: "row", alignItems: "center", marginBottom: 32 }}>
                 <Image
-                    source={typeof user.avatar === "string" ? { uri: user.avatar } : user.avatar}
+                    source={require("../../assets/Sample_User_Icon.png")}
                     style={{
                         width: 80,
                         height: 80,
@@ -58,21 +60,21 @@ export default function Profile() {
 
                 <View>
                     <Text style={{ fontWeight: "bold", fontSize: 25, flexShrink: 1, maxWidth: 200 }}>
-                        {user.name}
+                        {user.name ?? "Usuario"}
                     </Text>
                     <Text style={{ color: "gray" }}>{user.email}</Text>
                 </View>
             </View>
 
             <View style={{ flexDirection: "row", justifyContent: "space-between", marginBottom: 32 }}>
-                <ProfileBoxActivity title={user.orders?.length || 0} subtitle="Pedidos" />
+                <ProfileBoxActivity title={0} subtitle="Pedidos" />
                 <ProfileBoxActivity
-                    title={favoriteProducts.length}
+                    title={favoriteProducts.length || 0}
                     subtitle="Favoritos"
                     onPress={() => navigation.navigate("Tabs", { screen: "Favorites" })}
                 />
                 <ProfileBoxActivity
-                    title={user.cart?.length || 0}
+                    title={cartProducts.length || 0}
                     subtitle="Carrinho"
                     onPress={() => navigation.navigate("Tabs", { screen: "Cart" })}
                 />
