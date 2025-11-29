@@ -5,13 +5,12 @@ import axios from "axios";
 /**
  * Remove um produto da lista de desejos de um cliente.
  * 
- * @param {number} idClient - ID do cliente.
  * @param {number} idProduct - ID do produto.
  * @returns {Promise<any>} Resposta da API.
  */
-export const removeFavorite = async (idClient: number, idProduct: number): Promise<any> => {
+export const removeFavorite = async (idProduct: number): Promise<any> => {
     try {
-        await responseDelete(`${API.routes.removeWishList}?idCliente=${idClient}&idProduto=${idProduct}`);
+        await responseDelete(`${API.routes.removeWishList}/${idProduct}`);
     } catch (error) {
         console.error("Ocorreu um erro ao remover o produto da lista de desejos:", error);
         throw error;

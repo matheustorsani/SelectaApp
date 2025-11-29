@@ -10,6 +10,7 @@ import { safeGoBack } from '../../utils/safeGoBack';
 import { ActivityIndicator } from 'react-native-paper';
 import { useFavorites } from '../../hook/useFavorites';
 import { Styles } from '../../styles/Styles';
+import { useUser } from '../../hook/useUser';
 
 interface Props {
     productId: number;
@@ -25,11 +26,16 @@ interface Props {
 
 export const HeaderProductsDetails = ({ productId }: Props) => {
     const navigation = useNavigation<RootStackNavigationProp>();
-
+    const { user } = useUser();
     const { product, loading } = useProductDetails(productId);
     const { isFavorite, toggleFavorite, loadingFavorites } = useFavorites();
 
     const isLoading = loadingFavorites.includes(productId);
+
+    const isLogged = () => {
+        if (!user) return navigation.navigate('Login');
+        toggleFavorite(productId)
+    }
 
     const handleShare = async () => {
         if (!product) return;
@@ -54,7 +60,7 @@ export const HeaderProductsDetails = ({ productId }: Props) => {
                 <View style={Styles.actions}>
                     <TouchableOpacity
                         style={{ marginRight: 16 }}
-                        onPress={() => toggleFavorite(product.id)}
+                        onPress={() => isLogged()}
                         disabled={isLoading}
                     >
                         {isLoading ? (

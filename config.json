@@ -8,17 +8,20 @@
             "allProducts": "selectaAPI/Home/listar-todos-produtos",
             "searchProducts": "selectaAPI/Product/pesquisar-produtos",
             "highlightsProducts": "selectaAPI/Home/destaques",
-            "wishList": "selectaAPI/Home/wish-list",
+            "wishList": "selectaAPI/Home/lista-de-desejos",
             "forYouProducts": "selectaAPI/Home/for-you",
             "notifications": "selectaAPI/Home/notifications",
             "bestSellers": "selectaAPI/Home/best-sellers",
             "login": "/selectaAPI/Login/login-cliente",
             "register": "selectaAPI/Client/registrar-cliente",
-            "addWishList": "selectaAPI/Home/add-products-wishList",
-            "removeWishList": "selectaAPI/Home/remove-product-of-wish-list",
+            "addWishList": "selectaAPI/Home/lista-de-desejos/adicionar",
+            "removeWishList": "selectaAPI/Home/lista-de-desejos/remover",
             "mainImages": "selectaAPI/Product/produto/imagem-principal",
             "getProductById": "selectaAPI/Home/buscar-produto-id",
-            "getUserById": "selectaAPI/Client/buscar-cliente-id"
+            "getUserById": "selectaAPI/Client/buscar-cliente-id",
+            "getProductsInCart": "selectaAPI/Home/carrinho/listar-produtos",
+            "addToCart": "selectaAPI/Client/carrinho/adicionar-produto",
+            "removeFromCart": "selectaAPI/Home/carrinho/remover"
         }
     }
 }

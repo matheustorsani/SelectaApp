@@ -17,6 +17,7 @@ export default function Favorites() {
 
     const onRefresh = async () => {
         setRefreshing(true);
+        console.log(user)
         await reloadFavorites();
         setRefreshing(false);
     };

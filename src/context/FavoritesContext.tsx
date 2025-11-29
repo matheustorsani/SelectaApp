@@ -1,9 +1,8 @@
-import React, { createContext, useState, useEffect } from "react";
+import React, { createContext, useState } from "react";
 import { Product } from "../types/Products";
 import { favorites } from "../services/api/favorites/favorites";
 import { removeFavorite } from "../services/api/favorites/removeFavorites";
 import { addFavorites } from "../services/api/favorites/addFavorites";
-import { useUser } from "../hook/useUser";
 
 export const FavoritesContext = createContext<{
   favoriteProducts: Product[];
@@ -53,18 +52,12 @@ export const FavoritesContext = createContext<{
  * @public
  */
 export const FavoritesProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const { user } = useUser();
   const [favoriteProducts, setFavoriteProducts] = useState<Product[]>([]);
   const [loadingFavorites, setLoadingFavorites] = useState<number[]>([]);
 
-  useEffect(() => {
-    if (user?.id) reloadFavorites();
-  }, [user]);
-
   const reloadFavorites = async () => {
-    if (!user?.id) return;
     try {
-      const serverFavorites = await favorites(user.id);
+      const serverFavorites = await favorites();
       setFavoriteProducts(serverFavorites);
     } catch (error) {
       console.error("Erro ao carregar favoritos:", error);
@@ -75,16 +68,15 @@ export const FavoritesProvider: React.FC<{ children: React.ReactNode }> = ({ chi
     favoriteProducts.some((product) => product.id === productId);
 
   const toggleFavorite = async (productId: number) => {
-    if (!user?.id) return;
     const currentlyFavorite = isFavorite(productId);
-
+    
     try {
       setLoadingFavorites((prev) => [...prev, productId]);
 
       if (currentlyFavorite) {
-        await removeFavorite(user.id, productId);
+        await removeFavorite(productId);
       } else {
-        await addFavorites(user.id, productId);
+        await addFavorites(productId);
       }
 
       await reloadFavorites();
