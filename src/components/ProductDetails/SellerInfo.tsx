@@ -4,7 +4,7 @@ import Icon from "react-native-vector-icons/FontAwesome";
 import IconO from "react-native-vector-icons/Octicons";
 import { getUserById } from "../../services/api/client/getUserById";
 
-type Props = {
+interface Props {
   seller: number;
 }
 
@@ -24,10 +24,11 @@ export const SellerInfo = ({ seller }: Props) => {
     <View
       style={{
         borderWidth: 1,
-        borderColor: "#ccc",
-        padding: 10,
-        borderRadius: 8,
-        marginBottom: 16,
+        borderColor: "#ddd",
+        padding: 14,
+        borderRadius: 10,
+        marginBottom: 20,
+        backgroundColor: "#fafafa",
       }}
     >
       <View style={{ flexDirection: "row", alignItems: "center", gap: 5 }}>

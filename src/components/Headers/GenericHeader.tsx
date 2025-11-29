@@ -7,7 +7,7 @@ import { safeGoBack } from '../../utils/safeGoBack';
 import { useNavigation } from '@react-navigation/native';
 import { Styles } from '../../styles/Styles';
 
-type Props = {
+interface Props {
     name: string;
 }
 export const GenericHeader = ({ name }: Props) => {

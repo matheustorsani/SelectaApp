@@ -1,11 +1,12 @@
 import React, { useState, useMemo } from "react";
-import { Text, FlatList, RefreshControl, TouchableOpacity, View } from "react-native";
+import { Text, FlatList, RefreshControl, View } from "react-native";
 import { ProductCard } from "../components/ProductCard";
 import { Styles } from "../styles/Styles";
 import { SearchBar } from "../components/SearchBar";
 import { useProducts } from "../hook/useProducts";
 import { debounce } from "../utils/debounce";
 import { Error } from "../components/Error";
+import Icon from "react-native-vector-icons/Feather";
 
 export default function Search() {
     const { products, loading, loadProducts, search, error } = useProducts();
@@ -27,6 +28,8 @@ export default function Search() {
     const onRefresh = async () => {
         await loadProducts();
     };
+
+    const isSearching = query.trim().length > 0;
 
     if (error) return Error({ error, onPress: onRefresh, retryText: "Tentar Novamente" });
 
@@ -52,18 +55,76 @@ export default function Search() {
             numColumns={2}
             columnWrapperStyle={{ justifyContent: 'space-between', marginBottom: 16 }}
             renderItem={({ item }) => <ProductCard key={item.id} item={item} />}
+            ListEmptyComponent={
+                <View style={{
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    padding: 30,
+                    marginTop: 30,
+                    minHeight: 200,
+                    backgroundColor: '#fff',
+                    borderRadius: 12,
+                    borderWidth: 1,
+                    borderColor: '#E2E8F0',
+                    marginHorizontal: 16,
+                }}>
+                    <Icon name="search" size={50} color="#CBD5E1" style={{ marginBottom: 15 }} />
+                    <Text style={{
+                        fontSize: 18,
+                        fontWeight: '700',
+                        color: '#334155',
+                        marginBottom: 8,
+                        textAlign: 'center',
+                    }}>
+                        {isSearching ? "Nenhum resultado encontrado" : "Nenhum produto disponível"}
+                    </Text>
+                    <Text style={{
+                        fontSize: 14,
+                        color: '#64748B',
+                        textAlign: 'center',
+                    }}>
+                        {isSearching ? "Tente buscar por termos diferentes." : "O catálogo está vazio no momento."}
+                    </Text>
+                </View>
+            }
             ListHeaderComponent={
-                <>
+                <View style={{ marginBottom: 10 }}>
                     <SearchBar value={query} onChangeText={handleChangeText} />
-                    <Text style={Styles.TextTitle}>
-                        {query.trim() ? "Resultados da busca" : "Todos os produtos"}
+                    <View style={{
+                        flexDirection: 'row',
+                        alignItems: 'center',
+                        gap: 8,
+                        marginBottom: 4,
+                    }}>
+                        <Icon name={isSearching ? "tag" : "grid"} size={20} color="#0063E6" />
+                        <Text style={{
+                            fontSize: 20,
+                            fontWeight: '700',
+                            color: '#1e293b'
+                        }}>
+                            {isSearching ? "Resultados da Busca" : "Catálogo de Produtos"}
+                        </Text>
+                    </View>
+
+                    <Text style={{
+                        fontSize: 14,
+                        color: '#64748B',
+                        marginBottom: 10,
+                    }}>
+                        {isSearching
+                            ? `Exibindo ${products.length} resultados para "${query}"`
+                            : "Explore nosso catálogo completo"
+                        }
                     </Text>
-                    <Text style={Styles.TextSubtitle}>
-                        {query.trim()
-                            ? `Exibindo resultados para "${query}"`
-                            : "Explore nosso catálogo completo"}
-                    </Text>
-                </>
+
+                    {products.length > 0 && (
+                        <View style={{
+                            height: 1,
+                            backgroundColor: '#F1F5F9',
+                            marginBottom: 10
+                        }} />
+                    )}
+                </View>
             }
         />
     );

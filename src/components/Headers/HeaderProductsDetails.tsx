@@ -11,7 +11,7 @@ import { ActivityIndicator } from 'react-native-paper';
 import { useFavorites } from '../../hook/useFavorites';
 import { Styles } from '../../styles/Styles';
 
-type Props = {
+interface Props {
     productId: number;
 };
 

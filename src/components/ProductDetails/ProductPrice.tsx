@@ -2,7 +2,7 @@ import React from "react";
 import { View, Text } from "react-native";
 import { Product } from "../../types/Products";
 
-type Props = { product: Product };
+interface Props { product: Product };
 /** 
  * Componente que exibe o preço do produto, incluindo desconto se aplicável.
  * 
@@ -16,7 +16,7 @@ export const ProductPrice = ({ product }: Props) => {
     : product.price;
 
   return (
-    <View style={{ marginTop: 8 }}>
+    <View style={{ marginBottom: 10 }}>
       <View style={{ flexDirection: "row", alignItems: "center" }}>
         <Text style={{ fontSize: 25, color: "#0063E6", fontWeight: "bold" }}>
           R$ {finalPrice.toFixed(2)}

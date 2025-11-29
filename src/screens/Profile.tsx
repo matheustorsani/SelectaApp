@@ -94,17 +94,7 @@ export default function Profile() {
                 <ProfileOption icon="box" title="Meus produtos" subtitle="Gerencie seus produtos à venda" onPress={() => navigation.navigate("MyProducts")} />
                 <ProfileOption icon="trending-up" title="Minhas vendas" subtitle="Histórico de vendas realizadas" onPress={() => navigation.navigate("MySales")} />
                 <ProfileOption icon="help-circle" title="Meus Tickets" subtitle="Suporte e atendimento" onPress={() => navigation.navigate("MyTickets")} />
-
-                <TouchableOpacity onPress={() => navigation.navigate("Delivery", { status: 'offline' })}>
-                    <View style={{ flexDirection: "row", alignItems: "center" }}>
-                        <IconFA name="motorcycle" size={20} style={{ marginRight: 14, color: "#64748B" }} />
-                        <View style={{ flexDirection: "column" }}>
-                            <Text style={{ color: "#020817", fontSize: 16 }}>Delivery</Text>
-                            <Text style={{ color: "#64748B" }}>Entregue pedidos</Text>
-                        </View>
-                    </View>
-                </TouchableOpacity>
-
+                <ProfileOption icon="truck" title="Delivery" subtitle="Entregue pedidos" onPress={() => navigation.navigate("Delivery", { status: 'offline' })} />
                 <ProfileOption icon="user" title="Dados Cadastrais" subtitle="Edite suas informações" onPress={() => navigation.navigate("MyData")} />
                 <ProfileOption icon="settings" title="Configurações" subtitle="Conta e privacidade" onPress={() => navigation.navigate("Preferences")} />
 

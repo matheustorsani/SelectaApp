@@ -2,39 +2,66 @@ import React from "react";
 import MapView, { Marker, UrlTile } from "react-native-maps";
 import { Order } from "../../types/Delivery";
 
-type Props = {
+interface Props {
   userLocation: { latitude: number; longitude: number } | null;
   order: Order | null;
   stage: "waiting" | "pickup" | "delivery" | null;
 };
 
+const PIN_COLORS = {
+  USER: '#1D77ED',
+  PICKUP: '#10B981',
+  DELIVERY: '#E74C3C',
+  DEFAULT: 'gray',
+};
+
+
 export const MapViewComponent: React.FC<Props> = ({ userLocation, order, stage }) => (
   <MapView
-    style={{ flex: 1 }}
+    style={{ flex: 1, backgroundColor: '#f0f0f0' }}
     region={{
       latitude: userLocation?.latitude || -23.556,
       longitude: userLocation?.longitude || -46.634,
-      latitudeDelta: 0.01,
-      longitudeDelta: 0.01,
+      longitudeDelta: 0.05,
+      latitudeDelta: 0.05,
     }}
+    showsUserLocation={true}
+    showsMyLocationButton={false}
   >
-    <UrlTile urlTemplate="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" maximumZ={19} />
-
-    {userLocation && <Marker coordinate={userLocation} title="Você" pinColor="blue" />}
+    <UrlTile
+      urlTemplate="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+      maximumZ={19}
+    />
 
     {stage === "waiting" && order && (
       <>
-        <Marker coordinate={order.pickup} title="Coleta" pinColor="green" />
-        <Marker coordinate={order.delivery} title="Entrega" pinColor="red" />
+        <Marker
+          coordinate={order.pickup}
+          title="Coleta"
+          pinColor={PIN_COLORS.PICKUP}
+        />
+        <Marker
+          coordinate={order.delivery}
+          title="Entrega"
+          pinColor={PIN_COLORS.DELIVERY}
+        />
       </>
     )}
 
     {stage === "pickup" && order && (
-      <Marker coordinate={order.pickup} title="Coleta" pinColor="green" />
+      <Marker
+        coordinate={order.pickup}
+        title="Coleta"
+        pinColor={PIN_COLORS.PICKUP}
+      />
     )}
 
     {stage === "delivery" && order && (
-      <Marker coordinate={order.delivery} title="Entrega" pinColor="red" />
+      <Marker
+        coordinate={order.delivery}
+        title="Entrega"
+        pinColor={PIN_COLORS.DELIVERY}
+      />
     )}
   </MapView>
 );

@@ -8,7 +8,7 @@ interface Props {
 
 export const ProductOptions = ({ onAdd, onBuy }: Props) => {
     return (
-        <View style={{ flexDirection: "row", gap: 12, marginVertical: 24 }}>
+        <View style={{ flexDirection: "row", gap: 12, marginVertical: 15 }}>
             <TouchableOpacity
                 style={{
                     flex: 1,

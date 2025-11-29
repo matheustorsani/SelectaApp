@@ -2,7 +2,7 @@ import React from "react";
 import { Text, TouchableOpacity } from "react-native";
 import Icon from "react-native-vector-icons/Feather";
 
-type Props = {
+interface Props {
     /** Cor do background */
     bgColor: string;
     /** Cor do icone e texto */
@@ -15,6 +15,7 @@ type Props = {
     itens?: number;
     /** Função ao pressionar o card */
     onPress?: () => void;
+    disabled?: boolean;
 }
 
 /**
@@ -36,7 +37,7 @@ type Props = {
  *
  * @returns JSX.Element - Um TouchableOpacity configurado como um cartão de opção.
  */
-export const OptionCard = ({ bgColor, color, icon, text, onPress, itens = 1 }: Props) => {
+export const OptionCard = ({ disabled = false, bgColor, color, icon, text, onPress, itens = 1 }: Props) => {
     return (
         <TouchableOpacity activeOpacity={0.7} style={{
             flexDirection: "row",
@@ -45,14 +46,14 @@ export const OptionCard = ({ bgColor, color, icon, text, onPress, itens = 1 }: P
             padding: 15,
             width: itens > 1 ? `${(100 / itens) - 10}%` : "100%",
             borderWidth: 1,
-            borderColor: "#E2E4E9",
+            borderColor: disabled ? "#c9c9c9" : "#E2E4E9",
             borderRadius: 10,
             gap: 10,
             elevation: 2,
-            backgroundColor: bgColor,
-        }} onPress={onPress}>
+            backgroundColor: disabled ? "#c9c9c9" : bgColor,
+        }} onPress={onPress} disabled={disabled}>
             {icon && <Icon name={icon} color={color} />}
             <Text style={{ color: color }}>{text}</Text>
-        </TouchableOpacity >
+        </TouchableOpacity>
     );
 }

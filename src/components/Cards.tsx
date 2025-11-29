@@ -1,41 +1,55 @@
-import React from "react"
-import { View, Text } from "react-native"
+import React from "react";
+import { View, Text, StyleSheet } from "react-native";
 
-
-type Props = {
-    /** Número ou valor a ser exibido no cartão. */
-    number: string | number;
-    /** Texto descritivo do cartão. */
-    text: string;
-    /** Cor do número ou valor exibido. */
-    color: string;
+interface Props {
+  /** Número ou valor a ser exibido no cartão. */
+  number: string | number;
+  /** Texto descritivo do cartão. */
+  text: string;
+  /** Cor do número ou valor exibido. */
+  color: string;
 }
-
 
 /**
- * Componente Cards
- *
- * Renderiza um cartão de estatísticas com um valor em destaque e um texto descritivo.
- *
- * Destinado a dashboards e visões de métricas para exibir contadores, indicadores ou KPIs de forma compacta.
- *
- * @returns JSX.Element — um cartão estilizado contendo o valor e sua descrição.
+ * Cards — componente estilizado para exibir KPIs e estatísticas.
+ * Visual moderno, espaçamento proporcional e sombra suave.
  */
 export const Cards = ({ number, text, color }: Props) => {
-    return (
-        <View style={{
-            padding: 20,
-            backgroundColor: '#fff',
-            borderRadius: 10,
-            marginBottom: 20,
-            flexDirection: 'column',
-            alignItems: 'center',
-            borderWidth: 1,
-            elevation: 2,
-            borderColor: '#E2E4E9',
-        }}>
-            <Text style={{ color: color, fontSize: 25, fontWeight: "bold" }}>{number}</Text>
-            <Text style={{ color: "#6C7493" }}>{text}</Text>
-        </View>
-    )
-}
+  return (
+    <View style={styles.card}>
+      <Text style={[styles.number, { color }]}>{number}</Text>
+      <Text style={styles.label}>{text}</Text>
+    </View>
+  );
+};
+
+const styles = StyleSheet.create({
+  card: {
+    width: "100%",
+    paddingVertical: 18,
+    paddingHorizontal: 22,
+    backgroundColor: "#FFFFFF",
+    borderRadius: 16,
+    elevation: 4,
+    shadowColor: "#000",
+    shadowOpacity: 0.08,
+    shadowRadius: 8,
+    shadowOffset: { width: 0, height: 4 },
+    marginBottom: 20,
+    alignItems: "center",
+    borderWidth: 1,
+    borderColor: "#F1F1F3",
+  },
+
+  number: {
+    fontSize: 32,
+    fontWeight: "700",
+    marginBottom: 4,
+  },
+
+  label: {
+    fontSize: 14,
+    color: "#6C7493",
+    fontWeight: "500",
+  },
+});

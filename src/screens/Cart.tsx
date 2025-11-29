@@ -40,6 +40,7 @@ export default function Cart() {
             data={cartProducts}
             keyExtractor={(item) => item.id.toString()}
             numColumns={2}
+            contentContainerStyle={{ paddingBottom: 30 }}
             columnWrapperStyle={{ justifyContent: "space-between", marginBottom: 16 }}
             renderItem={({ item }) => (
                 <TouchableOpacity
@@ -49,16 +50,38 @@ export default function Cart() {
                 </TouchableOpacity>
             )}
             ListHeaderComponent={() => (
-                <View style={{ marginBottom: 16 }}>
-                    <View style={{ flexDirection: "row", alignItems: "center", gap: 10, marginBottom: 15 }}>
-                        <Icon name="shopping-cart" size={27} color="#0063E6" />
-                        <Text style={Styles.TextTitle}>Meu Carrinho</Text>
-                        <Text onPress={() => navigation.navigate("Checkout")}>dskskdsks</Text>
-                        <TouchableOpacity disabled={cartProducts.length === 0} style={{ marginLeft: "auto" }} onPress={() => undefined}>
+                <View style={{ marginBottom: 16, paddingBottom: 10 }}>
+
+                    <View style={{
+                        flexDirection: "row",
+                        alignItems: "center",
+                        marginBottom: 15,
+                        justifyContent: 'space-between',
+                    }}>
+                        <View style={{ flexDirection: "row", alignItems: "center", gap: 8 }}>
+                            <Icon name="shopping-cart" size={26} color="#0063E6" />
+                            <Text style={{ fontSize: 22, fontWeight: "700", color: '#1e293b' }}>
+                                Meu Carrinho
+                            </Text>
+                        </View>
+
+                        <TouchableOpacity
+                            disabled={cartProducts.length === 0}
+                            style={{
+                                paddingVertical: 8,
+                                paddingHorizontal: 15,
+                                borderRadius: 20,
+                                backgroundColor: '#EBF5FF',
+                            }}
+                            onPress={() => navigation.navigate("Checkout")}
+                        >
                             <Text style={{
-                                color: cartProducts.length > 0 ? "#0063E6" : "#c9c9c9",
-                                fontWeight: "600", fontSize: 15
-                            }}>Pagar</Text>
+                                color: cartProducts.length > 0 ? "#0063E6" : "#94a3b8",
+                                fontWeight: "700",
+                                fontSize: 14,
+                            }}>
+                                Pagar ({cartProducts.length})
+                            </Text>
                         </TouchableOpacity>
 
                     </View>
@@ -68,21 +91,42 @@ export default function Cart() {
                             flexDirection: "row",
                             alignItems: "center",
                             borderWidth: 1,
-                            borderColor: "#ddd",
-                            borderRadius: 8,
-                            padding: 15,
-                            backgroundColor: "#F1F5F9",
+                            borderColor: "#e2e8f0",
+                            borderRadius: 10,
+                            padding: 18,
+                            backgroundColor: "#f8fafc",
                             justifyContent: "space-between",
+                            shadowColor: '#000',
+                            shadowOffset: { width: 0, height: 1 },
+                            shadowOpacity: 0.05,
+                            shadowRadius: 2,
+                            elevation: 1,
                         }}
                     >
-                        <Text style={{ color: "#64748B" }}>{cartProducts.length} Itens no carrinho</Text>
-                        <Text style={{ color: "#020817", fontWeight: "900" }}>R$ {total}</Text>
+                        <Text style={{ color: "#475569", fontSize: 16 }}>Total de itens</Text>
+                        <Text style={{ color: "#020817", fontWeight: "bold", fontSize: 20 }}>
+                            R$ {total}
+                        </Text>
                     </View>
 
                     {cartProducts.length === 0 && (
-                        <Text style={{ color: "#64748B", marginTop: 16 }}>Seu carrinho está vazio.</Text>
+                        <View style={{
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            marginTop: 40,
+                            padding: 20,
+                            backgroundColor: '#fff',
+                            borderRadius: 10,
+                            borderWidth: 1,
+                            borderColor: '#e2e8f0',
+                        }}>
+                            <Icon name="frown" size={50} color="#cbd5e1" style={{ marginBottom: 10 }} />
+                            <Text style={{ color: "#64748B", fontSize: 16, textAlign: 'center' }}>
+                                Seu carrinho está vazio. Adicione alguns produtos!
+                            </Text>
+                        </View>
                     )}
-                </ View>
+                </View>
             )}
         />
     );

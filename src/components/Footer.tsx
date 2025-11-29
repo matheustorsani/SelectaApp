@@ -12,21 +12,7 @@ const icons: Record<string, string> = {
   Profile: "user",
   Search: "search",
 };
-/**
- * Componente de rodapé (Footer) personalizado para navegação por abas.
- *
- * Aqui o ideal é não mexer muito, apenas ajustar estilos se necessário.
- * @param FOOTER_ROUTES Lista de rotas que devem exibir o rodapé.
- * @param icons Mapeamento de nomes de rotas para ícones do FontAwesome.
- * 
- * Exibe ícones e rótulos correspondentes às rotas definidas em `FOOTER_ROUTES`.
- * O botão ativo é destacado visualmente.
- *
- * @param props Propriedades fornecidas automaticamente pelo `BottomTabBarProps`
- * do React Navigation, contendo o estado atual da navegação, descritores e métodos de navegação.
- *
- * @returns Componente de rodapé exibindo os botões de navegação ativos.
- */
+
 const Footer: React.FC<BottomTabBarProps> = ({ state, descriptors, navigation }) => {
   const currentRouteName = state.routes[state.index].name;
   if (!FOOTER_ROUTES.includes(currentRouteName)) return null;
@@ -49,9 +35,18 @@ const Footer: React.FC<BottomTabBarProps> = ({ state, descriptors, navigation })
           };
 
           return (
-            <TouchableOpacity key={route.key} style={styles.button} onPress={onPress}>
-              <Icon name={iconName} size={18} color={isFocused ? "#0063E6" : "#64748B"} />
-              <Text style={[styles.text, isFocused && { color: "#0063E6" }]}>
+            <TouchableOpacity
+              key={route.key}
+              onPress={onPress}
+              style={[styles.button]}
+              activeOpacity={0.8}
+            >
+              <Icon
+                name={iconName}
+                size={20}
+                color={isFocused ? "#0063E6" : "#94A3B8"}
+              />
+              <Text style={[styles.text, isFocused && styles.focusedText]}>
                 {typeof label === "string" ? label : ""}
               </Text>
             </TouchableOpacity>
@@ -67,11 +62,32 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: "row",
     justifyContent: "space-around",
-    paddingVertical: 10,
+    paddingVertical: 5,
     borderTopWidth: 1,
-    borderTopColor: "#ccc",
-    backgroundColor: "#fff",
+    borderTopColor: "#e5e7eb",
+    backgroundColor: "#ffffff",
+    shadowColor: "#000",
+    shadowOpacity: 0.06,
+    shadowRadius: 4,
+    shadowOffset: { width: 0, height: -1 },
+    elevation: 15,
   },
-  button: { alignItems: "center" },
-  text: { fontSize: 12, color: "#64748B" },
+
+  button: {
+    alignItems: "center",
+    justifyContent: "center",
+    paddingHorizontal: 12,
+    paddingVertical: 3,
+  },
+
+  text: {
+    fontSize: 11,
+    color: "#94A3B8",
+    marginTop: 2,
+  },
+
+  focusedText: {
+    color: "#0063E6",
+    fontWeight: "600",
+  },
 });

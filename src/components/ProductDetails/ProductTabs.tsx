@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { View, Text, TouchableOpacity } from "react-native";
 import { Product } from "../../types/Products";
 
-type Props = { product: Product };
+interface Props { product: Product };
 
 /**
  * Componente de abas para detalhes do produto.
@@ -14,7 +14,15 @@ export const ProductTabs = ({ product }: Props) => {
   const [tab, setTab] = useState<"description" | "specifications">("description");
 
   return (
-    <View style={{ marginBottom: 20, borderWidth: 1, borderColor: "#ccc", borderRadius: 8 }}>
+    <View
+      style={{
+        marginBottom: 22,
+        borderRadius: 10,
+        overflow: "hidden",
+        borderWidth: 1,
+        borderColor: "#ddd",
+      }}
+    >
       <View style={{ flexDirection: "row" }}>
         <TouchableOpacity
           style={{

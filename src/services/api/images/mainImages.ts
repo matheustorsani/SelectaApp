@@ -10,8 +10,8 @@ import { API } from "../../../../config.json";
 export const mainImages = async (id: number): Promise<any> => {
     try {
         return await responseBody<any>(`${API.routes.mainImages}/${id}`);
-    } catch (error) {
-        if (error === "404") return console.error("Imagens principais não encontradas para o produto ID:", id);
+    } catch (error: any) {
+        if (error.status === 404) return undefined;
         console.error("Ocorreu um erro ao buscar as imagens principais:", error);
         return undefined;
     }

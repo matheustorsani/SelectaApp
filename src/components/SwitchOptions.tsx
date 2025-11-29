@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { View, Text } from "react-native";
 import { Switch } from "react-native-paper";
 
-type Props = {
+interface Props {
     title: string;
     subtitle: string;
     enabled?: boolean;

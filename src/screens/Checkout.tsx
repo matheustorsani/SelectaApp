@@ -1,5 +1,5 @@
 import React from "react";
-import { Text, View, Platform, Image } from "react-native";
+import { Text, View, Platform, Image, Dimensions } from "react-native";
 import { Card, TextInput, RadioButton, Button } from "react-native-paper";
 import { Styles } from "../styles/Styles";
 import { CardHeader } from "../components/Headers/CardHeader";
@@ -15,98 +15,128 @@ export const Checkout = () => {
             enableOnAndroid
             keyboardOpeningTime={0}
         >
-            <Card style={Styles.Card}>
+            <Card style={{ ...Styles.Card, borderRadius: 12, elevation: 2, borderColor: '#e2e8f0', borderWidth: 1, backgroundColor: '#fff' }}>
                 <Card.Content>
-                    <CardHeader name="Resumo do pedido" icon="motorcycle" />
-                    <View style={{ flexDirection: "row", marginBottom: 10 }}>
-                        <Image source={require("../../assets/smartphone.png")} style={{ width: 60, height: 70 }} />
-                        <View>
-                            <Text>Produto 1</Text>
-                            <Text style={{ color: "#707070ff" }}>Quantidade: 1</Text>
-                            <Text>R$ 199,99</Text>
+                    <CardHeader name="Resumo do Pedido" icon="shopping-bag" />
+
+                    <View style={{ flexDirection: "row", alignItems: 'center', marginBottom: 15, paddingBottom: 10, borderBottomWidth: 1, borderBottomColor: '#f1f5f9' }}>
+                        <Image
+                            source={require("../../assets/smartphone.png")}
+                            style={{ width: 60, height: 70, marginRight: 15, borderRadius: 6, backgroundColor: '#f8fafc' }}
+                            resizeMode="contain"
+                        />
+                        <View style={{ flex: 1, justifyContent: 'space-between' }}>
+                            <Text style={{ fontSize: 16, fontWeight: '600', color: '#1e293b' }}>
+                                Produto 1
+                            </Text>
+                            <Text style={{ color: "#64748B", fontSize: 13, marginVertical: 2 }}>
+                                Quantidade: 1
+                            </Text>
+                            <Text style={{ fontSize: 15, fontWeight: '700', color: '#000' }}>
+                                R$ 199,99
+                            </Text>
                         </View>
                     </View>
-                    <View style={{ flexDirection: "row", justifyContent: "space-between", marginBottom: 10, borderTopWidth: 1, borderTopColor: "#e0e0e0", paddingTop: 10 }}>
-                        <Text style={{ color: "#707070ff" }}>Subtotal</Text>
-                        <Text style={{ color: "#707070ff", fontWeight: "600" }}>R$ 199,99</Text>
+
+                    <View style={{ flexDirection: "row", justifyContent: "space-between", marginBottom: 8 }}>
+                        <Text style={{ color: "#64748B", fontSize: 15 }}>Subtotal</Text>
+                        <Text style={{ color: "#64748B", fontWeight: "600", fontSize: 15 }}>R$ 199,99</Text>
                     </View>
-                    <View style={{ flexDirection: "row", justifyContent: "space-between", marginBottom: 10, borderBottomWidth: 1, borderBottomColor: "#e0e0e0", paddingBottom: 10 }}>
-                        <Text style={{ color: "#707070ff" }}>Frete</Text>
-                        <Text style={{ color: "#707070ff", fontWeight: "600" }}>Gratuito</Text>
+
+                    <View style={{ flexDirection: "row", justifyContent: "space-between", marginBottom: 15, paddingBottom: 15, borderBottomWidth: 1, borderBottomColor: "#e0e0e0" }}>
+                        <Text style={{ color: "#64748B", fontSize: 15 }}>Frete</Text>
+                        <Text style={{ color: "#0063E6", fontWeight: "700", fontSize: 15 }}>Gratuito</Text>
                     </View>
-                    <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
-                        <Text style={{ fontWeight: 700 }}>Total:</Text>
-                        <Text style={{ fontSize: 14, fontWeight: 700 }}>R$ 199,99</Text>
-                    </View>
-                </Card.Content>
-            </Card>
-            <Card style={Styles.Card}>
-                <Card.Content>
-                    <CardHeader name="Endereço de entrega" icon="map-pin" />
-                    <TextInput
-                        label={"Nome*"}
-                        placeholder="Digite o seu nome completo"
-                        placeholderTextColor="#64748B"
-                        mode="outlined"
-                        style={{ marginBottom: 8, alignSelf: "center", width: 300, borderRadius: 5, backgroundColor: "#fff" }}
-                        activeOutlineColor="#1D77ED"
-                    />
-                    <View style={{ flexDirection: "row", gap: 8, justifyContent: "center" }}>
-                        <TextInput
-                            label={"Endereço*"}
-                            placeholder="Rua das Flores"
-                            placeholderTextColor="#64748B"
-                            mode="outlined"
-                            style={{ marginBottom: 8, width: 148, borderRadius: 5, backgroundColor: "#fff" }}
-                            activeOutlineColor="#1D77ED"
-                        />
-                        <TextInput
-                            label={"Número*"}
-                            placeholder="123"
-                            placeholderTextColor="#64748B"
-                            mode="outlined"
-                            style={{ marginBottom: 8, width: 148, borderRadius: 5, backgroundColor: "#fff" }}
-                            activeOutlineColor="#1D77ED"
-                        />
-                    </View>
-                    <TextInput
-                        label={"Complemento"}
-                        placeholder="Bloco 4 Apt. 404"
-                        placeholderTextColor="#64748B"
-                        mode="outlined"
-                        style={{ marginBottom: 8, width: 300, alignSelf: "center", borderRadius: 5, backgroundColor: "#fff" }}
-                        activeOutlineColor="#1D77ED"
-                    />
-                    <View style={{ flexDirection: "row", gap: 8, justifyContent: "center" }}>
-                        <TextInput
-                            label={"Estado*"}
-                            placeholder="São Paulo"
-                            placeholderTextColor="#64748B"
-                            mode="outlined"
-                            style={{ marginBottom: 8, width: 148, borderRadius: 5, backgroundColor: "#fff" }}
-                            activeOutlineColor="#1D77ED"
-                        />
-                        <TextInput
-                            label={"Cidade*"}
-                            placeholder="São Paulo"
-                            placeholderTextColor="#64748B"
-                            mode="outlined"
-                            style={{ marginBottom: 8, width: 148, borderRadius: 5, backgroundColor: "#fff" }}
-                            activeOutlineColor="#1D77ED"
-                        />
+
+                    <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: 'center' }}>
+                        <Text style={{ fontWeight: '800', fontSize: 18, color: '#1e293b' }}>Total:</Text>
+                        <Text style={{ fontSize: 18, fontWeight: '800', color: '#000' }}>R$ 199,99</Text>
                     </View>
                 </Card.Content>
             </Card>
-            <Card style={Styles.Card}>
+
+            <Card style={{ ...Styles.Card, borderRadius: 12, elevation: 2, borderColor: '#e2e8f0', borderWidth: 1, backgroundColor: '#fff' }}>
+                <Card.Content style={{ alignItems: 'center' }}>
+                    <CardHeader name="Endereço de Entrega" icon="map-pin" />
+
+                    <View style={{ width: '100%', gap: 8 }}>
+                        <TextInput
+                            label={"Nome*"}
+                            placeholder="Digite o seu nome completo"
+                            placeholderTextColor="#64748B"
+                            mode="outlined"
+                            style={{ width: '100%', borderRadius: 8, backgroundColor: "#fff" }}
+                            activeOutlineColor="#1D77ED"
+                        />
+                        <View style={{ flexDirection: "row", gap: 8 }}>
+                            <TextInput
+                                label={"Endereço*"}
+                                placeholder="Rua das Flores"
+                                placeholderTextColor="#64748B"
+                                mode="outlined"
+                                style={{ flex: 1, borderRadius: 8, backgroundColor: "#fff" }}
+                                activeOutlineColor="#1D77ED"
+                            />
+                            <TextInput
+                                label={"Número*"}
+                                placeholder="123"
+                                placeholderTextColor="#64748B"
+                                mode="outlined"
+                                style={{ width: '30%', borderRadius: 8, backgroundColor: "#fff" }}
+                                activeOutlineColor="#1D77ED"
+                            />
+                        </View>
+                        <TextInput
+                            label={"Complemento"}
+                            placeholder="Bloco 4 Apt. 404"
+                            placeholderTextColor="#64748B"
+                            mode="outlined"
+                            style={{ width: '100%', borderRadius: 8, backgroundColor: "#fff" }}
+                            activeOutlineColor="#1D77ED"
+                        />
+                        <View style={{ flexDirection: "row", gap: 8 }}>
+                            <TextInput
+                                label={"Estado*"}
+                                placeholder="São Paulo"
+                                placeholderTextColor="#64748B"
+                                mode="outlined"
+                                style={{ flex: 1, borderRadius: 8, backgroundColor: "#fff" }}
+                                activeOutlineColor="#1D77ED"
+                            />
+                            <TextInput
+                                label={"Cidade*"}
+                                placeholder="São Paulo"
+                                placeholderTextColor="#64748B"
+                                mode="outlined"
+                                style={{ flex: 1, borderRadius: 8, backgroundColor: "#fff" }}
+                                activeOutlineColor="#1D77ED"
+                            />
+                        </View>
+                    </View>
+                </Card.Content>
+            </Card>
+
+            <Card style={{ ...Styles.Card, borderRadius: 12, elevation: 2, borderColor: '#e2e8f0', borderWidth: 1, backgroundColor: '#fff' }}>
                 <Card.Content>
                     <CardHeader name="Pagamento" icon="credit-card" />
                     <View style={{ flexDirection: "row", alignItems: "center", gap: 10, marginBottom: 10 }}>
-                        <RadioButton color="blue" value="Pix" status="checked" />
-                        <Text>Pix</Text>
+                        <RadioButton
+                            color="#0063E6"
+                            value="Pix"
+                            status="checked"
+                        />
+                        <Text style={{ fontSize: 16, color: '#1e293b' }}>Pix</Text>
                     </View>
                 </Card.Content>
             </Card>
-            <Button mode="contained" style={{ backgroundColor: "#0063E6" }}>
+
+            <Button
+                mode="contained"
+                uppercase={false}
+                labelStyle={{ fontSize: 18, fontWeight: '700', paddingVertical: 4 }}
+                style={{ backgroundColor: "#0063E6", borderRadius: 10, marginTop: 10, height: 55, justifyContent: 'center' }}
+                onPress={() => { }}
+            >
                 Finalizar Pedido
             </Button>
         </KeyboardAwareScrollView>

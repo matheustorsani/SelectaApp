@@ -30,9 +30,9 @@
  * ```
  */
 export interface User {
+    bearer?: string;
     id?: number;
     name: string;
-    password: string;
     email: string;
     avatar: string;
     phone?: string;

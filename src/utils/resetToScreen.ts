@@ -10,10 +10,3 @@ export const resetToHome = (navigation: RootStackNavigationProp) => {
         routes: [{ name: "Tabs", params: { screen: "Home" } }],
     })
 }
-
-export const resetToCategories = (navigation: RootStackNavigationProp) => {
-    navigation.reset({
-        index: 0,
-        routes: [{ name: "Categories" }],
-    })
-}

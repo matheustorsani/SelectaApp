@@ -1,25 +1,55 @@
 import React from "react";
 import { Text, TouchableOpacity } from "react-native";
-import { Styles } from "../styles/Styles";
 
-type ProfileBoxActivityProps = {
+interface Props {
     title: number;
     subtitle: string;
     onPress?: () => any;
 };
 
-/**
- * Componente de caixa de atividade do perfil.
- * Exibe um título numérico e um subtítulo descritivo.
- * 
- * @param {ProfileBoxActivityProps} props - Propriedades do componente, incluindo título, subtítulo e ação ao pressionar.
- * @returns Componente de caixa de atividade do perfil.
- */
-export const ProfileBoxActivity = ({ title, subtitle, onPress  }: ProfileBoxActivityProps) => {
+export const ProfileBoxActivity = ({ title, subtitle, onPress }: Props) => {
     return (
-        <TouchableOpacity style={Styles.ProfileBoxActivity} onPress={onPress}>
-            <Text style={{ fontSize: 28, fontWeight: "900", color: "#0063E6" }}>{title}</Text>
-            <Text style={{ color: "#64748B" }}>{subtitle}</Text>
+        <TouchableOpacity
+            onPress={onPress}
+            activeOpacity={0.7}
+            style={{
+                backgroundColor: "#fff",
+                paddingVertical: 13,
+                paddingHorizontal: 12,
+                borderRadius: 14,
+                width: 112,
+
+                shadowColor: "#000",
+                shadowOpacity: 0.06,
+                shadowRadius: 4,
+                shadowOffset: { width: 0, height: 2 },
+                elevation: 2,
+
+                justifyContent: "center",
+                alignItems: "center",
+            }}
+        >
+            <Text
+                style={{
+                    fontSize: 30,
+                    fontWeight: "800",
+                    color: "#1D77ED",
+                }}
+            >
+                {title}
+            </Text>
+
+            <Text
+                style={{
+                    marginTop: 4,
+                    fontSize: 13,
+                    color: "#64748B",
+                    textAlign: "center",
+                    fontWeight: "500",
+                }}
+            >
+                {subtitle}
+            </Text>
         </TouchableOpacity>
-    )
-}
+    );
+};

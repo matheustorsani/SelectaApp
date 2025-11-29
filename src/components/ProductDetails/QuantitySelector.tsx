@@ -1,7 +1,7 @@
 import React from "react";
 import { View, TouchableOpacity, Text } from "react-native";
 
-type Props = {
+interface Props {
   amount: number;
   onToggle: (increment: boolean) => void;
 };
@@ -17,16 +17,14 @@ type Props = {
 export const QuantitySelector = ({ amount, onToggle }: Props) => (
   <View
     style={{
-      marginTop: 16,
-      marginBottom: 12,
       flexDirection: "row",
       alignItems: "center",
       justifyContent: "space-between",
+      padding: 12,
       borderWidth: 1,
       borderColor: "#ddd",
-      paddingVertical: 8,
-      paddingHorizontal: 12,
-      borderRadius: 6,
+      borderRadius: 10,
+      backgroundColor: "#fafafa",
     }}
   >
     <Text>Quantidade:</Text>

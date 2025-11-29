@@ -1,5 +1,6 @@
 import axios from "axios";
 import { API } from "../../../config.json";
+import { getBearer } from "./BearerManager";
 
 /**
  * Instância principal do Axios configurada com o endpoint base e timeout.
@@ -9,6 +10,24 @@ const api = axios.create({
   timeout: API.timeout,
 });
 
+
+/**
+ * Interceptor para adicionar o Authorization: Bearer TOKEN
+ * em TODAS as requisições automaticamente.
+ */
+api.interceptors.request.use(async (config) => {
+  const token = getBearer();
+
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`;
+  }
+
+  return config;
+});
+
+/**
+ * Erro personalizado para caso a API esteja desligada.
+ */
 export class ApiOFF extends Error {
   public readonly code = "API_OFFLINE";
   constructor(message = "API OFFLINE.") {

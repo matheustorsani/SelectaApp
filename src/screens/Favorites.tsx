@@ -23,6 +23,8 @@ export default function Favorites() {
 
     if (!user) return Error({ error: "Você precisa estar logado para ver os favoritos.", retryText: "Ir para o Login", onPress: () => navigation.navigate("Login") });
 
+    const numFavorites = favoriteProducts.length;
+
     return (
         <FlatList
             style={Styles.Main}
@@ -41,19 +43,68 @@ export default function Favorites() {
                     isFavorite={isFavorite(item.id)}
                 />
             )}
-            ListHeaderComponent={() =>
-                favoriteProducts.length > 0 ? (
-                    <View style={{ flexDirection: "row", alignItems: "center", gap: 10, marginBottom: 16 }}>
-                        <Icon name="heart" size={27} color="#0063E6" />
-                        <Text style={Styles.TextTitle}>Meus Favoritos</Text>
+            ListHeaderComponent={
+                <View style={{
+                    flexDirection: "row",
+                    alignItems: "center",
+                    justifyContent: numFavorites > 0 ? 'space-between' : 'flex-start',
+                    paddingVertical: 10,
+                    marginBottom: 10,
+                    borderBottomWidth: numFavorites > 0 ? 1 : 0,
+                    borderBottomColor: '#F1F5F9',
+                }}>
+                    <View style={{ flexDirection: "row", alignItems: "center", gap: 10 }}>
+                        <Icon name="heart" size={24} color="#E74C3C" />
+                        <Text style={{ fontSize: 22, fontWeight: "700", color: '#1e293b' }}>
+                            Meus Favoritos
+                        </Text>
                     </View>
-                ) : (
-                    <Text style={{ color: "#64748B", marginBottom: 16 }}>
-                        Você ainda não favoritou um item.
-                    </Text>
-                )
+                    {numFavorites > 0 && (
+                        <View style={{
+                            backgroundColor: '#F1F5F9',
+                            paddingVertical: 4,
+                            paddingHorizontal: 8,
+                            borderRadius: 15,
+                        }}>
+                            <Text style={{ fontSize: 14, fontWeight: '600', color: '#64748B' }}>
+                                {numFavorites} {numFavorites === 1 ? 'item' : 'itens'}
+                            </Text>
+                        </View>
+                    )}
+                </View>
             }
-            ListEmptyComponent={<Text>{favoriteProducts.length === 0 ? "Nenhum favorito" : ""}</Text>}
+            ListEmptyComponent={
+                <View style={{
+                    flex: 1,
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    padding: 30,
+                    marginTop: 50,
+                    minHeight: 300,
+                    backgroundColor: '#fff',
+                    borderRadius: 12,
+                    borderWidth: 1,
+                    borderColor: '#E2E8F0',
+                }}>
+                    <Icon name="heart" size={60} color="#CBD5E1" style={{ marginBottom: 20, opacity: 0.7 }} />
+                    <Text style={{
+                        fontSize: 18,
+                        fontWeight: '700',
+                        color: '#334155',
+                        marginBottom: 8,
+                        textAlign: 'center',
+                    }}>
+                        Sua lista de favoritos está vazia.
+                    </Text>
+                    <Text style={{
+                        fontSize: 14,
+                        color: '#64748B',
+                        textAlign: 'center',
+                    }}>
+                        Adicione produtos que você amou para encontrá-los facilmente aqui!
+                    </Text>
+                </View>
+            }
         />
     );
 }

@@ -1,6 +1,7 @@
 import React, { createContext, useState, useEffect } from "react";
 import { User } from "../types/User";
 import { saveUser, getUser } from "../services/UserService";
+import { setBearer } from "../services/api/BearerManager";
 
 export const AuthContext = createContext<{
     user: User | null;
@@ -39,10 +40,12 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     const setUser = (newUser: User | null) => {
         setUserState(newUser);
         saveUser(newUser);
+        setBearer(newUser?.bearer ?? null);
     };
 
     const logout = () => {
         setUser(null);
+        setBearer(null);
     };
 
     return (

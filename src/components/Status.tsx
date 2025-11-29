@@ -3,7 +3,7 @@ import { View, Text } from "react-native";
 import IconF from 'react-native-vector-icons/Feather';
 import IconM from 'react-native-vector-icons/MaterialIcons'
 
-type Props = {
+interface Props {
     checked: boolean,
     title?: string,
     subtitle?: string

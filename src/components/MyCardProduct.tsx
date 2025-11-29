@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react"
+import React, { useEffect, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
-import { View, Text, Image, TouchableOpacity } from "react-native"
+import { View, Text, Image, TouchableOpacity } from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome";
 import { RootStackNavigationProp } from "../types/Navigation";
 import { getProductById } from "../services/api/products/getProductById";
@@ -9,12 +9,8 @@ import { LoadingSkeletonProduct } from "./LoadingSkeletonProduct";
 
 type CardProps = {
     productId: number;
-}
-/**
- * Componente de cartão de produto para a tela "Meus Produtos".
- * @param {CardProps} - Id do produto a ser exibido.
- * @returns Componente visual do cartão de produto.
- */
+};
+
 export const MyCardProduct = ({ productId }: CardProps) => {
     const navigation = useNavigation<RootStackNavigationProp>();
     const [product, setProduct] = useState<Product>();
@@ -25,44 +21,117 @@ export const MyCardProduct = ({ productId }: CardProps) => {
             try {
                 const data = await getProductById(productId);
                 setProduct(data.id ? data : undefined);
-                setLoading(false);
             } catch (error) {
                 console.error("Erro ao buscar produto:", error);
+            } finally {
                 setLoading(false);
             }
-        }
+        };
         fetch();
     }, [productId]);
-
 
     if (loading) return <LoadingSkeletonProduct />;
     if (!product) return null;
 
     return (
-        <TouchableOpacity activeOpacity={0.6} style={{
-            flexDirection: "row",
-            alignItems: "center",
-            padding: 15,
-            borderWidth: 1,
-            backgroundColor: "#fff",
-            borderColor: "#E2E4E9",
-            borderRadius: 10,
-            marginBottom: 15
-        }} onPress={() => navigation.navigate("EditProduct", { productId: productId })}>
-            <Image source={product.image} style={{ width: 60, height: 60, borderRadius: 10, marginRight: 15 }} />
-            <View>
-                <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between", width: 250 }}>
-                    <Text>{product.name}</Text>
-                    <Icon name="edit" size={16} />
+        <TouchableOpacity
+            activeOpacity={0.75}
+            style={{
+                flexDirection: "row",
+                alignItems: "center",
+                padding: 14,
+                borderWidth: 1,
+                backgroundColor: "#fff",
+                borderColor: "#E2E4E9",
+                borderRadius: 14,
+                marginBottom: 16,
+                gap: 14,
+                shadowColor: "#000",
+                shadowOpacity: 0.06,
+                shadowRadius: 4,
+                shadowOffset: { width: 0, height: 1 },
+                elevation: 3,
+            }}
+            onPress={() => navigation.navigate("EditProduct", { productId })}
+        >
+            
+            <Image
+                source={
+                    product.image
+                        ? { uri: product.image }
+                        : require("../../assets/smartphone.png")
+                }
+                style={{
+                    width: 65,
+                    height: 65,
+                    borderRadius: 12,
+                    backgroundColor: "#F0F2F5",
+                }}
+            />
+
+            <View style={{ flex: 1 }}>
+                <View
+                    style={{
+                        flexDirection: "row",
+                        justifyContent: "space-between",
+                        alignItems: "center",
+                    }}
+                >
+                    <Text
+                        numberOfLines={1}
+                        style={{
+                            fontSize: 15,
+                            fontWeight: "600",
+                            maxWidth: 210,
+                        }}
+                    >
+                        {product.name}
+                    </Text>
+
+                    <Icon name="edit" size={16} color="#4B5563" />
                 </View>
-                <Text style={{ color: "#6C7493" }}>{product.category}</Text>
-                <View style={{ flexDirection: "row", gap: 5, alignItems: "center" }}>
-                    <Icon name="star" size={14} color="#F97A1F" />
-                    <Text>{product.rate}</Text>
-                    <Text style={{ color: "#000", backgroundColor: "#F0F2F5", borderRadius: 8, fontWeight: "bold", paddingHorizontal: 10, paddingVertical: 2 }}>{product.totalRatings} Avaliações</Text>
+
+                <Text style={{ color: "#6C7493", marginTop: 2 }}>
+                    {product.category}
+                </Text>
+
+                <View
+                    style={{
+                        flexDirection: "row",
+                        alignItems: "center",
+                        gap: 6,
+                        marginTop: 4,
+                    }}
+                >
+                    <Icon name="star" size={15} color="#F97A1F" />
+                    <Text style={{ color: "#333" }}>{product.rate}</Text>
+
+                    <Text
+                        style={{
+                            color: "#000",
+                            backgroundColor: "#F0F2F5",
+                            borderRadius: 8,
+                            fontWeight: "600",
+                            paddingHorizontal: 10,
+                            paddingVertical: 2,
+                            fontSize: 11,
+                        }}
+                    >
+                        {product.totalRatings} Avaliações
+                    </Text>
                 </View>
-                <Text style={{ fontSize: 16, fontWeight: "bold", marginTop: 5, color: "#1D77ED" }}>{product.price}</Text>
+
+                <Text
+                    style={{
+                        fontSize: 17,
+                        fontWeight: "bold",
+                        marginTop: 6,
+                        color: "#1D77ED",
+                    }}
+                >
+                    R$ {product.price}
+                </Text>
             </View>
         </TouchableOpacity>
     );
-}
+};

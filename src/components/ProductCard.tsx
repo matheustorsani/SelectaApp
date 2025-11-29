@@ -13,83 +13,112 @@ interface ProductCardProps {
   isFavorite?: boolean;
 }
 
-/**
- * Componente visual que exibe as informações principais de um produto em formato de card.
- * Inclui imagem, nome, preço, desconto, avaliações e botão de favoritar.
- * 
- * Quando clicado, o card navega para a tela de detalhes do produto (`ProductDetails`).
- * 
- * @component
- * @param {ProductCardProps} props - Propriedades do componente.
- * @param {Product} props.item - Objeto contendo os dados do produto a serem exibidos.
- * @param {() => void} [props.onToggleFavorite] - Função opcional para alternar o estado de favorito.
- * @param {boolean} [props.isFavorite] - Indica se o produto já está marcado como favorito.
- * 
- * @returns Um card interativo com as informações do produto.
- * 
- * @example
- * ```tsx
- * <ProductCard
- *   item={{
- *     id: '123',
- *     name: 'Tênis Esportivo',
- *     price: 299.90,
- *     discount: 20,
- *     image: 'https://exemplo.com/imagem.jpg',
- *     rate: 4,
- *     totalRatings: 85
- *   }}
- * />
- * ```
- */
 export function ProductCard({ item }: ProductCardProps) {
   const { toggleFavorite, isFavorite, loadingFavorites } = useFavorites();
   const navigation = useNavigation<RootStackNavigationProp>();
 
   const isLoading = loadingFavorites.includes(item.id);
+
   return (
-    <TouchableOpacity style={{
-      width: '48%',
-      backgroundColor: '#fff',
-      borderRadius: 8,
-      padding: 8,
-      elevation: 2,
-    }} onPress={() => navigation.navigate('ProductDetails', { productId: item.id })}
+    <TouchableOpacity
+      style={{
+        width: '48%',
+        backgroundColor: '#fff',
+        borderRadius: 8,
+        overflow: 'hidden',
+        elevation: 2,
+      }}
+      onPress={() =>
+        navigation.navigate('ProductDetails', { productId: item.id })
+      }
     >
-      <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
-        {item.discount ? (
-          <View style={{ backgroundColor: '#FF5252', borderRadius: 4, paddingHorizontal: 6, paddingVertical: 2 }}>
+      <View style={{ position: 'relative' }}>
+    
+        {item.discount && (
+          <View
+            style={{
+              position: 'absolute',
+              top: 6,
+              left: 6,
+              backgroundColor: '#FF5252',
+              borderRadius: 4,
+              paddingHorizontal: 6,
+              paddingVertical: 2,
+              zIndex: 10,
+            }}
+          >
             <Text style={{ color: '#fff', fontWeight: 'bold', fontSize: 12 }}>
               -{item.discount}%
             </Text>
           </View>
-        ) : <View />}
+        )}
 
-        <TouchableOpacity onPress={() => toggleFavorite(item.id)} disabled={isLoading}>
+        <TouchableOpacity
+          onPress={() => toggleFavorite(item.id)}
+          disabled={isLoading}
+          style={{
+            position: 'absolute',
+            top: 6,
+            right: 6,
+            zIndex: 10,
+            padding: 4,
+          }}
+        >
           {isLoading ? (
             <ActivityIndicator size="small" color="#FF5252" />
-          ) :
+          ) : (
             <Icon
-              name={isFavorite(item.id) ? "heart" : "heart-o"}
-              size={20}
+              name={isFavorite(item.id) ? 'heart' : 'heart-o'}
+              size={22}
               color="#FF5252"
             />
-          }
+          )}
         </TouchableOpacity>
+
+        {item.mainImage ? (
+          <Image
+            source={{ uri: item.mainImage }}
+            style={{
+              width: '100%',
+              height: 150,         
+              resizeMode: 'cover',
+            }}
+          />
+        ) : (
+          <View
+            style={{
+              width: '100%',
+              height: 150,
+              backgroundColor: '#c9c9c9',
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}
+          >
+            <Text>Sem Imagem</Text>
+          </View>
+        )}
       </View>
 
-      <Image
-        source={{ uri: item.mainImage ?? undefined }}
-        style={{ width: 120, height: 120, alignSelf: 'center' }}
-      />
-      <Text>{item.name}</Text>
+      <Text
+        numberOfLines={2}
+        style={{ marginTop: 8, fontWeight: '600', paddingHorizontal: 8 }}
+      >
+        {item.name}
+      </Text>
 
-      <View style={{ flexDirection: 'row', alignItems: 'center', paddingTop: 5 }}>
+      <View
+        style={{
+          flexDirection: 'row',
+          alignItems: 'center',
+          marginTop: 4,
+          paddingHorizontal: 8,
+        }}
+      >
         {Array.from({ length: 5 }).map((_, i) => (
           <Icon
             key={i}
             name={i < (item.rate ?? 0) ? 'star' : 'star-o'}
-            size={16}
+            size={15}
             color="#FFD700"
             style={{ marginRight: 2 }}
           />
@@ -99,14 +128,33 @@ export function ProductCard({ item }: ProductCardProps) {
         </Text>
       </View>
 
-      <Text style={{ color: '#0063E6', fontWeight: 'bold', marginTop: 4 }}>
-        R$ {(item.discount ? item.price - ((item.discount / 100) * item.price) : item.price).toFixed(2)}
-      </Text>
-      {item.discount && (
-        <Text style={{ textDecorationLine: 'line-through', color: 'gray', fontSize: 12 }}>
-          R$ {item.price.toFixed(2)}
+      <View style={{ paddingHorizontal: 8, marginTop: 6, marginBottom: 8 }}>
+        <Text
+          style={{
+            color: '#0063E6',
+            fontWeight: 'bold',
+            fontSize: 16,
+          }}
+        >
+          R${' '}
+          {(
+            item.discount
+              ? item.price - (item.discount / 100) * item.price
+              : item.price
+          ).toFixed(2)}
         </Text>
-      )}
+        {item.discount && (
+          <Text
+            style={{
+              textDecorationLine: 'line-through',
+              color: 'gray',
+              fontSize: 12,
+            }}
+          >
+            R$ {item.price.toFixed(2)}
+          </Text>
+        )}
+      </View>
     </TouchableOpacity>
   );
 }

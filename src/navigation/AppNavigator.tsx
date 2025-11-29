@@ -5,7 +5,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
 import { RootStackParams, TabParamList } from "../types/Navigation";
 
-// 📱 Screens
+// Screens
 import Home from "../screens/Home";
 import Search from "../screens/Search";
 import Favorites from "../screens/Favorites";
@@ -22,7 +22,7 @@ import { Register } from "../screens/Register";
 import { Categories } from "../screens/Categories";
 import { MyData } from "../screens/MyData";
 
-// 🧩 Components
+// Components
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import { HeaderProductsDetails } from "../components/Headers/HeaderProductsDetails";
@@ -51,6 +51,7 @@ function Tabs(): JSX.Element {
       initialRouteName="Home"
       screenOptions={{
         header: () => <Header />,
+        animation: "shift",
       }}
       tabBar={(props) => <Footer {...props} />}
     >
