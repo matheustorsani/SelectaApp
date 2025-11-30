@@ -6,12 +6,11 @@ import { API } from "../../../../config.json";
 /**
  * Busca produtos recomendados "para você" com base no ID do usuário.
  * 
- * @param {number} id - ID do usuário.
  * @returns {Promise<Product[]>} Produtos recomendados.
  */
-export const forYou = async (id: number): Promise<Product[]> => {
+export const forYou = async (): Promise<Product[]> => {
     try {
-        const data = await responseBody<any[]>(`${API.routes.forYouProducts}?id=${id}`);
+        const data = await responseBody<any[]>(`${API.routes.forYouProducts}`);
         return data.map(normalizeProduct);
     } catch (error) {
         console.error("Ocorreu um erro ao buscar os produtos para você:", error);

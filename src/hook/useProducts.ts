@@ -3,6 +3,7 @@ import { Product } from "../types/Products";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { searchProducts } from "../services/api/home/searchProducts";
 import { allProducts } from "../services/api/products/allProducts";
+import { forYou as fy } from "../services/api/home/forYou";
 
 const CACHE_KEY = "@Selecta:products_cache";
 
@@ -20,6 +21,7 @@ const CACHE_KEY = "@Selecta:products_cache";
  */
 export function useProducts() {
   const [products, setProducts] = useState<Product[]>([]);
+  const [forYou, setForYou] = useState<Product[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const hasLoaded = useRef(false);
@@ -44,7 +46,7 @@ export function useProducts() {
           setLoading(false);
           return;
         } catch (err: any) {
-          
+
           if (err?.code === "API_OFFLINE" || err instanceof Error && (err as any).code === "API_OFFLINE") {
             console.warn("API offline.");
             setError("A API está offline no momento. Por favor, tente novamente mais tarde.");
@@ -97,9 +99,24 @@ export function useProducts() {
     [fetchWithRetry]
   );
 
-  useEffect(() => {
-    if (!hasLoaded.current) loadProducts();
-  }, [loadProducts]);
+  const forYouProducts = useCallback(
+    async () => {
+      try {
+        const data = await fy();
+        setForYou(data);
+      } catch (error) {
+        console.error("Ocorreu um erro ao buscar os produtos para você:", error);
+      }
+    },
+    []
+  );
 
-  return { products, loading, loadProducts, search, error };
+  useEffect(() => {
+    if (!hasLoaded.current) {
+      loadProducts()
+      forYouProducts();
+    };
+  }, [loadProducts, forYouProducts]);
+
+  return { products, forYou, loading, loadProducts, search, error };
 }
