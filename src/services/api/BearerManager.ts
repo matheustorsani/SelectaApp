@@ -1,15 +1,15 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-let currentBearer: string | null = null;
+let runtimeBearer: string | null = null;
 
 export const initBearer = async () => {
   const stored = await AsyncStorage.getItem("bearerToken");
-  currentBearer = stored || null;
-  return currentBearer;
+  runtimeBearer = stored || null;
+  return runtimeBearer;
 };
 
 export const setBearer = async (token: string | null) => {
-  currentBearer = token;
+  runtimeBearer = token;
 
   if (token) {
     await AsyncStorage.setItem("bearerToken", token);
@@ -18,4 +18,4 @@ export const setBearer = async (token: string | null) => {
   }
 };
 
-export const getBearer = () => currentBearer;
+export const getBearer = () => runtimeBearer;

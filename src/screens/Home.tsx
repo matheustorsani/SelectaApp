@@ -25,7 +25,7 @@ export default function Home() {
         <FlatList
             style={Styles.Main}
             showsVerticalScrollIndicator={false}
-            data={user?.bearer ? forYou : products}
+            data={products}
             initialNumToRender={10}
             maxToRenderPerBatch={10}
             windowSize={5}
