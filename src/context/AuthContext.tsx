@@ -9,6 +9,28 @@ export const AuthContext = createContext<{
     logout: () => Promise<void>;
 } | null>(null);
 
+/**
+ * Provedor de autenticação que envolve a árvore de componentes e fornece
+ * o contexto de autenticação (AuthContext).
+ *
+ * Comportamento:
+ * - Na montagem inicial, chama initBearer() e tenta carregar o usuário/bearer salvo via getUser().
+ * - Mantém o estado interno `user: User | null`.
+ * - Expõe as operações no contexto:
+ *   - setUser(newUser: User | null): atualiza o estado, persiste via saveUser() e configura o bearer via setBearer().
+ *   - logout(): limpa o usuário, remove a persistência e remove o bearer.
+ *
+ * Observações:
+ * - As operações de persistência e configuração do bearer são assíncronas.
+ * - Para consumir este contexto dentro de componentes, utilize o hook useUser().
+ *
+ * Exemplo de uso:
+ * const { user, setUser, logout } = useUser();
+ *
+ * @component
+ * @param {React.ReactNode} children - Elementos filhos que serão envolvidos pelo provedor.
+ * @returns {JSX.Element} Provider do AuthContext contendo os filhos.
+ */
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     const [user, setUserState] = useState<User | null>(null);
 

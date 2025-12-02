@@ -1,5 +1,29 @@
 import axios from "axios";
 
+/**
+ * Realiza reverse geocoding (coordenadas -> endereço legível) utilizando a API Nominatim (OpenStreetMap).
+ *
+ * Constrói uma string de endereço a partir dos campos retornados pelo serviço (ex.: road, suburb, city_district, city)
+ * e a retorna como uma Promise<string>. Em caso de falha na requisição ou ausência de dados relevantes, retorna
+ * a string literal "Endereço desconhecido".
+ *
+ * @param lat - Latitude em graus decimais.
+ * @param lon - Longitude em graus decimais.
+ * @returns Uma Promise que resolve para a representação textual do endereço (por exemplo: "Rua X, Bairro - Distrito, Cidade")
+ *          ou "Endereço desconhecido" quando o endereço não puder ser determinado.
+ *
+ * @remarks
+ * - A função realiza uma requisição GET para https://nominatim.openstreetmap.org/reverse com retorno em JSON.
+ * - Deve-se respeitar a política de uso do Nominatim (limites de taxa, inclusão de User-Agent/contato apropriado).
+ * - Componentes do endereço podem estar ausentes dependendo da localização; a formatação final pode variar.
+ * - Erros de rede ou respostas inesperadas são tratados internamente e resultam na string "Endereço desconhecido" em vez de lançar.
+ *
+ * @example
+ * const endereco = await reverseGeocode(-23.55052, -46.633308);
+ * // => "Av. Exemplo, Bairro Exemplo - Distrito Exemplo, Cidade Exemplo" (ou "Endereço desconhecido")
+ *
+ * @see https://nominatim.org/release-docs/latest/api/Reverse/
+ */
 export async function reverseGeocode(lat: number, lon: number): Promise<string> {
     try {
         const response = await axios.get('https://nominatim.openstreetmap.org/reverse', {

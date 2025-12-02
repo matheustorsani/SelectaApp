@@ -7,16 +7,55 @@ import { allProducts } from "../services/api/products/allProducts";
 const CACHE_KEY = "@Selecta:products_cache";
 
 /**
- * Hook para gerenciar a listagem de produtos.
- * Inclui cache local, busca, controle de erros e tentativas automáticas.
+ * Hook para carregar e buscar produtos com tratamento de cache, tentativas e estados de carregamento/erro.
  *
- * @returns {{
- *   products: Product[];
- *   loading: boolean;
- *   error: string | null;
- *   loadProducts: () => Promise<void>;
- *   search: (query: string) => Promise<void>;
- * }}
+ * Comportamento principal
+ * - Carrega a lista de produtos a partir da API (função allProducts) e mantém o resultado em estado local.
+ * - Mantém estados reativos: `products`, `loading` e `error`.
+ * - Usa AsyncStorage para cache local (chave definida em CACHE_KEY). Se houver cache válido, ele é carregado antes da primeira requisição de rede.
+ * - Implementa uma rotina de retry (por padrão 3 tentativas) com delay incremental fixo de 1s entre tentativas.
+ * - Se a API sinalizar que está offline (erro com `.code === "API_OFFLINE"`), o hook define mensagem de erro específica e interrompe novas tentativas.
+ * - Evita múltiplos carregamentos desnecessários usando a ref interna `hasLoaded`.
+ *
+ * Funções expostas
+ * - loadProducts(): Promise<void>
+ *   - Executa o fluxo de carregamento dos produtos.
+ *   - Lê o cache (AsyncStorage) se presente e então tenta atualizar a lista a partir da API.
+ *   - Não re-executa a carga se já tiver sido feita com sucesso (controle por hasLoaded + products.length + erro).
+ *
+ * - search(query: string): Promise<void>
+ *   - Se `query` for string vazia ou apenas espaços, faz o carregamento padrão (allProducts) e atualiza/usa cache.
+ *   - Caso contrário, executa a busca via searchProducts(query) e atualiza o estado `products`.
+ *
+ * Estados retornados
+ * - products: Product[]
+ *   - Array atual de produtos carregados/consultados.
+ * - loading: boolean
+ *   - Indica se há uma operação de rede em andamento.
+ * - error: string | null
+ *   - Mensagem de erro legível (em português) quando falhas acontecem ou quando a API está offline.
+ *
+ * Observações de implementação e efeitos colaterais
+ * - Persiste os resultados bem-sucedidos em AsyncStorage (CACHE_KEY) quando a chamada de rede for bem-sucedida e `shouldCache` estiver habilitado.
+ * - Tratamento de erros:
+ *   - Para falhas transitórias, o hook tenta novamente até o número de retries configurado.
+ *   - Quando esgotadas as tentativas, define `error` com mensagem genérica de verificação de conexão.
+ * - Dependências externas esperadas no escopo:
+ *   - allProducts(): Promise<Product[]>
+ *   - searchProducts(query: string): Promise<Product[]>
+ *   - AsyncStorage e constante CACHE_KEY
+ * - Concorrência/race conditions:
+ *   - O hook atualiza estados (`products`, `loading`, `error`) diretamente no fluxo assíncrono; se múltiplas chamadas paralelas forem iniciadas externamente, o último resultado a resolver determinará o estado.
+ *
+ * Exemplo de uso
+ * - const { products, loading, error, loadProducts, search } = useProducts();
+ * - useEffect(() => { loadProducts(); }, []);
+ *
+ * Observações de uso
+ * - Ideal para componentes que precisam de uma lista global/compartilhada de produtos com cache local.
+ * - Em apps com múltiplos componentes consumindo o mesmo hook, considerar extrair a lógica para um contexto/global store para evitar chamadas redundantes.
+ *
+ * @returns Objeto com { products, loading, error, loadProducts, search }.
  */
 export function useProducts(): {
   products: Product[];
@@ -30,9 +69,6 @@ export function useProducts(): {
   const [error, setError] = useState<string | null>(null);
   const hasLoaded = useRef(false);
 
-  /**
-   * Executa uma função de busca com tentativas e fallback em cache.
-   */
   const fetchWithRetry = useCallback(
     async (fn: () => Promise<Product[]>, retries = 3, shouldCache = false) => {
       setLoading(true);
@@ -71,9 +107,6 @@ export function useProducts(): {
     []
   );
 
-  /**
-   * Carrega produtos, priorizando cache local antes de consultar a API.
-   */
   const loadProducts = useCallback(async () => {
     if (hasLoaded.current && products.length > 0 && !error) return;
     hasLoaded.current = true;
@@ -91,10 +124,6 @@ export function useProducts(): {
     await fetchWithRetry(allProducts, 3, true);
   }, [fetchWithRetry, products.length, error]);
 
-  /**
-   * Pesquisa produtos por nome ou termo.
-   * Caso a query esteja vazia, recarrega todos os produtos.
-   */
   const search = useCallback(
     async (query: string) => {
       if (!query.trim()) return fetchWithRetry(allProducts, 3, true);
