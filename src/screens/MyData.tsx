@@ -29,7 +29,7 @@ export const MyData = () => {
             <Card style={Styles.Card}>
                 <Card.Content style={{ justifyContent: "center", alignItems: "center", marginBottom: 10 }}>
                     <Image
-                        source={typeof user.avatar === "string" ? { uri: user.avatar } : user.avatar}
+                        source={require("../../assets/Sample_User_Icon.png")}
                         style={{
                             width: 80,
                             height: 80,
@@ -47,7 +47,7 @@ export const MyData = () => {
                 <Card.Content style={{ marginBottom: 10 }}>
                     <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center", marginBottom: 10 }}>
                         <CardHeader name="Informações Pessoais" icon="user" />
-                        <Icon name="edit" size={14} onPress={() => setEditable(true)} />
+                        <Icon name="edit" size={14} onPress={() => setEditable(false)} />
                     </View>
                     <TextInput
                         label={"Nome Completo"}
@@ -93,7 +93,7 @@ export const MyData = () => {
                 <Card.Content style={{ marginBottom: 10 }}>
                     <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center", marginBottom: 10 }}>
                         <CardHeader name="Endereço" icon="home" />
-                        <Icon name="edit" size={14} onPress={() => setEditable(true)} />
+                        <Icon name="edit" size={14} onPress={() => setEditable(false)} />
                     </View>
                     <TextInput
                         label={"Endereço"}

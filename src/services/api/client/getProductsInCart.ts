@@ -18,8 +18,9 @@ export const getProductsInCart = async () => {
         }));
 
         return productsWithMainImages;
-    } catch (error) {
+    } catch (error: any) {
         console.error("Ocorreu um erro ao obter os produtos no carrinho:", error);
-        throw error && undefined;
+        if (error.status === 500 || error.status === 404) return [];
+        throw error;
     }
 };

@@ -1,6 +1,5 @@
 import React from "react";
 import { View, Text, TouchableOpacity } from "react-native";
-import { Product } from "../types/Products";
 import Icon from "react-native-vector-icons/MaterialIcons";
 import IconFE from "react-native-vector-icons/Feather";
 import IconSLI from "react-native-vector-icons/SimpleLineIcons";
@@ -11,7 +10,7 @@ interface Props {
     situation: "Entregue" | "Em Trânsito" | "Processando";
     trackingCode?: string;
     onPress?: () => void;
-    item?: Product;
+    item: any;
 };
 
 const statusColors: Record<string, string> = {
@@ -102,7 +101,7 @@ export const OrderSituation = ({ order, data, situation, item, onPress }: Props)
                         numberOfLines={1}
                         style={{ fontSize: 15, fontWeight: "500" }}
                     >
-                        {item?.name}
+                        {item.name || "Produto sem Nome"}
                     </Text>
 
                     <Text
@@ -112,7 +111,7 @@ export const OrderSituation = ({ order, data, situation, item, onPress }: Props)
                             marginTop: 2,
                         }}
                     >
-                        Qtd: {item?.amount || 1} • R$ {item?.price}
+                        Qtd: {item.amount || 1} • R$ {item.total}
                     </Text>
                 </View>
             </View>
@@ -137,7 +136,7 @@ export const OrderSituation = ({ order, data, situation, item, onPress }: Props)
                             color: "#1D77ED",
                         }}
                     >
-                        R$ {item?.price}
+                        R$ {item.total}
                     </Text>
                 </View>
 

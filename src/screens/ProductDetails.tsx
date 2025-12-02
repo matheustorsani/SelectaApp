@@ -12,14 +12,19 @@ import { ProductOptions } from "../components/ProductDetails/ProductOptions";
 import { LoadingSkeletonProduct } from "../components/LoadingSkeletonProduct";
 import { useCart } from "../hook/useCart";
 import { useNavigation } from "@react-navigation/native";
+import { useUser } from "../hook/useUser";
+import { Error } from "../components/Error";
 
 export const ProductDetails = ({ route }: RootStackScreenProps<"ProductDetails">) => {
     const productId = route.params.productId;
+    const { user } = useUser();
     const navigation = useNavigation<RootStackScreenProps<"ProductDetails">["navigation"]>();
     const { product, loading, amount, error, toggleAmount } = useProductDetails(productId);
-    const { add } = useCart();
+    const { add, message, errorMessage, loading: load } = useCart();
+
     if (loading) return <LoadingSkeletonProduct />;
-    if (!product) return <Text>{error}</Text>;
+
+    if (!product) return Error({ error: error!, retryText: "Voltar para o home", onPress: () => navigation.navigate("Tabs", { screen: "Home" }) });
 
     return (
         <ScrollView
@@ -32,7 +37,13 @@ export const ProductDetails = ({ route }: RootStackScreenProps<"ProductDetails">
                 <ProductPrice product={product} />
                 <QuantitySelector amount={amount} onToggle={toggleAmount} />
                 {error && <Text style={{ color: "red" }}>{error}</Text>}
-                <ProductOptions onAdd={() => { add(product.id, amount) }} onBuy={() => {
+                {errorMessage && <Text style={{ color: "red" }}>{errorMessage}</Text>}
+                {message && <Text style={{ color: "green" }}>{message}</Text>}
+                <ProductOptions disable={load} onAdd={() => {
+                    if (!user) return navigation.navigate("Login");
+                    add(product.id, amount)
+                }} onBuy={() => {
+                    if (!user) return navigation.navigate("Login");
                     navigation.navigate("Checkout", {
                         buyNowProduct: product,
                         amount: amount
@@ -45,4 +56,3 @@ export const ProductDetails = ({ route }: RootStackScreenProps<"ProductDetails">
         </ScrollView>
     );
 };
-

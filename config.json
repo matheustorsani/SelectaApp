@@ -21,7 +21,14 @@
             "getUserById": "selectaAPI/Client/buscar-cliente-id",
             "getProductsInCart": "selectaAPI/Home/carrinho/listar-produtos",
             "addToCart": "selectaAPI/Client/carrinho/adicionar-produto",
-            "removeFromCart": "selectaAPI/Home/carrinho/remover"
+            "removeFromCart": "selectaAPI/Home/carrinho/remover",
+            "checkout": "selectaAPI/Sale/comprar-produto",
+            "checkoutProducts": "/selectaAPI/Sale/carrinho/comprar-produtos",
+            "orders": "selectaAPI/Client/pedidos/historico",
+            "sales": "selectaAPI/SalesPerson/meus-produtos",
+            "createProduct": "selectaAPI/Product/cadastrar-produto",
+            "editProduct": "selectaAPI/Product/editar-produto",
+            "deleteProduct": "selectaAPI/Product/produto/remover"
         }
     }
 }

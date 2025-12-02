@@ -81,7 +81,9 @@ export type RootStackParams = {
   /** Tela de Checkout */
   Checkout: undefined | { buyNowProduct: Product, amount: number };
   /** Tela de Status do Pedido */
-  OrderStatus: undefined;
+  OrderStatus: { order: any };
+  /** Tela de Sucesso do Pedido */
+  OrderSuccess: undefined;
 };
 
 

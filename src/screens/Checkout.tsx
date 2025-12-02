@@ -1,47 +1,83 @@
-import React, { useEffect, useState, useContext } from "react";
-import { Text, View, Platform, Image } from "react-native";
+import React, { useEffect, useState } from "react";
+import { Text, View, Platform, Image, Alert, ActivityIndicator } from "react-native";
 import { Card, TextInput, RadioButton, Button } from "react-native-paper";
 import { Styles } from "../styles/Styles";
 import { CardHeader } from "../components/Headers/CardHeader";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
-import { Product } from "../types/Products";
-import { RootStackScreenProps } from "../types/Navigation";
+import { RootStackNavigationProp, RootStackScreenProps } from "../types/Navigation";
 import { useCart } from "../hook/useCart";
-
+import Icon from "react-native-vector-icons/Feather"
+import { removeFromCart } from "../services/api/client/removeFromCart";
+import { useNavigation } from "@react-navigation/native";
+import { checkout, checkoutProducts } from "../services/api/client/checkout";
 
 export const Checkout = ({ route }: RootStackScreenProps<"Checkout">) => {
+    const navigation = useNavigation<RootStackNavigationProp>();
     const buyNowProduct = route.params?.buyNowProduct;
-
-    const { cartProducts, reloadCart } = useCart();
-
-    const [products, setProducts] = useState<Product[]>([]);
+    const { cartProducts, setCartProducts, reloadCart } = useCart();
+    const [checked, setChecked] = useState<string>("pix");
     const [loading, setLoading] = useState(true);
 
-    useEffect(() => {
-        const load = async () => {
+    const finishCheckout = async () => {
+        try {
+            setLoading(true);
+
             if (buyNowProduct) {
-                setProducts([buyNowProduct]);
-                setLoading(false);
+                await checkout({
+                    idProduto: buyNowProduct.id,
+                    quantidade: route.params?.amount || 1,
+                    pagamento: "pix"
+                });
+
+                navigation.reset({
+                    index: 1,
+                    routes: [{ name: "Tabs" }, { name: "OrderSuccess" }]
+                });
+
                 return;
             }
 
-            await reloadCart();
-            setProducts(cartProducts);
+            await checkoutProducts("pix");
+
+            navigation.reset({
+                index: 1,
+                routes: [{ name: "Tabs" }, { name: "OrderSuccess" }]
+            });
+
+        } catch (error) {
+            console.error("Erro ao finalizar pedido:", error);
+            Alert.alert("Erro", "Não foi possível finalizar o pedido.");
+        } finally {
             setLoading(false);
-        };
+        }
+    };
+
+
+    const load = async (id?: number) => {
+        setLoading(true);
+        if (buyNowProduct) {
+            setCartProducts([buyNowProduct]);
+            setLoading(false);
+            return;
+        }
+        if (id) await removeFromCart(id);
+
+        const cart = await reloadCart();
+
+        if (cart.length === 0) navigation.navigate("Tabs", { screen: "Cart" })
+
+        setLoading(false);
+    };
+
+    useEffect(() => {
 
         load();
     }, []);
 
-    if (loading) {
-        return (
-            <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-                <Text style={{ color: "#475569" }}>Carregando resumo do pedido...</Text>
-            </View>
-        );
-    }
 
-    const subtotal = products
+    if (loading) return <ActivityIndicator size="large" style={{ marginTop: 20 }} />
+
+    const subtotal = cartProducts
         .reduce((acc, product) => {
             const discount = product.discount ? product.price * (product.discount / 100) : 0;
             return acc + (product.price - discount) * (buyNowProduct ? route.params?.amount : product.amount ?? 1);
@@ -60,7 +96,7 @@ export const Checkout = ({ route }: RootStackScreenProps<"Checkout">) => {
                 <Card.Content>
                     <CardHeader name="Resumo do Pedido" icon="shopping-bag" />
 
-                    {products.map((item) => {
+                    {cartProducts.map((item) => {
                         const finalPrice = item.discount
                             ? item.price - item.price * (item.discount / 100)
                             : item.price;
@@ -84,9 +120,13 @@ export const Checkout = ({ route }: RootStackScreenProps<"Checkout">) => {
                                 />
 
                                 <View style={{ flex: 1 }}>
-                                    <Text style={{ fontSize: 16, fontWeight: '600', color: '#1e293b' }}>
-                                        {item.name}
-                                    </Text>
+                                    <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center" }}>
+                                        <Text style={{ fontSize: 16, fontWeight: '600', color: '#1e293b' }}>
+                                            {item.name}
+                                        </Text>
+                                        {!buyNowProduct && <Icon name="trash" color={"red"} size={14} onPress={() => load(item.id)
+                                        } />}
+                                    </View>
 
                                     <Text style={{ color: "#64748B", fontSize: 13, marginVertical: 2 }}>
                                         Quantidade: {buyNowProduct ? route.params?.amount : item.amount ?? 1}
@@ -139,18 +179,29 @@ export const Checkout = ({ route }: RootStackScreenProps<"Checkout">) => {
             <Card style={{ ...Styles.Card, borderRadius: 12, elevation: 2, borderColor: '#e2e8f0', borderWidth: 1, backgroundColor: '#fff' }}>
                 <Card.Content>
                     <CardHeader name="Pagamento" icon="credit-card" />
-                    <View style={{ flexDirection: "row", alignItems: "center", gap: 10, marginBottom: 10 }}>
-                        <RadioButton color="#0063E6" value="Pix" status="checked" />
-                        <Text style={{ fontSize: 16, color: '#1e293b' }}>Pix</Text>
-                    </View>
+
+                    <RadioButton.Group onValueChange={(value) => setChecked(value)} value={checked}>
+                        <View style={{ flexDirection: "row", alignItems: "center", gap: 10, marginBottom: 10 }}>
+                            <RadioButton color="#0063E6" value="pix" />
+                            <Text style={{ fontSize: 16, color: '#1e293b' }}>Pix</Text>
+                        </View>
+                        <View style={{ flexDirection: "row", alignItems: "center", gap: 10, marginBottom: 10 }}>
+                            <RadioButton color="#0063E6" value="debito" />
+                            <Text style={{ fontSize: 16, color: '#1e293b' }}>Debito</Text>
+                        </View>
+                        <View style={{ flexDirection: "row", alignItems: "center", gap: 10, marginBottom: 10 }}>
+                            <RadioButton color="#0063E6" value="credito" />
+                            <Text style={{ fontSize: 16, color: '#1e293b' }}>Credito</Text>
+                        </View>
+                    </RadioButton.Group>
                 </Card.Content>
             </Card>
 
             <Button
                 mode="contained"
                 labelStyle={{ fontSize: 18, fontWeight: "700" }}
-                style={{ backgroundColor: "#0063E6", borderRadius: 10, marginTop: 10}}
-                onPress={() => { }}
+                style={{ backgroundColor: "#0063E6", borderRadius: 10, marginTop: 10 }}
+                onPress={() => { finishCheckout(); }}
             >
                 Finalizar Pedido
             </Button>

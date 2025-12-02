@@ -4,10 +4,14 @@ import { Product } from "../types/Products";
 
 export const useCart = (): {
     cartProducts: Product[];
-    reloadCart: () => Promise<void>;
+    setCartProducts: React.Dispatch<React.SetStateAction<Product[]>>;
+    reloadCart: () => Promise<any>;
     add: (productId: number, quantity: number) => Promise<void>;
     remove: (productId: number) => Promise<void>;
     loadingCart: number[];
+    message: string | null;
+    errorMessage: string | null;
+    loading: boolean;
 } => {
   const context = useContext(CartContext);
 

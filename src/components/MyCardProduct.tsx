@@ -6,32 +6,19 @@ import { RootStackNavigationProp } from "../types/Navigation";
 import { getProductById } from "../services/api/products/getProductById";
 import { Product } from "../types/Products";
 import { LoadingSkeletonProduct } from "./LoadingSkeletonProduct";
+import IconFE from "react-native-vector-icons/Feather";
 
 type CardProps = {
     productId: number;
+    name: string;
+    price: number;
+    rate?: number;
+    totalRatings?: number;
+    image?: string;
 };
 
-export const MyCardProduct = ({ productId }: CardProps) => {
+export const MyCardProduct = ({ productId, name, price, rate = 0, totalRatings = 0, image }: CardProps) => {
     const navigation = useNavigation<RootStackNavigationProp>();
-    const [product, setProduct] = useState<Product>();
-    const [loading, setLoading] = useState(true);
-
-    useEffect(() => {
-        const fetch = async () => {
-            try {
-                const data = await getProductById(productId);
-                setProduct(data.id ? data : undefined);
-            } catch (error) {
-                console.error("Erro ao buscar produto:", error);
-            } finally {
-                setLoading(false);
-            }
-        };
-        fetch();
-    }, [productId]);
-
-    if (loading) return <LoadingSkeletonProduct />;
-    if (!product) return null;
 
     return (
         <TouchableOpacity
@@ -54,20 +41,28 @@ export const MyCardProduct = ({ productId }: CardProps) => {
             }}
             onPress={() => navigation.navigate("EditProduct", { productId })}
         >
-            
-            <Image
-                source={
-                    product.image
-                        ? { uri: product.image }
-                        : require("../../assets/smartphone.png")
-                }
-                style={{
-                    width: 65,
-                    height: 65,
-                    borderRadius: 12,
-                    backgroundColor: "#F0F2F5",
-                }}
-            />
+
+            {image ? (
+                <Image
+                    source={{ uri: image }}
+                    style={{
+                        width: 65,
+                        height: 65,
+                        borderRadius: 12,
+                        backgroundColor: "#F0F2F5",
+                    }}
+                />
+            ) : (
+                <View
+                    style={{
+                        backgroundColor: "#F3F4F6",
+                        padding: 12,
+                        borderRadius: 12,
+                    }}
+                >
+                    <IconFE name="package" size={22} color="#6C7493" />
+                </View>
+            )}
 
             <View style={{ flex: 1 }}>
                 <View
@@ -85,15 +80,11 @@ export const MyCardProduct = ({ productId }: CardProps) => {
                             maxWidth: 210,
                         }}
                     >
-                        {product.name}
+                        {name}
                     </Text>
 
                     <Icon name="edit" size={16} color="#4B5563" />
                 </View>
-
-                <Text style={{ color: "#6C7493", marginTop: 2 }}>
-                    {product.category}
-                </Text>
 
                 <View
                     style={{
@@ -104,7 +95,7 @@ export const MyCardProduct = ({ productId }: CardProps) => {
                     }}
                 >
                     <Icon name="star" size={15} color="#F97A1F" />
-                    <Text style={{ color: "#333" }}>{product.rate}</Text>
+                    <Text style={{ color: "#333" }}>{rate}</Text>
 
                     <Text
                         style={{
@@ -117,7 +108,7 @@ export const MyCardProduct = ({ productId }: CardProps) => {
                             fontSize: 11,
                         }}
                     >
-                        {product.totalRatings} Avaliações
+                        {totalRatings} Avaliações
                     </Text>
                 </View>
 
@@ -129,7 +120,7 @@ export const MyCardProduct = ({ productId }: CardProps) => {
                         color: "#1D77ED",
                     }}
                 >
-                    R$ {product.price}
+                    R$ {price}
                 </Text>
             </View>
         </TouchableOpacity>

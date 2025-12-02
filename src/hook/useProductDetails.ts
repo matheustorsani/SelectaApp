@@ -15,7 +15,13 @@ import { getProductById } from "../services/api/products/getProductById";
  *   toggleAmount: (increment: boolean) => void;
  * }}
  */
-export function useProductDetails(productId: number) {
+export function useProductDetails(productId: number): {
+  product: Product | undefined;
+  loading: boolean;
+  amount: number;
+  error: string | null;
+  toggleAmount: (increment: boolean) => void;
+} {
   const [product, setProduct] = useState<Product>();
   const [amount, setAmount] = useState(1);
   const [error, setError] = useState<string | null>(null);

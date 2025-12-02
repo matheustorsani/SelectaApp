@@ -1,54 +1,66 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, ScrollView } from "react-native";
+import { View, Text, ScrollView, ActivityIndicator } from "react-native";
 import { Styles } from "../styles/Styles";
 import { OrderSituation } from "../components/OrderSituation";
 import { useUser } from "../hook/useUser";
-import { Product } from "../types/Products";
-import { getProductById } from "../services/api/products/getProductById";
 import { Error } from "../components/Error";
 import { useNavigation } from "@react-navigation/native";
 import { RootStackNavigationProp } from "../types/Navigation";
+import { orders } from "../services/api/client/orders";
 
 export const MyOrders = () => {
-    const [products, setProducts] = useState<Product[]>([]);
+    const [myOrders, setMyOrders] = useState<any[]>([]);
+    const [loading, setLoading] = useState(true);
+
     const { user } = useUser();
-    const navigation = useNavigation<RootStackNavigationProp>()
+    const navigation = useNavigation<RootStackNavigationProp>();
 
-    if (!user) return Error({ error: "Você precisa estar logado para ver seus pedidos.", retryText: "Ir para o Login", onPress: () => navigation.navigate("Login") });
-
+    if (!user)
+        return Error({
+            error: "Você precisa estar logado para ver seus pedidos.",
+            retryText: "Ir para o Login",
+            onPress: () => navigation.navigate("Login")
+        });
 
     useEffect(() => {
-        const fetchAllProducts = async () => {
-            if (!user?.orders || user.orders.length === 0) return setProducts([]);
-
+        const loadOrders = async () => {
             try {
-                const promises = user.orders.map(id => getProductById(id));
-                const results = await Promise.all(promises);
-                const validProducts = results.flat().filter(Boolean) as Product[];
-                setProducts(validProducts);
+                const res = await orders();
+                setMyOrders(res || []);
             } catch (error) {
-                console.error("deu pau...", error);
-                setProducts([]);
+                console.error("Erro ao carregar pedidos:", error);
+                setMyOrders([]);
+            } finally {
+                setLoading(false);
             }
         };
 
-        fetchAllProducts();
-    }, [user.orders]);
+        loadOrders();
+    }, []);
+
+    if (loading) return <ActivityIndicator size="large" style={{ marginTop: 20 }} />
+
     return (
-        <ScrollView contentContainerStyle={{ paddingBottom: 40 }} showsVerticalScrollIndicator={false} style={Styles.Main}>
+        <ScrollView
+            contentContainerStyle={{ paddingBottom: 40 }}
+            showsVerticalScrollIndicator={false}
+            style={Styles.Main}
+        >
             <Text style={{ fontWeight: "bold", fontSize: 18 }}>Pedidos Recentes</Text>
+
             <View style={{ marginTop: 16, gap: 16 }}>
-                {products.length > 0 ? (
-                    products.map(item => (
+                {myOrders.length > 0 ? (
+                    myOrders.map((order) => (
                         <OrderSituation
-                            key={item.id}
-                            order={`PED-${new Date().getFullYear()}-00${item.id}`}
-                            data={"2025-09-15"}
-                            situation={"Entregue"}
-                            trackingCode={"TRK123456789BR"}
-                            item={item}
-                            onPress={() => navigation.navigate("OrderStatus")}
+                            key={order.idPedido}
+                            order={`PED-${order.idPedido}`}
+                            data={order.dataPedido}
+                            situation={"Processando"}
+                            trackingCode={"Indisponível"}
+                            item={order}
+                            onPress={() => navigation.navigate("OrderStatus", { order })}
                         />
+
                     ))
                 ) : (
                     <Text>Você não possui pedidos recentes.</Text>
@@ -56,4 +68,4 @@ export const MyOrders = () => {
             </View>
         </ScrollView>
     );
-}
+};

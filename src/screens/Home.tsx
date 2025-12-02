@@ -6,13 +6,10 @@ import { Styles } from '../styles/Styles';
 import { LoadingSkeletonItems } from '../components/LoadingSkeletonItems';
 import { Error } from '../components/Error';
 import Icon from 'react-native-vector-icons/Feather';
-import { useUser } from '../hook/useUser';
 
 export default function Home() {
-    const { user } = useUser();
-    const { products, forYou, loading, loadProducts, error } = useProducts();
+    const { products, loading, loadProducts, error } = useProducts();
     const [refreshing, setRefreshing] = useState(false);
-
     const onRefresh = async () => {
         setRefreshing(true);
         await loadProducts();

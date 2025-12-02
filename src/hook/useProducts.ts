@@ -3,7 +3,6 @@ import { Product } from "../types/Products";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { searchProducts } from "../services/api/home/searchProducts";
 import { allProducts } from "../services/api/products/allProducts";
-import { forYou as fy } from "../services/api/home/forYou";
 
 const CACHE_KEY = "@Selecta:products_cache";
 
@@ -19,9 +18,14 @@ const CACHE_KEY = "@Selecta:products_cache";
  *   search: (query: string) => Promise<void>;
  * }}
  */
-export function useProducts() {
+export function useProducts(): {
+  products: Product[];
+  loading: boolean;
+  error: string | null;
+  loadProducts: () => Promise<void>;
+  search: (query: string) => Promise<void>;
+} {
   const [products, setProducts] = useState<Product[]>([]);
-  const [forYou, setForYou] = useState<Product[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const hasLoaded = useRef(false);
@@ -99,24 +103,11 @@ export function useProducts() {
     [fetchWithRetry]
   );
 
-  const forYouProducts = useCallback(
-    async () => {
-      try {
-        const data = await fy();
-        setForYou(data);
-      } catch (error) {
-        console.error("Ocorreu um erro ao buscar os produtos para você:", error);
-      }
-    },
-    []
-  );
-
   useEffect(() => {
     if (!hasLoaded.current) {
       loadProducts()
-      forYouProducts();
     };
-  }, [loadProducts, forYouProducts]);
+  }, [loadProducts]);
 
-  return { products, forYou, loading, loadProducts, search, error };
+  return { products, loading, loadProducts, search, error };
 }

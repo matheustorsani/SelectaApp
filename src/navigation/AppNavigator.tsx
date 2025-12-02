@@ -33,6 +33,8 @@ import { Preferences } from "../screens/Preferences";
 import { AddProduct } from "../screens/AddProduct";
 import { Checkout } from "../screens/Checkout";
 import { OrderStatus } from "../screens/OrderStatus";
+import { StackScreen } from "react-native-screens";
+import { OrderSuccess } from "../screens/OrderSucess";
 
 const Tab = createBottomTabNavigator<TabParamList>();
 const Stack = createNativeStackNavigator<RootStackParams>();
@@ -137,10 +139,17 @@ export default function AppNavigator(): JSX.Element {
         <Stack.Screen
           name="EditProduct"
           component={EditProduct}
-          options={{
+          options={({ route }) => ({
             headerShown: true,
-            header: () => <HeaderEditProduct />,
-          }}
+            header: () => (
+              <HeaderEditProduct productId={route.params?.productId} />
+            ),
+          })}
+        />
+
+        <Stack.Screen
+          name="OrderSuccess"
+          component={OrderSuccess}
         />
 
         <Stack.Screen

@@ -21,16 +21,18 @@ export default function Cart() {
         setRefreshing(false);
     };
 
-    useEffect(() => {
-        onRefresh();
-    }, []);
-
     if (!user)
         return Error({
             error: "Você precisa estar logado para ver o carrinho.",
             retryText: "Ir para o Login",
             onPress: () => navigation.navigate("Login"),
         });
+
+
+    useEffect(() => {
+        onRefresh();
+    }, []);
+
 
     const total =
         cartProducts.length > 0
@@ -52,7 +54,7 @@ export default function Cart() {
             data={cartProducts}
             keyExtractor={(item) => item.id.toString()}
             numColumns={2}
-            refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} colors={['#0063E6']}/>}
+            refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} colors={['#0063E6']} />}
             contentContainerStyle={{ paddingBottom: 30 }}
             columnWrapperStyle={{
                 justifyContent: "space-between",

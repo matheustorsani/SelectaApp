@@ -3,7 +3,6 @@ import { useAudioPlayer } from "expo-audio";
 import { Order, Status } from "../types/Delivery";
 import { calculateFare } from "../utils/calculateFare";
 
-
 export const useDeliveryManager = (userLocation: { latitude: number; longitude: number } | null) => {
     const [status, setStatus] = useState<Status>("offline");
     const [order, setOrder] = useState<Order | null>(null);

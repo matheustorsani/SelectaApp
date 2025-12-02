@@ -21,7 +21,7 @@ api.interceptors.request.use((config) => {
   if (token) {
     config.headers.Authorization = `Bearer ${token}`;
   }
-  
+
   return config;
 });
 
@@ -97,3 +97,16 @@ export const responseDelete = async <T = any>(
   }
 };
 
+export const responsePut = async <T = any>(
+  route: string,
+  body?: any
+): Promise<T> => {
+  if (!API.stats) throw new ApiOFF();
+  try {
+    const response = await api.put<T>(route, body);
+    return response.data;
+  } catch (error) {
+    console.error("Erro na requisição PUT:", error);
+    throw error;
+  }
+};

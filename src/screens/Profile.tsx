@@ -4,7 +4,6 @@ import { Styles } from "../styles/Styles";
 import { ProfileOption } from "../components/ProfileOption";
 import { ProfileBoxActivity } from "../components/ProfileBoxActivity";
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import IconFA from 'react-native-vector-icons/FontAwesome';
 import { useUser } from "../hook/useUser";
 import { RootStackNavigationProp } from "../types/Navigation";
 import { useNavigation } from "@react-navigation/native";
@@ -67,7 +66,7 @@ export default function Profile() {
             </View>
 
             <View style={{ flexDirection: "row", justifyContent: "space-between", marginBottom: 32 }}>
-                <ProfileBoxActivity title={0} subtitle="Pedidos" />
+                <ProfileBoxActivity title={0} subtitle="Pedidos" onPress={() => navigation.navigate("MyOrders")}/>
                 <ProfileBoxActivity
                     title={favoriteProducts.length || 0}
                     subtitle="Favoritos"
