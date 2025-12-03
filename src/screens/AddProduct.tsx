@@ -33,7 +33,10 @@ export const AddProduct = () => {
                 quantidade: parseInt(stock),
             });
 
-            navigation.goBack();
+            navigation.reset({
+                index: 1,
+                routes: [{ name: "Tabs" }, { name: "MyProducts" }]
+            });a
         } catch (error) {
             console.error("Erro ao criar produto:", error);
             setError("Não foi possível criar o produto. Tente novamente.");
